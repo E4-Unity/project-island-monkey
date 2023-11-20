@@ -1,0 +1,54 @@
+{
+    "name": "CameraController",
+    "maps": [
+        {
+            "name": "CameraControl",
+            "id": "783bb7d3-2f3c-4da6-8a10-8a32f22ba268",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "fae020e8-e491-4622-9946-58a959e60a6c",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "579eba3c-ff4a-4cfa-9601-9da7afaf3938",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8d3cc3b4-dd2b-4b04-8ae6-18df730a22db",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c632fd2d-87ad-492d-99e4-6d4581783660",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
