@@ -4,10 +4,13 @@ using UnityEngine.UI;
 
 public class CutsceneController : MonoBehaviour
 {
-	public GameObject[] cutscenes; // 컷신들을 담을 배열
-	public Image whiteFadeImage; // 화면 전체를 덮을 하얀색 Image
-	public float fadeDuration = 1f; // 페이드하는 데 걸리는 시간
-	public float cutsceneDuration = 1f; // 각 컷신이 표시되는 시간
+	[SerializeField] private GameObject[] cutscenes; // 컷신들을 담을 배열
+	[SerializeField] private GameObject cutscenesBG; // 컷신들을 담을 배경
+	[SerializeField] private Image whiteFadeImage; // 화면 전체를 덮을 하얀색 Image
+	[SerializeField] private float fadeDuration = 1f; // 페이드하는 데 걸리는 시간
+	[SerializeField] private float cutsceneDuration = 1f; // 각 컷신이 표시되는 시간
+	[SerializeField] private Transform smallCircle; // 원 UI의 Transform 컴포넌트
+	[SerializeField] private Camera cutsceneCamera; // 컷신용 카메라에 대한 참조
 
 	void OnEnable()
 	{
@@ -17,32 +20,31 @@ public class CutsceneController : MonoBehaviour
 
 	IEnumerator PlayCutscenesSequence()
 	{
-		for (int i = 0; i < cutscenes.Length; i++)
+		cutscenesBG.SetActive(true);
+		// 기존 컷신 재생
+		foreach (GameObject cutscene in cutscenes)
 		{
-			GameObject cutscene = cutscenes[i];
 			cutscene.SetActive(true); // 컷신 활성화
-
-			if (i < cutscenes.Length - 1)
-			{
-				yield return StartCoroutine(FadeToClear());
-				yield return new WaitForSeconds(cutsceneDuration);
-				yield return StartCoroutine(FadeToWhite());
-			}
-			else
-			{
-				// 마지막 컷신에서는 페이드 인만 실행하고 일정 시간 후에 비활성화
-				yield return StartCoroutine(FadeToClear());
-				yield return new WaitForSeconds(cutsceneDuration); // 마지막 컷신을 보여주는 시간
-			}
-
+			yield return StartCoroutine(FadeToClear()); // 페이드 인
+			yield return new WaitForSeconds(cutsceneDuration); // 지속 시간 동안 대기
+			yield return StartCoroutine(FadeToWhite()); // 페이드 아웃
 			cutscene.SetActive(false); // 컷신 비활성화
 		}
 
-		gameObject.SetActive(false); // 모든 컷신이 끝나면 패널 비활성화
+		cutscenesBG.SetActive(false);
+		// 카메라 위치 변경 및 추가 연출 실행
+		cutsceneCamera.transform.position = new Vector3(0, 6, -11);
+		smallCircle.gameObject.SetActive(true); // 원 UI 활성화
+		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.zero, Vector3.one, 0.5f)); // 커지는 연출
+		yield return new WaitForSeconds(5f); // 1초 동안 유지
+		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.one, Vector3.zero, 0.5f)); // 작아지는 연출
+		smallCircle.gameObject.SetActive(false); // 원 UI 비활성화
+
+		gameObject.SetActive(false); // 컷신 컨트롤러 비활성화
 	}
+
 	IEnumerator FadeToClear()
 	{
-		// 페이드 인 동안 화면을 클리어하게 만듭니다 (하얀색에서 투명으로)
 		float time = 0f;
 		while (time < fadeDuration)
 		{
@@ -56,7 +58,6 @@ public class CutsceneController : MonoBehaviour
 
 	IEnumerator FadeToWhite()
 	{
-		// 페이드 아웃 동안 화면을 하얀색으로 만듭니다 (투명에서 하얀색으로)
 		float time = 0f;
 		while (time < fadeDuration)
 		{
@@ -66,5 +67,18 @@ public class CutsceneController : MonoBehaviour
 			yield return null;
 		}
 		whiteFadeImage.color = Color.white;
+	}
+
+	IEnumerator ScaleCircle(Transform targetTransform, Vector3 startScale, Vector3 endScale, float duration)
+	{
+		float time = 0f;
+		Image maskChildImage = targetTransform.GetComponentInChildren<Image>(); // 마스크 자식 Image 찾기
+		while (time < duration)
+		{
+			float scale = Mathf.Lerp(startScale.x, endScale.x, time / duration);
+			maskChildImage.rectTransform.localScale = new Vector3(scale, scale, 1); // Image 크기 변경
+			time += Time.deltaTime;
+			yield return null;
+		}
 	}
 }
