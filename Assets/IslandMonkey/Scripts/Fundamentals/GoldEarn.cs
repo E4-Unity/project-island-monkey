@@ -36,7 +36,7 @@ public class GoldEarn : MonoBehaviour
 			if (!isGoldPopupClicked)
 			{
 				// 클릭이 감지되지 않았을 때 처리
-				if (MonkeyBank.Instance.monkeybankCurrentGold < MonkeyBank.Instance.monkeybankLimit)
+				if (!MonkeyBank.Instance.IsFull)
 				{
 					// 몽키뱅크에 여유가 있을 경우에만 몽키뱅크에 골드를 추가합니다.
 					MonkeyBank.Instance.AddToBank(goldIncome);

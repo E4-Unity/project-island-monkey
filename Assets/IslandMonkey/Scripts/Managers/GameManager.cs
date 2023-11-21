@@ -1,67 +1,15 @@
-using System;
-using UnityEngine;
+using IslandMonkey.MVVM;
 
 public class GameManager : Singleton<GameManager>
 {
-	public static event Action<int> OnGoldChanged;
-	public static event Action<int> OnBananaChanged;
-	public static event Action<int> OnClamChanged;
+	GoodsModel goodsModel;
 
-	private int gold;
-	private int banana;
-	private int clam;
-
-	public int Gold
+	void Awake()
 	{
-		get => gold;
-		private set
-		{
-			if (gold != value)
-			{
-				gold = value;
-				OnGoldChanged?.Invoke(gold);
-			}
-		}
+		goodsModel = GetComponentInChildren<GoodsModel>();
 	}
 
-	public int Banana
-	{
-		get => banana;
-		private set
-		{
-			if (banana != value)
-			{
-				banana = value;
-				OnBananaChanged?.Invoke(banana);
-			}
-		}
-	}
-
-	public int Clam
-	{
-		get => clam;
-		private set
-		{
-			if (clam != value)
-			{
-				clam = value;
-				OnClamChanged?.Invoke(clam);
-			}
-		}
-	}
-
-	public void EarnGold(int amount)
-	{
-		Gold += amount;
-	}
-
-	public void EarnBanana(int amount)
-	{
-		Banana += amount;
-	}
-
-	public void EarnClam(int amount)
-	{
-		Clam += amount;
-	}
+	public void EarnGold(int amount) => goodsModel.EarnGold(in amount);
+	public void EarnBanana(int amount) => goodsModel.EarnBanana(in amount);
+	public void EarnClam(int amount) => goodsModel.EarnClam(in amount);
 }

@@ -28,20 +28,8 @@ public class UIManager : Singleton<UIManager>
 	public List<MPanel> panels = new List<MPanel>();
 	public List<MButton> buttons = new List<MButton>();
 
-	[SerializeField]
-	private TextMeshProUGUI goldText;
-	[SerializeField]
-	private TextMeshProUGUI bananaText;
-	[SerializeField]
-	private TextMeshProUGUI clamText;
-
 	public void Awake()
 	{
-
-		GameManager.OnGoldChanged += SetGold;
-		GameManager.OnBananaChanged += SetBanana;
-		GameManager.OnClamChanged += SetClam;
-
 		foreach (var panel in panels)
 		{
 			panel.panel.onEnableEvent.AddListener(() => panel.onEnableEvent.Invoke());
@@ -52,27 +40,5 @@ public class UIManager : Singleton<UIManager>
 		{
 			btn.button.onClick.AddListener(() => btn.onClickEvent.Invoke());
 		}
-	}
-
-	void OnDestroy()
-	{
-		GameManager.OnGoldChanged -= SetGold;
-		GameManager.OnBananaChanged -= SetBanana;
-		GameManager.OnClamChanged -= SetClam;
-	}
-
-	public void SetGold(int value)
-	{
-		goldText.SetText(value.FormatLargeNumber());
-	}
-
-	public void SetBanana(int value)
-	{
-		bananaText.SetText(value.FormatLargeNumber());
-	}
-
-	public void SetClam(int value)
-	{
-		clamText.SetText(value.FormatLargeNumber());
 	}
 }
