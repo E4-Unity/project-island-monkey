@@ -12,36 +12,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-
-public partial class @CameraController : IInputActionCollection2, IDisposable
+public partial class @CameraController: IInputActionCollection2, IDisposable
 {
-	// 카메라 참조
-	private Camera camera;
-
-	// 이동 입력 값
-	private UnityEngine.Vector2 moveInput;
-
-	// 줌 입력 값
-	private float zoomInput;
-
-	// 이동 및 줌 속도
-	private float panSpeed = 20f;
-	private float zoomSpeed = 1f;
-
-	// 이동 가능한 최대/최소 범위
-	private float minX = -5f;
-	private float maxX = 5f;
-	private float minZ = 5f;
-	private float maxZ = 11f;
-	public InputActionAsset asset { get; }
-	public @CameraController()
-	{
-		asset = InputActionAsset.FromJson(@"{
+    public InputActionAsset asset { get; }
+    public @CameraController()
+    {
+        asset = InputActionAsset.FromJson(@"{
     ""name"": ""CameraController"",
     ""maps"": [
         {
@@ -52,7 +31,7 @@ public partial class @CameraController : IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""fae020e8-e491-4622-9946-58a959e60a6c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Delta"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -71,18 +50,7 @@ public partial class @CameraController : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8d3cc3b4-dd2b-4b04-8ae6-18df730a22db"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ffb627d4-4c19-4993-894c-329f9f20a9be"",
-                    ""path"": ""<Touchscreen>/position"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -100,196 +68,130 @@ public partial class @CameraController : IInputActionCollection2, IDisposable
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9f2eac8d-2703-447a-9e70-dded99ac3a2a"",
-                    ""path"": ""/Touchscreen/Pinch"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Zoom"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-		// CameraControl
-		m_CameraControl = asset.FindActionMap("CameraControl", throwIfNotFound: true);
-		m_CameraControl_Move = m_CameraControl.FindAction("Move", throwIfNotFound: true);
-		m_CameraControl_Zoom = m_CameraControl.FindAction("Zoom", throwIfNotFound: true);
-	}
+        // CameraControl
+        m_CameraControl = asset.FindActionMap("CameraControl", throwIfNotFound: true);
+        m_CameraControl_Move = m_CameraControl.FindAction("Move", throwIfNotFound: true);
+        m_CameraControl_Zoom = m_CameraControl.FindAction("Zoom", throwIfNotFound: true);
+    }
 
-	public void Dispose()
-	{
-		UnityEngine.Object.Destroy(asset);
-	}
+    public void Dispose()
+    {
+        UnityEngine.Object.Destroy(asset);
+    }
 
-	public InputBinding? bindingMask
-	{
-		get => asset.bindingMask;
-		set => asset.bindingMask = value;
-	}
+    public InputBinding? bindingMask
+    {
+        get => asset.bindingMask;
+        set => asset.bindingMask = value;
+    }
 
-	public ReadOnlyArray<InputDevice>? devices
-	{
-		get => asset.devices;
-		set => asset.devices = value;
-	}
+    public ReadOnlyArray<InputDevice>? devices
+    {
+        get => asset.devices;
+        set => asset.devices = value;
+    }
 
-	public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
-	public bool Contains(InputAction action)
-	{
-		return asset.Contains(action);
-	}
+    public bool Contains(InputAction action)
+    {
+        return asset.Contains(action);
+    }
 
-	public IEnumerator<InputAction> GetEnumerator()
-	{
-		return asset.GetEnumerator();
-	}
+    public IEnumerator<InputAction> GetEnumerator()
+    {
+        return asset.GetEnumerator();
+    }
 
-	IEnumerator IEnumerable.GetEnumerator()
-	{
-		return GetEnumerator();
-	}
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 
-	public void Enable()
-	{
-		asset.Enable();
-	}
+    public void Enable()
+    {
+        asset.Enable();
+    }
 
-	public void Disable()
-	{
-		asset.Disable();
-	}
+    public void Disable()
+    {
+        asset.Disable();
+    }
 
-	public IEnumerable<InputBinding> bindings => asset.bindings;
+    public IEnumerable<InputBinding> bindings => asset.bindings;
 
-	public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
-	{
-		return asset.FindAction(actionNameOrId, throwIfNotFound);
-	}
+    public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)
+    {
+        return asset.FindAction(actionNameOrId, throwIfNotFound);
+    }
 
-	public int FindBinding(InputBinding bindingMask, out InputAction action)
-	{
-		return asset.FindBinding(bindingMask, out action);
-	}
+    public int FindBinding(InputBinding bindingMask, out InputAction action)
+    {
+        return asset.FindBinding(bindingMask, out action);
+    }
 
-	// CameraControl
-	private readonly InputActionMap m_CameraControl;
-	private List<ICameraControlActions> m_CameraControlActionsCallbackInterfaces = new List<ICameraControlActions>();
-	private readonly InputAction m_CameraControl_Move;
-	private readonly InputAction m_CameraControl_Zoom;
-	public struct CameraControlActions
-	{
-		private @CameraController m_Wrapper;
-		public CameraControlActions(@CameraController wrapper) { m_Wrapper = wrapper; }
-		public InputAction @Move => m_Wrapper.m_CameraControl_Move;
-		public InputAction @Zoom => m_Wrapper.m_CameraControl_Zoom;
-		public InputActionMap Get() { return m_Wrapper.m_CameraControl; }
-		public void Enable() { Get().Enable(); }
-		public void Disable() { Get().Disable(); }
-		public bool enabled => Get().enabled;
-		public static implicit operator InputActionMap(CameraControlActions set) { return set.Get(); }
-		public void AddCallbacks(ICameraControlActions instance)
-		{
-			if (instance == null || m_Wrapper.m_CameraControlActionsCallbackInterfaces.Contains(instance)) return;
-			m_Wrapper.m_CameraControlActionsCallbackInterfaces.Add(instance);
-			@Move.started += instance.OnMove;
-			@Move.performed += instance.OnMove;
-			@Move.canceled += instance.OnMove;
-			@Zoom.started += instance.OnZoom;
-			@Zoom.performed += instance.OnZoom;
-			@Zoom.canceled += instance.OnZoom;
-		}
+    // CameraControl
+    private readonly InputActionMap m_CameraControl;
+    private List<ICameraControlActions> m_CameraControlActionsCallbackInterfaces = new List<ICameraControlActions>();
+    private readonly InputAction m_CameraControl_Move;
+    private readonly InputAction m_CameraControl_Zoom;
+    public struct CameraControlActions
+    {
+        private @CameraController m_Wrapper;
+        public CameraControlActions(@CameraController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_CameraControl_Move;
+        public InputAction @Zoom => m_Wrapper.m_CameraControl_Zoom;
+        public InputActionMap Get() { return m_Wrapper.m_CameraControl; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraControlActions set) { return set.Get(); }
+        public void AddCallbacks(ICameraControlActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CameraControlActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraControlActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
+        }
 
-		private void UnregisterCallbacks(ICameraControlActions instance)
-		{
-			@Move.started -= instance.OnMove;
-			@Move.performed -= instance.OnMove;
-			@Move.canceled -= instance.OnMove;
-			@Zoom.started -= instance.OnZoom;
-			@Zoom.performed -= instance.OnZoom;
-			@Zoom.canceled -= instance.OnZoom;
-		}
+        private void UnregisterCallbacks(ICameraControlActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
+        }
 
-		public void RemoveCallbacks(ICameraControlActions instance)
-		{
-			if (m_Wrapper.m_CameraControlActionsCallbackInterfaces.Remove(instance))
-				UnregisterCallbacks(instance);
-		}
+        public void RemoveCallbacks(ICameraControlActions instance)
+        {
+            if (m_Wrapper.m_CameraControlActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
 
-		public void SetCallbacks(ICameraControlActions instance)
-		{
-			foreach (var item in m_Wrapper.m_CameraControlActionsCallbackInterfaces)
-				UnregisterCallbacks(item);
-			m_Wrapper.m_CameraControlActionsCallbackInterfaces.Clear();
-			AddCallbacks(instance);
-		}
-	}
-	public CameraControlActions @CameraControl => new CameraControlActions(this);
-	public interface ICameraControlActions
-	{
-		void OnMove(InputAction.CallbackContext context);
-		void OnZoom(InputAction.CallbackContext context);
-	}
-	// 카메라와 입력 시스템을 초기화하는 메소드
-	public void InitializeCamera()
-	{
-		camera = Camera.main; // 메인 카메라를 가져옵니다.
-		RegisterCallbacks(); // 입력 콜백을 등록합니다.
-	}
-	// ICameraControlActions 인터페이스 구현
-	public void OnMove(InputAction.CallbackContext context)
-	{
-		// 드래그 입력을 Vector2 값으로 읽어옵니다.
-		moveInput = context.ReadValue<Vector2>();
-	}
-
-	// 입력 콜백을 등록하는 메소드
-	private void RegisterCallbacks()
-	{
-		// "Move" 액션에 대한 콜백 등록
-		// Move 액션에 대한 콜백을 등록합니다.
-		m_CameraControl_Move.performed += OnMove;
-		m_CameraControl_Move.canceled += OnMove;
-
-		// "Zoom" 액션에 대한 콜백 등록
-		var zoomAction = asset.FindAction("Zoom");
-		zoomAction.performed += context => zoomInput = context.ReadValue<Vector2>().y;
-		zoomAction.canceled += context => zoomInput = 0;
-
-		// 입력 시스템 활성화
-		asset.Enable();
-	}
-	// 카메라 상태를 업데이트하는 메소드
-	public void OnUpdate()
-	{
-		// 카메라 이동 처리
-		Vector3 pos = camera.transform.position;
-		pos.x -= moveInput.x * panSpeed * Time.deltaTime;
-		pos.z -= moveInput.y * panSpeed * Time.deltaTime;
-		pos.x = Mathf.Clamp(pos.x, minX, maxX);
-		pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
-		camera.transform.position = pos;
-
-		// 카메라 줌 처리
-		float newSize = camera.orthographicSize - (zoomInput * zoomSpeed * Time.deltaTime);
-		newSize = Mathf.Clamp(newSize, 1f, 6f);
-		camera.orthographicSize = newSize;
-
-		// 드래그에 따른 카메라 이동 처리
-		if (moveInput != Vector2.zero)
-		{
-			// 카메라 위치 조정 로직을 여기에 추가합니다.
-			// 예를 들어, 아래와 같은 방식으로 카메라를 이동시킬 수 있습니다.
-			Vector3 movement = new Vector3(moveInput.x, 0, moveInput.y) * panSpeed * Time.deltaTime;
-			camera.transform.Translate(movement, Space.World);
-		}
-	}
-
+        public void SetCallbacks(ICameraControlActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CameraControlActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CameraControlActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CameraControlActions @CameraControl => new CameraControlActions(this);
+    public interface ICameraControlActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
+    }
 }
