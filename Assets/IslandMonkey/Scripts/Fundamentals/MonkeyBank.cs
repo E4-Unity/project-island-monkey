@@ -1,11 +1,27 @@
+using IslandMonkey.MVVM;
 using UnityEngine;
 
-public class MonkeyBank : MonoBehaviour
+public class MonkeyBank : Model
 {
 	public static MonkeyBank Instance { get; private set; } // Singleton 인스턴스
-	public int monkeybankCurrentGold = 0;
-	public int monkeybankLimit = 3000;
+	int gold = 0;
+	int goldLimit = 3000;
 
+	/* 프로퍼티 */
+	public int Gold
+	{
+		get => gold;
+		set
+		{
+			var newCurrentGold = Mathf.Clamp(value, 0, goldLimit);
+
+			SetField(ref gold, newCurrentGold);
+		}
+	}
+
+	public bool IsFull => gold == goldLimit;
+
+	/* MonoBehaviour */
 	private void Awake()
 	{
 		if (Instance == null)
@@ -19,16 +35,18 @@ public class MonkeyBank : MonoBehaviour
 		}
 	}
 
+	/* API */
 	public void AddToBank(int amount)
 	{
-		if (monkeybankCurrentGold + amount <= monkeybankLimit)
+		if (IsFull)
 		{
-			monkeybankCurrentGold += amount;
-			// 추가 로직: UI 업데이트, 사운드 재생 등
-		}
-		else
-		{
+#if UNITY_EDITOR
 			Debug.Log("몽키뱅크 꽉 참!");
+#endif
+			return;
 		}
+
+		Gold += amount;
+		// TODO UI 업데이트, 사운드 재생 등
 	}
 }
