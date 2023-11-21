@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AC_FireStation
+  m_Controller: {fileID: 9100000, guid: c29ab89fe76ce8d44b7d4313cd90d585, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 1abab33a81697714a937e82b79255b0e, type: 2}
+    m_OverrideClip: {fileID: 1946292761811331612, guid: b3dd053389f78c94aa021150f9c227a6,
+      type: 3}
