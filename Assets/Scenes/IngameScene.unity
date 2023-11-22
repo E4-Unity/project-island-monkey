@@ -1897,7 +1897,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90312976987b70942840f62f0c519d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldIncome: 100
+  goodsType: 0
+  income: 100
   goldPopupInterval: 2
   goldPopupImage: {fileID: 5071517719792484152}
   goldEarnEvent:
@@ -6440,7 +6441,7 @@ PrefabInstance:
     - target: {fileID: 8345340581767698882, guid: 18f7b3825f8d13244ac66e2f58c817a6,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -6458,6 +6459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1953255368}
   - component: {fileID: 1953255369}
+  - component: {fileID: 1953255370}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -6493,6 +6495,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a73ca5e085fa342849b0c0e199d6b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1953255370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953255367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74f55c6f1012aa40b7e43e66cb38a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1957782249
@@ -7081,9 +7095,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  goldText: {fileID: 634683352}
-  bananaText: {fileID: 221004029}
-  clamText: {fileID: 1303532497}
 --- !u!1 &2000749923
 GameObject:
   m_ObjectHideFlags: 0
@@ -7128,8 +7139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b5077afb552e9469732f2abddbe034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monkeybankCurrentGold: 0
-  monkeybankLimit: 3000
 --- !u!224 &2011800781 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5200397984139767442, guid: 1fbd64591fb720d4c92274d044a7ec62,
