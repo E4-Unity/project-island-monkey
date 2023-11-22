@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using IslandMonkey.MVVM;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,7 +20,7 @@ public class BananaEarn : MonoBehaviour
 		while (true)
 		{
 			yield return new WaitForSeconds(bananaEarnInterval);
-			GameManager.instance.EarnBanana(bananaIncome);
+			GameManager.instance.EarnGoods(GoodsType.Banana, bananaIncome);
 			bananaEarnEvent.Invoke();
 		}
 	}

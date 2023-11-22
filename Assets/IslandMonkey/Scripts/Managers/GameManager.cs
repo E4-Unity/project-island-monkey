@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
 		goodsModel = GetComponentInChildren<GoodsModel>();
 	}
 
-	public void EarnGold(int amount) => goodsModel.EarnGold(in amount);
-	public void EarnBanana(int amount) => goodsModel.EarnBanana(in amount);
-	public void EarnClam(int amount) => goodsModel.EarnClam(in amount);
+	public void EarnGoods(GoodsType goodsType, int amount) => goodsModel.EarnGoods(goodsType, in amount);
+	public void SpendGoods(GoodsType goodsType, int amount) => goodsModel.SpendGoods(goodsType, in amount);
+	public bool CanSpend(GoodsType goodsType, in int amount) => goodsModel.CanSpend(goodsType, in amount);
 }

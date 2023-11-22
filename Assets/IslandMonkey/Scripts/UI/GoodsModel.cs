@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace IslandMonkey.MVVM
 {
+	public enum GoodsType
+	{
+		Gold,
+		Banana,
+		Clam
+	}
+
 	public class GoodsModel : Model
 	{
 		int gold;
@@ -13,34 +20,80 @@ namespace IslandMonkey.MVVM
 		public int Gold
 		{
 			get => gold;
-			set => SetField(ref gold, Mathf.Max(0, value));
+			private set => SetField(ref gold, Mathf.Max(0, value));
 		}
 
 		public int Banana
 		{
 			get => banana;
-			set => SetField(ref banana, Mathf.Max(0, value));
+			private set => SetField(ref banana, Mathf.Max(0, value));
 		}
 
 		public int Clam
 		{
 			get => clam;
-			set => SetField(ref clam, Mathf.Max(0, value));
+			private set => SetField(ref clam, Mathf.Max(0, value));
 		}
 
-		public void EarnGold(in int amount)
+		public void EarnGoods(GoodsType goodsType, in int amount)
 		{
-			Gold += amount;
+			if (amount <= 0) return;
+
+			switch (goodsType)
+			{
+				case GoodsType.Gold:
+					Gold += amount;
+					break;
+				case GoodsType.Banana:
+					Banana += amount;
+					break;
+				case GoodsType.Clam:
+					Clam += amount;
+					break;
+			}
 		}
 
-		public void EarnBanana(in int amount)
+		public void SpendGoods(GoodsType goodsType, in int amount)
 		{
-			Banana += amount;
+			if (amount <= 0) return;
+
+			switch (goodsType)
+			{
+				case GoodsType.Gold:
+					Gold -= amount;
+					break;
+				case GoodsType.Banana:
+					Banana -= amount;
+					break;
+				case GoodsType.Clam:
+					Clam -= amount;
+					break;
+			}
 		}
 
-		public void EarnClam(in int amount)
+		public bool CanSpend(GoodsType goodsType, in int amount)
 		{
-			Clam += amount;
+			if (amount < 0) return false;
+
+			bool result = false;
+
+			switch (goodsType)
+			{
+				case GoodsType.Gold:
+					if (Gold >= amount) result = true;
+					break;
+				case GoodsType.Banana:
+					if (Banana >= amount) result = true;
+					break;
+				case GoodsType.Clam:
+					if (Clam >= amount) result = true;
+					break;
+				default:
+					result = false;
+					break;
+			}
+
+			return result;
 		}
 	}
 }

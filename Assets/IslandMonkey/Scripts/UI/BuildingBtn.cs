@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using IslandMonkey.MVVM;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class BuildingBtn : MonoBehaviour
 
 	[SerializeField] private GameObject getAnimalPanel; // 연출을 적용할 UI 패널에 대한 참조
 	[SerializeField] private GameObject buildingPanel; // 연출을 적용할 UI 패널에 대한 참조
-	
+
 
 	void Start()
 	{
@@ -31,7 +32,10 @@ public class BuildingBtn : MonoBehaviour
 		if (buttonIndex >= 0 && buttonIndex < payGoldList.Count)
 		{
 			int payGold = payGoldList[buttonIndex];
-			bool hasEnoughGold = GameManager.instance.SpendGold(payGold);
+
+			var gameManager = GameManager.instance;
+			bool hasEnoughGold = CanSpendGold(in payGold);
+			SpendGold(in payGold);
 
 			if (hasEnoughGold && placementManager != null)
 			{
@@ -76,4 +80,7 @@ public class BuildingBtn : MonoBehaviour
 		if (spawnedMonkey != null)
 			Destroy(spawnedMonkey);
 	}
+
+	bool CanSpendGold(in int amount) => GameManager.instance.CanSpend(GoodsType.Gold, amount);
+	void SpendGold(in int amount) => GameManager.instance.SpendGoods(GoodsType.Gold, amount);
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using IslandMonkey.MVVM;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -65,7 +66,7 @@ public class GoldEarn : MonoBehaviour
 		if (goldPopupImage.activeInHierarchy)
 		{
 			isGoldPopupClicked = true;
-			GameManager.instance.EarnGold(goldIncome); // 골드를 즉시 GameManager에 추가합니다.
+			GameManager.instance.EarnGoods(GoodsType.Gold, goldIncome); // 골드를 즉시 GameManager에 추가합니다.
 			goldPopupImage.SetActive(false);
 		}
 	}
