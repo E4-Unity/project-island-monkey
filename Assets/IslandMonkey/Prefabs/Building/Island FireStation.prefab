@@ -61,10 +61,40 @@ PrefabInstance:
     - target: {fileID: 8856786422368604479, guid: aa2a8f8d74f945f4bb598e7a951a13ad,
         type: 3}
       propertyPath: m_Name
-      value: FireStation
+      value: Island FireStation
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8856786422368604479, guid: aa2a8f8d74f945f4bb598e7a951a13ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7975060026757837767}
   m_SourcePrefab: {fileID: 100100000, guid: aa2a8f8d74f945f4bb598e7a951a13ad, type: 3}
+--- !u!4 &203775598739730429 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1814046066447827049, guid: aa2a8f8d74f945f4bb598e7a951a13ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 2017398892204093332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6995952561956060843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8856786422368604479, guid: aa2a8f8d74f945f4bb598e7a951a13ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 2017398892204093332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7975060026757837767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995952561956060843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1b05fc26b261d4f8d9f573ec942af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entrance: {fileID: 203775598739730429}
+  animatorController: {fileID: 22100000, guid: 3a811aaa48a9f9d4a99e028e45c7a8cd, type: 2}

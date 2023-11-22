@@ -61,7 +61,7 @@ PrefabInstance:
     - target: {fileID: 3993500149399650607, guid: 9aed5a39a4704d6478f8386e4349af80,
         type: 3}
       propertyPath: m_Name
-      value: SNS
+      value: Island SNS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

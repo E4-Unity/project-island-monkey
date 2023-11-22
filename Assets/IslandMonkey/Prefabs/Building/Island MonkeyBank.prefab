@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 823367852935576257, guid: 3f0f2aac90b4c524cafee65172c2215c,
         type: 3}
       propertyPath: m_Name
-      value: MonkeyBank
+      value: Island MonkeyBank
       objectReference: {fileID: 0}
     - target: {fileID: 3060675203687862725, guid: 3f0f2aac90b4c524cafee65172c2215c,
         type: 3}
