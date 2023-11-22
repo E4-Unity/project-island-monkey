@@ -1,4 +1,4 @@
-using IslandMonkey.MVVM;
+using IslandMonkey;
 
 public class GameManager : Singleton<GameManager>
 {

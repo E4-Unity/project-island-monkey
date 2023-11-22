@@ -1,5 +1,4 @@
-﻿using System;
-using IslandMonkey.MVVM;
+﻿using IslandMonkey;
 using UnityEngine;
 
 public class GoodsFactory : MonoBehaviour
