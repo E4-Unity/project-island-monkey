@@ -31,7 +31,20 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		{
 			posList.Add(fishingPos.GetChild(i));
 		}
+
+		Teststatic();
 	}
+
+	public static int Teststatic()
+	{
+		for(int i = 0; i < 5; i++)
+		{
+			Debug.Log("i:" + i);
+			return i;
+		}
+		return 0;
+	}
+
 	//화면 터치 시
 	public void OnPointerClick(PointerEventData eventData)
 	{
