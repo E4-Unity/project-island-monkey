@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fcb51061874a7f95fc07262b4eb9d7, type: 3}
+  m_Name: Monkey Skin Data
+  m_EditorClassIdentifier: 
+  basic:
+    Body: {fileID: 2800000, guid: 588b81af1bfb90b40add498e69527ab6, type: 3}
+    Face: {fileID: 2800000, guid: 039ccebca9200764a9cbbe38951a693c, type: 3}
+  boss:
+    Body: {fileID: 2800000, guid: 7b26af99c18a5224fa55a2b302a140d1, type: 3}
+    Face: {fileID: 2800000, guid: b789766826f0a05488256088e01fd88b, type: 3}
+  barista:
+    Body: {fileID: 2800000, guid: 39673706afced3843a3a5f0751fe5412, type: 3}
+    Face: {fileID: 2800000, guid: e871e77a06995af4d8fa0ae1f110da43, type: 3}
+  buildingOwner:
+    Body: {fileID: 2800000, guid: 370853893dc683b4f8b75fef353daada, type: 3}
+    Face: {fileID: 2800000, guid: cac7ac19076700f4790ebd8d978b37e7, type: 3}
