@@ -31,18 +31,6 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		{
 			posList.Add(fishingPos.GetChild(i));
 		}
-
-		Teststatic();
-	}
-
-	public static int Teststatic()
-	{
-		for(int i = 0; i < 5; i++)
-		{
-			Debug.Log("i:" + i);
-			return i;
-		}
-		return 0;
 	}
 
 	//화면 터치 시
@@ -71,6 +59,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 					break;
 				case 3:
 					Debug.Log("잡았다!");
+					VoyageUIManager.Show<ClamPopup>();
 					break;
 				case 4:
 					Debug.Log("시간초과");
@@ -97,7 +86,6 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		//찌를 들어올릴 때까지 반복
 		while (true)
 		{
-			SetFishingPoint();
 			fishStatus = 0;
 			fishingTime = Random.Range(minTime, maxTime);
 			Debug.Log("fishingTime : " + fishingTime);
@@ -124,6 +112,8 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			fishStatus = 2;
 
 			yield return new WaitForSeconds(overTime);
+
+			SetFishingPoint();
 		}
 	}
 
