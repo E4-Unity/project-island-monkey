@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1839848740766678845, guid: d2f101252679ca44194fd3c2d84fa5ab,
         type: 3}
       propertyPath: m_Name
-      value: LuckyDraw
+      value: Island LuckyDraw
       objectReference: {fileID: 0}
     - target: {fileID: 6730096814324939790, guid: d2f101252679ca44194fd3c2d84fa5ab,
         type: 3}
