@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using IslandMonkey.MVVM;
 using UnityEngine;
 
-namespace IslandMonkey.MVVM
+namespace IslandMonkey
 {
 	public enum GoodsType
 	{

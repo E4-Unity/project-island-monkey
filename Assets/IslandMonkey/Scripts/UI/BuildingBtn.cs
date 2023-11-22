@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using IslandMonkey.MVVM;
+using IslandMonkey;
 using UnityEngine;
 using UnityEngine.UI;
 
