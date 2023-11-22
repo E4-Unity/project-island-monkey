@@ -10,7 +10,7 @@ namespace IslandMonkey
 		Clam
 	}
 
-	public class GoodsModel : Model
+	public class GoodsManager : Model
 	{
 		int gold;
 		int banana;
