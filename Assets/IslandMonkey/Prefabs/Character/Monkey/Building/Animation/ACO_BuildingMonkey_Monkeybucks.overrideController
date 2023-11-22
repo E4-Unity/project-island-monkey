@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ACO_BuildingMonkey_Monkeybucks
+  m_Controller: {fileID: 9100000, guid: 97739c46ef2de534499c3e1c359d8247, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: eaf2614483287b745b30d1eb7fd18e2c, type: 2}
+    m_OverrideClip: {fileID: 5778580631781675118, guid: d2dff9fc93518f14ab1e67927d799184,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 50e3c15b6974a9140887ff6b3005aeb1, type: 2}
+    m_OverrideClip: {fileID: 1721205207941855531, guid: d2dff9fc93518f14ab1e67927d799184,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: ed3a41a51450a524d88e4f8c14e83a39, type: 2}
+    m_OverrideClip: {fileID: -5348898718767986723, guid: d2dff9fc93518f14ab1e67927d799184,
+      type: 3}
