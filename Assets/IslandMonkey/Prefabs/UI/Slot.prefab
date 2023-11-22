@@ -703,6 +703,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 8501371021185471113, guid: ddb9f2ccaf6ad344f91aab3987c589bb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8501371021198605924, guid: ddb9f2ccaf6ad344f91aab3987c589bb,
         type: 3}
       propertyPath: m_fontAsset
