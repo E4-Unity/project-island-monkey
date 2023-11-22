@@ -3,9 +3,8 @@ using IslandMonkey.MVVM;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GoldEarn : MonoBehaviour
+public class GoldEarn : GoodsFactory
 {
-	public int goldIncome = 100;
 	public float goldPopupInterval = 2.0f;
 	public GameObject goldPopupImage;
 	public UnityEvent goldEarnEvent;
@@ -40,7 +39,7 @@ public class GoldEarn : MonoBehaviour
 				if (!MonkeyBank.Instance.IsFull)
 				{
 					// 몽키뱅크에 여유가 있을 경우에만 몽키뱅크에 골드를 추가합니다.
-					MonkeyBank.Instance.AddToBank(goldIncome);
+					MonkeyBank.Instance.AddToBank(Income);
 					goldPopupImage.SetActive(false);
 				}
 				// 몽키뱅크가 꽉 찼을 경우, 팝업은 유지됩니다.
@@ -66,7 +65,7 @@ public class GoldEarn : MonoBehaviour
 		if (goldPopupImage.activeInHierarchy)
 		{
 			isGoldPopupClicked = true;
-			GameManager.instance.EarnGoods(GoodsType.Gold, goldIncome); // 골드를 즉시 GameManager에 추가합니다.
+			EarnGoods(); // 골드를 즉시 GameManager에 추가합니다.
 			goldPopupImage.SetActive(false);
 		}
 	}
