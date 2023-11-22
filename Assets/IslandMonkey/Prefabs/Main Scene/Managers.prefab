@@ -91,7 +91,6 @@ GameObject:
   m_Component:
   - component: {fileID: 51939849205630805}
   - component: {fileID: 4707852626793299268}
-  - component: {fileID: 1631236256899563861}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -127,18 +126,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a73ca5e085fa342849b0c0e199d6b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1631236256899563861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944393498911945496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b74f55c6f1012aa40b7e43e66cb38a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4477163671671021200
@@ -513,7 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d120e0919cf217a4086e1572ba914051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 1631236256899563861}
+  model: {fileID: 0}
   goldText: {fileID: 0}
   bananaText: {fileID: 0}
   clamText: {fileID: 0}
