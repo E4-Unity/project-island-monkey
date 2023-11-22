@@ -13,17 +13,17 @@ namespace IslandMonkey
 		/* 컴포넌트 */
 		MonkeySkinController skinController;
 
-		void Awake()
+		protected virtual void Awake()
 		{
 			skinController = GetComponent<MonkeySkinController>();
 		}
 
-		void OnEnable()
+		protected virtual void OnEnable()
 		{
 			Init(defaultDefinition);
 		}
 
-		public void Init(MonkeyDefinition inDefinition)
+		public virtual void Init(MonkeyDefinition inDefinition)
 		{
 			if (!inDefinition) return;
 			currentDefinition = inDefinition;
