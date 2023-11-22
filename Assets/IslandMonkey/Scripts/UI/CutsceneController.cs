@@ -36,6 +36,7 @@ public class CutsceneController : MonoBehaviour
 		cutscenesBG.SetActive(false);
 		// 카메라 위치 변경 및 추가 연출 실행
 		cutsceneCamera.transform.position = new Vector3(0, 6, -11);
+		cutsceneCamera.orthographicSize = 1; // Orthographic Size를 1로 설정
 		smallCircle.gameObject.SetActive(true); // 원 UI 활성화
 		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.zero, Vector3.one, 0.5f)); // 커지는 연출
 		Invoke("CutSceneEnd", 0.5f);
