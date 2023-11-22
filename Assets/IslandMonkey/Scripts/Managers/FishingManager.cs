@@ -69,7 +69,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 					Debug.Log("시간초과");
 					break;
 			}
-				
+
 		}
 		else //찌 던지기
 		{
@@ -105,11 +105,11 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			yield return new WaitForSeconds(overTime);
 			Debug.Log("조개가 물었다!");
 			fishStatus = 3;
-			
+
 			//잡은 표시 이미지, '!'이미지 또는 파동으로 대체
 			sign = Instantiate(catchSign);
 			sign.transform.position = posList[fishingPoint].position;
-			
+
 
 			//조개가 도망감
 			yield return new WaitForSeconds(validTime);
