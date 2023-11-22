@@ -5,6 +5,18 @@ namespace IslandMonkey
 	public class FishingAnimator : MonoBehaviour
 	{
 		[SerializeField] bool _succeed;
+		public bool succeed
+		{
+			get
+			{
+				return _succeed;
+			}
+			set
+			{
+				_succeed = value;
+			}
+		}
+
 		Animator _animator;
 		static readonly int _hashNext = Animator.StringToHash("Next");
 		static readonly int _hashSucceed = Animator.StringToHash("Succeed");
