@@ -98,3 +98,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entrance: {fileID: 1396068811398247447}
   animatorController: {fileID: 22100000, guid: 96dccbac0a2e9ad4596d93ec156d174e, type: 2}
+  equipmentSet:
+    RightHandEquipment: {fileID: 0}
+    LeftHandEquipment: {fileID: 0}
+    NeckEquipment: {fileID: 72551959970543082, guid: a11673744a92bda41ac6af90e8cff531,
+      type: 3}
+    LeftFootEquipment: {fileID: 3252501305272136467, guid: cf7617aea34c789469ea972cb461ec99,
+      type: 3}
+    RightFootEquipment: {fileID: 4529837073759400095, guid: 6cbe92324de82ff459f01fb25f41dcf0,
+      type: 3}

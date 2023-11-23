@@ -92,6 +92,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entrance: {fileID: 8361645977940545583}
   animatorController: {fileID: 22100000, guid: 9d1383542aa22524eb1ba8008842888b, type: 2}
+  equipmentSet:
+    RightHandEquipment: {fileID: 0}
+    LeftHandEquipment: {fileID: 4674937124063724094, guid: 163420ba74d90ef4eb7cbb0248132d17,
+      type: 3}
+    NeckEquipment: {fileID: 0}
+    LeftFootEquipment: {fileID: 0}
+    RightFootEquipment: {fileID: 0}
 --- !u!4 &8361645977940545583 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1692639302397777412, guid: e04b236f31822504a958f207fef82de5,

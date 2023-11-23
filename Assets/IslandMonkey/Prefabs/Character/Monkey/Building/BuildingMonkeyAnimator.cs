@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonkeyAnimator : MonoBehaviour
+public class BuildingMonkeyAnimator : MonoBehaviour
 {
 	public enum AnimationState
 	{

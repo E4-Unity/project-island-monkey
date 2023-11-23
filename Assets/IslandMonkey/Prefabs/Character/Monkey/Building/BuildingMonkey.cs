@@ -5,12 +5,15 @@ using UnityEngine.AI;
 
 namespace IslandMonkey
 {
+	[RequireComponent(typeof(NavMeshAgent), typeof(BuildingMonkeyAnimator), typeof(EquipmentComponent))]
 	public class BuildingMonkey : Monkey
 	{
 		public interface IBuilding
 		{
 			Transform Entrance { get; }
 			AnimatorOverrideController AnimatorController { get; }
+
+			EquipmentComponent.EquipmentSet Equipments { get; }
 		}
 
 		enum BuildingMonkeyState
@@ -23,7 +26,8 @@ namespace IslandMonkey
 		/* 컴포넌트 */
 		[SerializeField] Transform model;
 		NavMeshAgent agent;
-		MonkeyAnimator monkeyAnimator;
+		BuildingMonkeyAnimator buildingMonkeyAnimator;
+		EquipmentComponent equipmentComponent;
 
 		/* 필드 */
 		[SerializeField] float walkSpeedFactor = 2; // 애니메이션 속도와 실제 속도 싱크에 사용
@@ -42,15 +46,16 @@ namespace IslandMonkey
 			base.Awake();
 
 			agent = GetComponent<NavMeshAgent>();
-			monkeyAnimator = GetComponent<MonkeyAnimator>();
+			buildingMonkeyAnimator = GetComponent<BuildingMonkeyAnimator>();
+			equipmentComponent = GetComponent<EquipmentComponent>();
 
-			if (monkeyAnimator is not null)
+			if (buildingMonkeyAnimator is not null)
 			{
 				OnArrived += () =>
 				{
-					monkeyAnimator.Stop();
-					monkeyAnimator.ResetAnimationSpeed();
-					monkeyAnimator.PlayBuildingIn();
+					buildingMonkeyAnimator.Stop();
+					buildingMonkeyAnimator.ResetAnimationSpeed();
+					buildingMonkeyAnimator.PlayBuildingIn();
 
 					// TODO 다른 방법?
 					var t = transform;
@@ -120,7 +125,7 @@ namespace IslandMonkey
 
 			targetBuilding = inBuilding;
 			state = BuildingMonkeyState.Resting;
-			monkeyAnimator.PlayBuildingOut();
+			buildingMonkeyAnimator.PlayBuildingOut();
 		}
 
 		[ContextMenu("Back To Work")]
@@ -137,8 +142,8 @@ namespace IslandMonkey
 			targetBuilding = building;
 			state = BuildingMonkeyState.Working;
 
-			if(monkeyAnimator.State == MonkeyAnimator.AnimationState.Building)
-				monkeyAnimator.PlayBuildingOut();
+			if(buildingMonkeyAnimator.State == BuildingMonkeyAnimator.AnimationState.Building)
+				buildingMonkeyAnimator.PlayBuildingOut();
 			else
 				EnterBuilding(building);
 		}
@@ -147,7 +152,7 @@ namespace IslandMonkey
 		// 루트 모션으로 인한 Offset 초기화
 		public void ResetModelTransform()
 		{
-			monkeyAnimator.DisableRootMotion(true);
+			buildingMonkeyAnimator.DisableRootMotion(true);
 			model.localPosition = Vector3.zero;
 			model.localRotation = Quaternion.identity;
 		}
@@ -155,12 +160,18 @@ namespace IslandMonkey
 		public void OnBuildingOutStateExit()
 		{
 			EnterBuilding(targetBuilding);
+			equipmentComponent.UnEquip();
+		}
+
+		public void OnBuildingEnter()
+		{
+			equipmentComponent.Equip(targetBuilding.Equipments);
 		}
 
 		/* Method */
 		void EnterBuilding(IBuilding inBuilding)
 		{
-			monkeyAnimator.SetAnimatorController(inBuilding.AnimatorController);
+			buildingMonkeyAnimator.SetAnimatorController(inBuilding.AnimatorController);
 			MoveToGoal(inBuilding.Entrance);
 		}
 
@@ -170,10 +181,10 @@ namespace IslandMonkey
 
 			agent.SetDestination(goal.position);
 
-			if (monkeyAnimator)
+			if (buildingMonkeyAnimator)
 			{
-				monkeyAnimator.Walk();
-				monkeyAnimator.SyncAnimationWithSpeed(agent.speed, walkSpeedFactor);
+				buildingMonkeyAnimator.Walk();
+				buildingMonkeyAnimator.SyncAnimationWithSpeed(agent.speed, walkSpeedFactor);
 			}
 
 			checkRemainingDistanceCoroutine ??= StartCoroutine(CheckRemainingDistance());
