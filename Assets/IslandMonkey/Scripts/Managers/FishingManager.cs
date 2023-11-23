@@ -63,8 +63,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 				case 3:
 					Debug.Log("잡았다!");
 					fa.succeed = true;
-					fa.PlayNextAnimation();
-					//VoyageUIManager.Show<ClamPopup>();
+					fa.PlayAndShowPopup();
 					break;
 				case 4:
 					Debug.Log("시간초과");

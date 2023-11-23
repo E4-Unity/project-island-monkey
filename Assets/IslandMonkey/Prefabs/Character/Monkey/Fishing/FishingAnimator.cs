@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace IslandMonkey
@@ -31,6 +32,23 @@ namespace IslandMonkey
 		{
 			_animator.SetTrigger(_hashNext);
 			_animator.SetBool(_hashSucceed, _succeed);
+		}
+
+		public void PlayAndShowPopup()
+		{
+			_animator.SetTrigger(_hashNext);
+			_animator.SetBool(_hashSucceed, _succeed);
+
+			StartCoroutine(WaitforAnimation());
+		}
+
+		IEnumerator WaitforAnimation()
+		{
+			while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("AS_Monkey_Fishing_Stand"))
+			{
+				yield return null;
+			}
+			VoyageUIManager.Show<ClamPopup>();
 		}
 	}
 }
