@@ -12,6 +12,7 @@ namespace IslandMonkey
 		void Awake()
 		{
 			goodsManager = GetComponent<GoodsManager>();
+			DontDestroyOnLoad(gameObject);
 		}
 	}
 }
