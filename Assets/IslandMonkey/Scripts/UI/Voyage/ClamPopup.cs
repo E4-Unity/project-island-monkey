@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using IslandMonkey;
 
 public class ClamPopup : Popup
 {
@@ -22,6 +23,8 @@ public class ClamPopup : Popup
 	float randNum = 0;
 	int clamNum;
 	Dictionary<int, float> clamPercent;
+
+	[SerializeField] GoodsManager goodsManager;
 
 	public override void Initialize()
 	{
@@ -43,14 +46,18 @@ public class ClamPopup : Popup
 		}
 
 		//획득하기 버튼
-		GetButton.onClick.AddListener(() => VoyageUIManager.Hide());
+		GetButton.onClick.AddListener(() => {
+			VoyageUIManager.Hide();
+			goodsManager.EarnGoods(GoodsType.Clam, clamNum*2 + 1);
+		});
 	}
 
 	public override void Show()
 	{
 		base.Show();
 		clamNum = PickClam();
-		if(clamNum >= 0 )
+		
+		if (clamNum >= 0)
 		{
 			Debug.Log("난수 : " + randNum);
 			clamText.text = GradeText[clamNum];
@@ -58,6 +65,7 @@ public class ClamPopup : Popup
 		}
 		else
 		{
+			Debug.Log("Clam number :" + clamNum);
 			Debug.Log("잘못된 난수 :" + randNum);
 		}
 		
@@ -66,6 +74,7 @@ public class ClamPopup : Popup
 	private int PickClam()
 	{
 		randNum = Random.Range(0, 100);
+		randNum = 22;
 		foreach(int key in clamPercent.Keys)
 		{
 			if(randNum < clamPercent[key])

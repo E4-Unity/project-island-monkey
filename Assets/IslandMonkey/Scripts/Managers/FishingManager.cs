@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using IslandMonkey;
 
 public class FishingManager : MonoBehaviour, IPointerClickHandler
 {
 	[SerializeField] Transform fishingPos;
 	[SerializeField] GameObject catchSign;
+	[SerializeField] FishingAnimator fishingAnimator;
 	List<Transform> posList = new List<Transform>() ; //낚시 찌를 던질 위치
 
 	bool isFishing = false; //낚시 상태
@@ -39,6 +41,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		//낚시 중이면 찌 꺼내기
 		if(isFishing)
 		{
+			fishingAnimator.PlayNextAnimation();
 			Debug.Log("(찌 들어올림)");
 			if(sign)
 			{
@@ -59,16 +62,19 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 					break;
 				case 3:
 					Debug.Log("잡았다!");
-					VoyageUIManager.Show<ClamPopup>();
+					fishingAnimator.succeed = true;
+					fishingAnimator.PlayAndShowPopup();
 					break;
 				case 4:
 					Debug.Log("시간초과");
 					break;
 			}
-				
+
 		}
 		else //찌 던지기
 		{
+			fishingAnimator.PlayNextAnimation();
+			fishingAnimator.succeed = false;
 			SetFishingPoint();
 			isFishing = true;
 			fishCoroutine = StartCoroutine(Fishing());
@@ -103,12 +109,12 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			//잡은 표시 이미지, '!'이미지 또는 파동으로 대체
 			sign = Instantiate(catchSign);
 			sign.transform.position = posList[fishingPoint].position;
-			
+
 
 			//조개가 도망감
 			yield return new WaitForSeconds(validTime);
 			Debug.Log("조개가 도망갔다.");
-			
+			fishingAnimator.succeed = false;
 			fishStatus = 2;
 
 			yield return new WaitForSeconds(overTime);
