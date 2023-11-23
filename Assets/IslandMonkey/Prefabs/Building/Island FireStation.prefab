@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1432022006369497620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8775508239929067869}
+  m_Layer: 0
+  m_Name: FireStation Entrance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8775508239929067869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432022006369497620}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.175, y: 0.02, z: 0.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 203775598739730429}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &2017398892204093332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,7 +96,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1814046066447827049, guid: aa2a8f8d74f945f4bb598e7a951a13ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8775508239929067869}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8856786422368604479, guid: aa2a8f8d74f945f4bb598e7a951a13ad,
         type: 3}
@@ -96,5 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1b05fc26b261d4f8d9f573ec942af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entrance: {fileID: 203775598739730429}
+  entrance: {fileID: 8775508239929067869}
   animatorController: {fileID: 22100000, guid: 3a811aaa48a9f9d4a99e028e45c7a8cd, type: 2}
+  equipmentSet:
+    RightHandEquipment: {fileID: 0}
+    LeftHandEquipment: {fileID: 0}
+    NeckEquipment: {fileID: 0}
+    LeftFootEquipment: {fileID: 0}
+    RightFootEquipment: {fileID: 0}
