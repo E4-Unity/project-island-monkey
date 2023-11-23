@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
@@ -12,7 +13,7 @@ public class CutsceneController : MonoBehaviour
 	[SerializeField] private float cutsceneDuration = 1f; // 각 컷신이 표시되는 시간
 	[SerializeField] private Transform smallCircle; // 원 UI의 Transform 컴포넌트
 	[SerializeField] private Camera cutsceneCamera; // 컷신용 카메라에 대한 참조
-	[SerializeField] private UnityEvent cutSceneEnd;
+	public event Action OnCutSceneEnd;
 
 	void OnEnable()
 	{
@@ -39,7 +40,10 @@ public class CutsceneController : MonoBehaviour
 		cutsceneCamera.orthographicSize = 1; // Orthographic Size를 1로 설정
 		smallCircle.gameObject.SetActive(true); // 원 UI 활성화
 		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.zero, Vector3.one, 0.5f)); // 커지는 연출
-		Invoke("CutSceneEnd", 0.5f);
+
+		// 캐릭터 등장 연출
+		OnCutSceneEnd?.Invoke();
+
 		yield return new WaitForSeconds(5f); // 5초 동안 유지
 		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.one, Vector3.zero, 0.5f)); // 작아지는 연출
 		smallCircle.gameObject.SetActive(false); // 원 UI 비활성화
@@ -85,10 +89,4 @@ public class CutsceneController : MonoBehaviour
 			yield return null;
 		}
 	}
-
-	void CutSceneEnd()
-	{
-		cutSceneEnd.Invoke();
-	}
-
 }

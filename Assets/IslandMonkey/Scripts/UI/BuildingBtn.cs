@@ -24,7 +24,7 @@ public class BuildingBtn : MonoBehaviour
 	[SerializeField] private List<Button> buildingButtons; // 건물 버튼 리스트
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
 	[SerializeField] private List<int> payGoldList; // 건물 건설에 필요한 골드 리스트
-	[SerializeField] private GameObject showcaseMonkeyPrefab; // 원숭이 프리팹
+	[SerializeField] private ShowcaseMonkey showcaseMonkeyPrefab; // 원숭이 프리팹
 	[SerializeField] private GameObject buildingMonkeyPrefab; // 원숭이 프리팹
 	private GameObject spawnedMonkey; // 활성화될 원숭이 오브젝트
 	private GameObject buildingMonkey;
@@ -36,17 +36,47 @@ public class BuildingBtn : MonoBehaviour
 
 	private List<BuildingData> buildings = new List<BuildingData>(); // 건물 정보 리스트
 
+	// 캐릭터 등장 연출
+	ShowcaseMonkey showcaseMonkey;
+	CutsceneController cutsceneController;
+
 	void Start()
 	{
 		LoadBuildingData(); // 저장된 건물 데이터 불러오기
-		spawnedMonkey = Instantiate(showcaseMonkeyPrefab, new Vector3(0, -0.025f, -1), Quaternion.Euler(0, 180, 0)); // 원숭이 생성 및 회전
+
+		// 원숭이 생성 및 초기화
+		showcaseMonkey = Instantiate(showcaseMonkeyPrefab, new Vector3(0, -0.025f, -1), Quaternion.Euler(0, 180, 0)); // 원숭이 생성 및 회전
+		spawnedMonkey = showcaseMonkey.gameObject;
 		spawnedMonkey.SetActive(false); // 처음에는 원숭이를 비활성화
+
+		// 이벤트 바인딩
+		cutsceneController = getAnimalPanel.GetComponent<CutsceneController>();
+		if (showcaseMonkey && cutsceneController)
+		{
+			cutsceneController.OnCutSceneEnd += OnCutSceneEnd_Event;
+		}
 
 		for (int i = 0; i < buildingButtons.Count; i++)
 		{
 			int index = i;
 			buildingButtons[i].onClick.AddListener(() => OnBuildingButtonClicked(index));
 		}
+	}
+
+	void OnCutSceneEnd_Event()
+	{
+		showcaseMonkey.ToggleAnimation();
+	}
+
+	void InitMonkey(Monkey monkey, MonkeyType monkeyType)
+	{
+		if (monkey is null) return;
+
+		monkey.ChangeSkin(monkeyType);
+
+#if UNITY_EDITOR
+		Debug.Log(monkey.name + " 스킨 변경 완료");
+#endif
 	}
 
 	private void OnBuildingButtonClicked(int buttonIndex)
@@ -89,47 +119,36 @@ public class BuildingBtn : MonoBehaviour
 		// 원숭이 오브젝트를 활성화하고 위치를 설정합니다.
 		buildingMonkey = Instantiate(buildingMonkeyPrefab, placementManager.GetLastSpawnedBuildingPosition(), Quaternion.identity);
 
-		// 원숭이 스킨 컨트롤러에 접근합니다.
-		var skinController = buildingMonkey.GetComponent<MonkeySkinController>();
-		if (skinController != null)
+		// 원숭이 초기화
+		// 원숭이 스킨을 변경하고 저장합니다.
+		MonkeyType selectedType = MonkeyType.Basic; // 기본값 설정
+		switch (buttonIndex)
 		{
-			// 원숭이 스킨을 변경하고 저장합니다.
-			MonkeyType selectedType = MonkeyType.Basic; // 기본값 설정
-			switch (buttonIndex)
-			{
-				case 0:
-					selectedType = MonkeyType.Basic;
-					break;
-				case 4:
-					selectedType = MonkeyType.Barista;
-					break;
-				case 6:
-					selectedType = MonkeyType.Boss;
-					break;
-			}
-
-			Debug.Log("스킨 변경 시도: " + selectedType.ToString());
-
-			skinController.ChangeSkin(selectedType);
-
-			Debug.Log("스킨 변경 완료");
-
-			var buildingData = new BuildingData()
-			{
-				buildingIndex = buttonIndex,
-				position = placementManager.GetLastSpawnedBuildingPosition(),
-				isCompleted = true,
-				monkeyType = (int)selectedType,
-				hasMonkey = true // 원숭이가 있음을 나타내는 플래그 설정
-			};
-			buildings.Add(buildingData);
-			SaveBuildingData(); // 변경된 데이터 저장
-		}
-		else
-		{
-			Debug.LogError("스폰된 몽키에 몽키 컨트롤러가 없습니다.");
+			case 0:
+				selectedType = MonkeyType.Basic;
+				break;
+			case 4:
+				selectedType = MonkeyType.Barista;
+				break;
+			case 6:
+				selectedType = MonkeyType.Boss;
+				break;
 		}
 
+		Debug.Log("스킨 변경 시도: " + selectedType.ToString());
+		InitMonkey(showcaseMonkey, selectedType);
+		InitMonkey(buildingMonkey.GetComponent<Monkey>(), selectedType);
+
+		var buildingData = new BuildingData()
+		{
+			buildingIndex = buttonIndex,
+			position = placementManager.GetLastSpawnedBuildingPosition(),
+			isCompleted = true,
+			monkeyType = (int)selectedType,
+			hasMonkey = true // 원숭이가 있음을 나타내는 플래그 설정
+		};
+		buildings.Add(buildingData);
+		SaveBuildingData(); // 변경된 데이터 저장
 
 		yield return new WaitForSeconds(10f); // 연출 지연
 
