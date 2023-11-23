@@ -13,7 +13,9 @@ public class BuildingData
 	public int buildingIndex; // 건물의 인덱스
 	public Vector3 position; // 건물의 위치
 	public bool isCompleted; // 건물이 완성되었는지 여부
-							 // 필요한 추가 정보를 여기에 추가
+	public int monkeyType; // 몽키 타입 정보
+	public bool hasMonkey; // 원숭이 생성 여부를 나타내는 새로운 필드
+						   // 필요한 추가 정보를 여기에 추가
 }
 
 
@@ -22,8 +24,10 @@ public class BuildingBtn : MonoBehaviour
 	[SerializeField] private List<Button> buildingButtons; // 건물 버튼 리스트
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
 	[SerializeField] private List<int> payGoldList; // 건물 건설에 필요한 골드 리스트
-	[SerializeField] private GameObject monkeyPrefab; // 원숭이 프리팹
+	[SerializeField] private GameObject showcaseMonkeyPrefab; // 원숭이 프리팹
+	[SerializeField] private GameObject buildingMonkeyPrefab; // 원숭이 프리팹
 	private GameObject spawnedMonkey; // 활성화될 원숭이 오브젝트
+	private GameObject buildingMonkey;
 
 	public HexagonalPlacementManager placementManager; // 헥사곤 배치 매니저
 
@@ -35,7 +39,7 @@ public class BuildingBtn : MonoBehaviour
 	void Start()
 	{
 		LoadBuildingData(); // 저장된 건물 데이터 불러오기
-		spawnedMonkey = Instantiate(monkeyPrefab, new Vector3(0, -0.025f, -1), Quaternion.Euler(0, 180, 0)); // 원숭이 생성 및 회전
+		spawnedMonkey = Instantiate(showcaseMonkeyPrefab, new Vector3(0, -0.025f, -1), Quaternion.Euler(0, 180, 0)); // 원숭이 생성 및 회전
 		spawnedMonkey.SetActive(false); // 처음에는 원숭이를 비활성화
 
 		for (int i = 0; i < buildingButtons.Count; i++)
@@ -82,31 +86,50 @@ public class BuildingBtn : MonoBehaviour
 
 		// 원숭이 오브젝트를 활성화합니다.
 		spawnedMonkey.SetActive(true);
+		// 원숭이 오브젝트를 활성화하고 위치를 설정합니다.
+		buildingMonkey = Instantiate(buildingMonkeyPrefab, placementManager.GetLastSpawnedBuildingPosition(), Quaternion.identity);
 
 		// 원숭이 스킨 컨트롤러에 접근합니다.
-		var skinController = spawnedMonkey.GetComponent<MonkeySkinController>();
+		var skinController = buildingMonkey.GetComponent<MonkeySkinController>();
 		if (skinController != null)
 		{
-			// 원숭이 스킨을 변경합니다.
+			// 원숭이 스킨을 변경하고 저장합니다.
+			MonkeyType selectedType = MonkeyType.Basic; // 기본값 설정
 			switch (buttonIndex)
 			{
 				case 0:
-					skinController.ChangeSkin(MonkeyType.Basic);
+					selectedType = MonkeyType.Basic;
 					break;
 				case 4:
-					skinController.ChangeSkin(MonkeyType.Barista);
+					selectedType = MonkeyType.Barista;
 					break;
 				case 6:
-					skinController.ChangeSkin(MonkeyType.BuildingOwner);
+					selectedType = MonkeyType.Boss;
 					break;
 			}
+
+			Debug.Log("스킨 변경 시도: " + selectedType.ToString());
+
+			skinController.ChangeSkin(selectedType);
+
+			Debug.Log("스킨 변경 완료");
+
+			var buildingData = new BuildingData()
+			{
+				buildingIndex = buttonIndex,
+				position = placementManager.GetLastSpawnedBuildingPosition(),
+				isCompleted = true,
+				monkeyType = (int)selectedType,
+				hasMonkey = true // 원숭이가 있음을 나타내는 플래그 설정
+			};
+			buildings.Add(buildingData);
+			SaveBuildingData(); // 변경된 데이터 저장
 		}
 		else
 		{
-			Debug.LogError("Spawned monkey does not have a MonkeySkinController component attached.");
+			Debug.LogError("스폰된 몽키에 몽키 컨트롤러가 없습니다.");
 		}
 
-		
 
 		yield return new WaitForSeconds(10f); // 연출 지연
 
@@ -114,13 +137,23 @@ public class BuildingBtn : MonoBehaviour
 		spawnedMonkey.SetActive(false); // 원숭이 비활성화
 
 		SpawnBuildingAndSaveData(buttonIndex); // 건물 건설 및 데이터 저장
-		SceneManager.LoadScene("SampleScene"); // 샘플 씬 로드
+		SceneManager.LoadScene("VoyageTest"); // 샘플 씬 로드
 	}
 
 	private void SpawnBuildingWithoutSequence(int buttonIndex)
 	{
 		buildingPanel.SetActive(false);
 		SpawnBuildingAndSaveData(buttonIndex);
+
+		var buildingData = new BuildingData()
+		{
+			buildingIndex = buttonIndex,
+			position = placementManager.GetLastSpawnedBuildingPosition(),
+			isCompleted = true,
+			hasMonkey = false // 원숭이가 없음을 나타내는 플래그 설정
+		};
+		buildings.Add(buildingData);
+		SaveBuildingData(); // 변경된 데이터 저장
 	}
 
 	private void SpawnBuildingAndSaveData(int buttonIndex)
@@ -166,31 +199,52 @@ public class BuildingBtn : MonoBehaviour
 	private void LoadBuildingData()
 	{
 		DataManager.Instance.LoadBuildingData();
-		buildings = DataManager.Instance.Buildings; // DataManager에서 로드한 데이터로 buildings 리스트 갱신
+		buildings = DataManager.Instance.Buildings;
 
 		foreach (var building in buildings)
 		{
-			// 건물 오브젝트를 생성합니다.
-			GameObject buildingPrefab = placementManager.GetBuildingPrefab(building.buildingIndex);
-			if (buildingPrefab != null)
+			// 건물이 이미 씬에 존재하는지 확인합니다.
+			if (!IsBuildingSpawned(building))
 			{
-				Instantiate(buildingPrefab, building.position, Quaternion.identity);
-			}
+				GameObject buildingPrefab = placementManager.GetBuildingPrefab(building.buildingIndex);
+				if (buildingPrefab != null)
+				{
+					Instantiate(buildingPrefab, building.position, Quaternion.identity);
 
-			// 건물의 UI 상태를 복원합니다.
-			buildingButtons[building.buildingIndex].gameObject.SetActive(!building.isCompleted);
-			if (building.isCompleted && building.buildingIndex < finList.Count)
-			{
-				finList[building.buildingIndex].SetActive(true);
+					// 원숭이 생성 여부를 확인합니다.
+					if (building.hasMonkey)
+					{
+						var monkeyInstance = Instantiate(buildingMonkeyPrefab, building.position, Quaternion.identity);
+						var skinController = monkeyInstance.GetComponent<MonkeySkinController>();
+						if (skinController != null)
+						{
+							skinController.ChangeSkin((MonkeyType)building.monkeyType);
+						}
+					}
+				}
 			}
 		}
+
+	}
+
+	// 건물이 이미 씬에 존재하는지 확인하는 메서드입니다.
+	private bool IsBuildingSpawned(BuildingData buildingData)
+	{
+		foreach (var existingBuilding in FindObjectsOfType<Building>())
+		{
+			if ((existingBuilding.transform.position - buildingData.position).sqrMagnitude < 0.1f)
+			{
+				return true; // 이미 존재하는 건물이 있음
+			}
+		}
+		return false; // 씬에 건물이 존재하지 않음
 	}
 
 	private void DeleteBuildingData()
 	{
 		DataManager.Instance.DeleteBuildingData();
 		// Buildings 리스트를 클리어합니다.
-		
+
 		string filePath = Path.Combine(Application.persistentDataPath, "buildingData.json");
 		if (File.Exists(filePath))
 		{
