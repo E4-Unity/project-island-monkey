@@ -8,7 +8,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 {
 	[SerializeField] Transform fishingPos;
 	[SerializeField] GameObject catchSign;
-	[SerializeField] FishingAnimator fa;
+	[SerializeField] FishingAnimator fishingAnimator;
 	List<Transform> posList = new List<Transform>() ; //낚시 찌를 던질 위치
 
 	bool isFishing = false; //낚시 상태
@@ -41,7 +41,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		//낚시 중이면 찌 꺼내기
 		if(isFishing)
 		{
-			fa.PlayNextAnimation();
+			fishingAnimator.PlayNextAnimation();
 			Debug.Log("(찌 들어올림)");
 			if(sign)
 			{
@@ -62,8 +62,8 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 					break;
 				case 3:
 					Debug.Log("잡았다!");
-					fa.succeed = true;
-					fa.PlayAndShowPopup();
+					fishingAnimator.succeed = true;
+					fishingAnimator.PlayAndShowPopup();
 					break;
 				case 4:
 					Debug.Log("시간초과");
@@ -73,8 +73,8 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		}
 		else //찌 던지기
 		{
-			fa.PlayNextAnimation();
-			fa.succeed = false;
+			fishingAnimator.PlayNextAnimation();
+			fishingAnimator.succeed = false;
 			SetFishingPoint();
 			isFishing = true;
 			fishCoroutine = StartCoroutine(Fishing());
@@ -114,7 +114,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			//조개가 도망감
 			yield return new WaitForSeconds(validTime);
 			Debug.Log("조개가 도망갔다.");
-			fa.succeed = false;
+			fishingAnimator.succeed = false;
 			fishStatus = 2;
 
 			yield return new WaitForSeconds(overTime);

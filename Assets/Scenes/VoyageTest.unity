@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 87076931}
   - component: {fileID: 87076930}
   m_Layer: 5
-  m_Name: Shellfish
+  m_Name: Clam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 154805266}
   - component: {fileID: 154805265}
   m_Layer: 5
-  m_Name: Shellfish Text
+  m_Name: Clam Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2589,6 +2589,7 @@ MonoBehaviour:
   - 60
   - 30
   - 10
+  goodsManager: {fileID: 750530591}
 --- !u!1 &576577325
 GameObject:
   m_ObjectHideFlags: 0
@@ -2953,6 +2954,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &750530591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6815815535034134676, guid: fb7fba05883264e41874ce04e8d80b96,
+    type: 3}
+  m_PrefabInstance: {fileID: 1288886808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74f55c6f1012aa40b7e43e66cb38a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &793872610
 GameObject:
   m_ObjectHideFlags: 0
@@ -4133,7 +4146,7 @@ GameObject:
   - component: {fileID: 1214358635}
   - component: {fileID: 1214358634}
   m_Layer: 5
-  m_Name: Shellfish UI
+  m_Name: Clam UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4460,6 +4473,75 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &1288886808
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3129154883867649194, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_Name
+      value: Global Game Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5260755054875341029, guid: fb7fba05883264e41874ce04e8d80b96,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -2311227630915695460, guid: fb7fba05883264e41874ce04e8d80b96, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fb7fba05883264e41874ce04e8d80b96, type: 3}
 --- !u!1 &1340977270
 GameObject:
   m_ObjectHideFlags: 0
@@ -5241,6 +5323,7 @@ GameObject:
   - component: {fileID: 1637620140}
   - component: {fileID: 1637620142}
   - component: {fileID: 1637620141}
+  - component: {fileID: 1637620143}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -5305,6 +5388,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1637620139}
   m_CullTransparentMesh: 1
+--- !u!114 &1637620143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637620139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1637620141}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1703639666}
+        m_TargetAssemblyTypeName: VoyageManager, Assembly-CSharp
+        m_MethodName: LoadMainScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1642047284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5439,6 +5578,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1703639663}
   - component: {fileID: 1703639664}
+  - component: {fileID: 1703639665}
+  - component: {fileID: 1703639666}
   m_Layer: 0
   m_Name: VoyageManager
   m_TagString: Untagged
@@ -5477,7 +5618,34 @@ MonoBehaviour:
   - {fileID: 2049204176}
   - {fileID: 542896292}
   cancelPanel: {fileID: 133948958}
-  currentPopup: {fileID: 0}
+--- !u!114 &1703639665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703639662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d120e0919cf217a4086e1572ba914051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 750530591}
+  goldText: {fileID: 0}
+  bananaText: {fileID: 0}
+  clamText: {fileID: 154805265}
+--- !u!114 &1703639666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703639662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc2a3401751ce14793aee99409421c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1706008252
 GameObject:
   m_ObjectHideFlags: 0
@@ -5644,7 +5812,7 @@ MonoBehaviour:
   fishingPos: {fileID: 658109909}
   catchSign: {fileID: 1860191881075394391, guid: f5964ee5cedffef4083f72ccde9c357d,
     type: 3}
-  fa: {fileID: 6761447776717612143}
+  fishingAnimator: {fileID: 6761447776717612143}
 --- !u!1 &1852194128
 GameObject:
   m_ObjectHideFlags: 0
@@ -6687,3 +6855,4 @@ SceneRoots:
   - {fileID: 732743673}
   - {fileID: 793872612}
   - {fileID: 658109909}
+  - {fileID: 1288886808}

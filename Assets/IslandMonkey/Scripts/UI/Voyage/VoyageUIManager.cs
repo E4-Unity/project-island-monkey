@@ -9,7 +9,7 @@ public class VoyageUIManager : MonoBehaviour
 	[SerializeField] private Popup[] popups; //팝업 목록
 	[SerializeField] private GameObject cancelPanel;
 
-	public Popup currentPopup; //화면에 보여지고 있는 팝업
+	Popup currentPopup; //화면에 보여지고 있는 팝업
 
 	public static T GetPopup<T>() where T : Popup
 	{
@@ -50,6 +50,8 @@ public class VoyageUIManager : MonoBehaviour
 			s_instance.currentPopup = null;
 		}
 	}
+
+
 
 	private void Awake()
 	{
