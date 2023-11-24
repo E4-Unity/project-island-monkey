@@ -1,20 +1,62 @@
+using System;
 using System.ComponentModel;
-using Assets._0_IslandMonkey.Scripts.Extension;
-using TMPro;
-using UnityEngine;
 
 namespace IslandMonkey.MVVM
 {
 	public class GoodsViewModel : ViewModel
 	{
-		[SerializeField] TextMeshProUGUI goldText;
-		[SerializeField] TextMeshProUGUI bananaText;
-		[SerializeField] TextMeshProUGUI clamText;
+		int gold;
+		int banana;
+		int clam;
+
+		public int Gold
+		{
+			get => gold;
+			private set
+			{
+				gold = value;
+				OnUpdated?.Invoke(GoodsType.Gold);
+			}
+		}
+
+		public int Banana
+		{
+			get => banana;
+			private set
+			{
+				banana = value;
+				OnUpdated?.Invoke(GoodsType.Banana);
+			}
+		}
+
+		public int Clam
+		{
+			get => clam;
+			private set
+			{
+				clam = value;
+				OnUpdated?.Invoke(GoodsType.Clam);
+			}
+		}
+
+		/* 이벤트 */
+		public event Action<GoodsType> OnUpdated;
 
 		void Start()
 		{
 			var model = GlobalGameManager.Instance.GetGoodsManager();
-			Init(model);
+			if (model)
+			{
+				Init(model);
+				Fetch(model);
+			}
+		}
+
+		void Fetch(object sender)
+		{
+			Fetch<int>(sender, nameof(Gold));
+			Fetch<int>(sender, nameof(Banana));
+			Fetch<int>(sender, nameof(Clam));
 		}
 
 		protected override void OnPropertyChanged_Event(object sender, PropertyChangedEventArgs e)
@@ -22,28 +64,16 @@ namespace IslandMonkey.MVVM
 			switch (e.PropertyName)
 			{
 				case "Gold":
-					if (!goldText) return;
+					Fetch<int>(sender, nameof(Gold));
 
-					if (GetProperty<int>(sender, e, out var gold))
-					{
-						goldText.SetText(gold.FormatLargeNumber());
-					}
 					break;
 				case "Banana":
-					if (!bananaText) return;
+					Fetch<int>(sender, nameof(Banana));
 
-					if (GetProperty<int>(sender, e, out var banana))
-					{
-						bananaText.SetText(banana.FormatLargeNumber());
-					}
 					break;
 				case "Clam":
-					if (!clamText) return;
+					Fetch<int>(sender, nameof(Clam));
 
-					if (GetProperty<int>(sender, e, out var clam))
-					{
-						clamText.SetText(clam.FormatLargeNumber());
-					}
 					break;
 			}
 		}

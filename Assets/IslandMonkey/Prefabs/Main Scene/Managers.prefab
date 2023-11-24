@@ -83,8 +83,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   payGoldList: f401000020030000d0070000a00f0000401f000010270000a0860100
-  monkeyPrefab: {fileID: 7499185100001276866, guid: c868981a8e29b5145bb0f09ca31fd673,
-    type: 3}
+  showcaseMonkeyPrefab: {fileID: 0}
+  buildingMonkeyPrefab: {fileID: 0}
   placementManager: {fileID: 2476973309707345441}
   getAnimalPanel: {fileID: 0}
   buildingPanel: {fileID: 0}
@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 3203049440667799180}
   - component: {fileID: 5737624286422769375}
   - component: {fileID: 1621909433594127035}
+  - component: {fileID: 2470021240266640277}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -552,7 +553,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d120e0919cf217a4086e1572ba914051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
+--- !u!114 &2470021240266640277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313534493197938262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70def77b915cecf44b0425efca435084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goodsViewModel: {fileID: 1621909433594127035}
   goldText: {fileID: 0}
   bananaText: {fileID: 0}
   clamText: {fileID: 0}

@@ -21,7 +21,9 @@ namespace IslandMonkey.MVVM
 		{
 			if (isInitialized)
 			{
+#if UNITY_EDITOR
 				Debug.LogWarning("이미 초기화된 상태입니다");
+#endif
 				return;
 			}
 
@@ -35,13 +37,11 @@ namespace IslandMonkey.MVVM
 		}
 
 		protected abstract void OnPropertyChanged_Event(object sender, PropertyChangedEventArgs e);
-		protected bool GetProperty<T>(object sender, PropertyChangedEventArgs e, out T value) where T : new()
+		static bool TryGetProperty<T>(object target, string propertyName, out PropertyInfo propertyInfo)
 		{
-			value = new T();
-
 			// Property Info 추출
-			var propertyInfo = sender.GetType().GetProperty(
-				e.PropertyName,
+			propertyInfo = target.GetType().GetProperty(
+				propertyName,
 				BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
 				null,
 				typeof(T),
@@ -49,10 +49,28 @@ namespace IslandMonkey.MVVM
 				null
 			);
 
-			if (propertyInfo is null) return false;
+			return propertyInfo is not null;
+		}
 
-			value = (T)propertyInfo.GetValue(sender);
-			return true;
+		protected void Fetch<T>(object sender, string propertyName) where T : new()
+		{
+			if (!TryGetProperty<T>(sender, propertyName, out var modelPropertyInfo))
+			{
+#if UNITY_EDITOR
+				Debug.LogWarning(sender + " : Property not found(" + propertyName + ")");
+#endif
+				return;
+			}
+
+			if (!TryGetProperty<T>(this, propertyName, out var viewModelPropertyInfo))
+			{
+#if UNITY_EDITOR
+				Debug.LogWarning(name + " : Property not found(" + propertyName + ")");
+#endif
+				return;
+			}
+
+			viewModelPropertyInfo.SetValue(this, modelPropertyInfo.GetValue(sender));
 		}
 	}
 }

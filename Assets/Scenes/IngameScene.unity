@@ -1806,6 +1806,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 2470021240266640277, guid: 018c06cf0c6f5a549b84c50024fd794d,
+        type: 3}
+      propertyPath: clamText
+      value: 
+      objectReference: {fileID: 1303532497}
+    - target: {fileID: 2470021240266640277, guid: 018c06cf0c6f5a549b84c50024fd794d,
+        type: 3}
+      propertyPath: goldText
+      value: 
+      objectReference: {fileID: 634683352}
+    - target: {fileID: 2470021240266640277, guid: 018c06cf0c6f5a549b84c50024fd794d,
+        type: 3}
+      propertyPath: bananaText
+      value: 
+      objectReference: {fileID: 221004029}
     - target: {fileID: 2476973309707345441, guid: 018c06cf0c6f5a549b84c50024fd794d,
         type: 3}
       propertyPath: _buildings.Array.data[0]
