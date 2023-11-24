@@ -47,13 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseDistance: 2
   _buildings:
-  - {fileID: 8856786422368604479, guid: aa2a8f8d74f945f4bb598e7a951a13ad, type: 3}
-  - {fileID: 5526271403094571826, guid: 89c861b060dbd8948b575cfe3cc088ba, type: 3}
-  - {fileID: 823367852935576257, guid: 3f0f2aac90b4c524cafee65172c2215c, type: 3}
-  - {fileID: 1839848740766678845, guid: d2f101252679ca44194fd3c2d84fa5ab, type: 3}
-  - {fileID: 8944466360679381165, guid: aca34ace4103beb48bba2ad1d7230554, type: 3}
-  - {fileID: 3838336924499406671, guid: 8b0a6ca31caf30e4a8df7b472954a852, type: 3}
-  - {fileID: 351353344735257160, guid: 8537c1798fbd3d347a479765399ea4f1, type: 3}
+  - {fileID: 6995952561956060843, guid: c062a79cde16879478db370f8aaced16, type: 3}
+  - {fileID: 2540479403802071824, guid: 63d93aa94686dd44384eba6ae7cfb476, type: 3}
+  - {fileID: 8673208496545699124, guid: f6e9a3ae556158f4f9ce892a00163c23, type: 3}
+  - {fileID: 6660878886936667017, guid: 2230b7fbf768fb5418d166f1e24b0402, type: 3}
+  - {fileID: 856035062903400266, guid: 6cb6290af01c9a64980b87f7c8f27eb9, type: 3}
+  - {fileID: 2823044316522827041, guid: 30a30ca300229a249887f02bdbffe0a1, type: 3}
+  - {fileID: 5105247033075119214, guid: 8baa28e1dddd89146872773b82f79929, type: 3}
 --- !u!114 &649933614904028653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,8 +83,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   payGoldList: f401000020030000d0070000a00f0000401f000010270000a0860100
-  showcaseMonkeyPrefab: {fileID: 0}
-  buildingMonkeyPrefab: {fileID: 0}
+  showcaseMonkeyPrefab: {fileID: 6071723936066587446, guid: c868981a8e29b5145bb0f09ca31fd673,
+    type: 3}
+  buildingMonkeyPrefab: {fileID: 2231438862682943507, guid: e3be94dc69834294583c4a7b3f94bb9b,
+    type: 3}
   placementManager: {fileID: 2476973309707345441}
   getAnimalPanel: {fileID: 0}
   buildingPanel: {fileID: 0}
@@ -190,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5377650579081790409}
   - component: {fileID: 176095503978777517}
+  - component: {fileID: 2853188327460441573}
   m_Layer: 0
   m_Name: MonkeyBankManager
   m_TagString: Untagged
@@ -224,6 +227,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b5077afb552e9469732f2abddbe034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2853188327460441573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477163671671021200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8196e939274ad054eb4467550367eb5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldText: {fileID: 0}
+  goldPopupText: {fileID: 0}
+  currentGold: 0
 --- !u!1 &5313534493197938262
 GameObject:
   m_ObjectHideFlags: 0
