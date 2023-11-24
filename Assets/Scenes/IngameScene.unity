@@ -8507,7 +8507,7 @@ PrefabInstance:
         type: 3}
       propertyPath: showcaseMonkeyPrefab
       value: 
-      objectReference: {fileID: 7499185100001276866, guid: c868981a8e29b5145bb0f09ca31fd673,
+      objectReference: {fileID: 6071723936066587446, guid: c868981a8e29b5145bb0f09ca31fd673,
         type: 3}
     - target: {fileID: 649933614904028653, guid: 018c06cf0c6f5a549b84c50024fd794d,
         type: 3}

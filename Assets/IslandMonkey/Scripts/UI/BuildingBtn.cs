@@ -34,7 +34,7 @@ public class BuildingBtn : MonoBehaviour
 	[SerializeField] private GameObject getAnimalPanel; // 동물 획득 UI 패널
 	[SerializeField] private GameObject buildingPanel; // 건물 UI 패널
 
-	private List<BuildingData> buildings = new List<BuildingData>(); // 건물 정보 리스트
+	List<BuildingData> buildings; // 건물 정보 리스트
 
 	// 캐릭터 등장 연출
 	ShowcaseMonkey showcaseMonkey;
@@ -63,6 +63,13 @@ public class BuildingBtn : MonoBehaviour
 		}
 	}
 
+	// TODO 나중에 index 캐싱
+	bool IsBuildingAlreadyExist(int index)
+	{
+		var existingData = buildings.Find(data => data.buildingIndex == index);
+		return existingData is not null;
+	}
+
 	void OnCutSceneEnd_Event()
 	{
 		showcaseMonkey.ToggleAnimation();
@@ -81,6 +88,13 @@ public class BuildingBtn : MonoBehaviour
 
 	private void OnBuildingButtonClicked(int buttonIndex)
 	{
+		// 이미 존재하는 건물은 건설하지 않음
+		if (IsBuildingAlreadyExist(buttonIndex))
+		{
+			Debug.LogWarning("이미 건설된 건물입니다 : " + buttonIndex);
+			return;
+		}
+
 		if (buttonIndex >= 0 && buttonIndex < payGoldList.Count)
 		{
 			int payGold = payGoldList[buttonIndex];
@@ -138,69 +152,50 @@ public class BuildingBtn : MonoBehaviour
 		Debug.Log("스킨 변경 시도: " + selectedType.ToString());
 		InitMonkey(showcaseMonkey, selectedType);
 		InitMonkey(buildingMonkey.GetComponent<Monkey>(), selectedType);
-
-		var buildingData = new BuildingData()
-		{
-			buildingIndex = buttonIndex,
-			position = placementManager.GetLastSpawnedBuildingPosition(),
-			isCompleted = true,
-			monkeyType = (int)selectedType,
-			hasMonkey = true // 원숭이가 있음을 나타내는 플래그 설정
-		};
-		buildings.Add(buildingData);
-		SaveBuildingData(); // 변경된 데이터 저장
+		SpawnBuildingAndSaveData(buttonIndex, (int)selectedType); // 건물 건설 및 데이터 저장
 
 		yield return new WaitForSeconds(10f); // 연출 지연
 
 		getAnimalPanel.SetActive(false);
 		spawnedMonkey.SetActive(false); // 원숭이 비활성화
 
-		SpawnBuildingAndSaveData(buttonIndex); // 건물 건설 및 데이터 저장
 		SceneManager.LoadScene("VoyageTest"); // 샘플 씬 로드
 	}
 
 	private void SpawnBuildingWithoutSequence(int buttonIndex)
 	{
-		buildingPanel.SetActive(false);
+		buildingPanel.SetActive(false); // TODO 필요한가?
 		SpawnBuildingAndSaveData(buttonIndex);
-
-		var buildingData = new BuildingData()
-		{
-			buildingIndex = buttonIndex,
-			position = placementManager.GetLastSpawnedBuildingPosition(),
-			isCompleted = true,
-			hasMonkey = false // 원숭이가 없음을 나타내는 플래그 설정
-		};
-		buildings.Add(buildingData);
-		SaveBuildingData(); // 변경된 데이터 저장
 	}
 
-	private void SpawnBuildingAndSaveData(int buttonIndex)
+	private void SpawnBuildingAndSaveData(int buttonIndex, int monkeyType = -1)
 	{
-		if (placementManager != null)
-		{
-			placementManager.SpawnBuilding(buttonIndex);
-			Vector3 buildingPosition = placementManager.GetLastSpawnedBuildingPosition();
+		// 유효성 검사
+		if (placementManager is null) return;
 
-			// 현재 인덱스에 해당하는 기존의 데이터를 찾아서 업데이트하거나 새로 추가합니다.
-			var existingData = buildings.Find(data => data.buildingIndex == buttonIndex);
-			if (existingData != null)
-			{
-				existingData.position = buildingPosition; // 위치 업데이트
-				existingData.isCompleted = true; // 완성 상태 업데이트
-			}
-			else
-			{
-				buildings.Add(new BuildingData()
-				{
-					buildingIndex = buttonIndex,
-					position = buildingPosition,
-					isCompleted = true
-				});
-			}
-			UpdateBuildingUI(buttonIndex);
-			SaveBuildingData(); // 데이터 JSON으로 저장
+		// 건설되지 않은 경우에만 실행
+		if (IsBuildingAlreadyExist(buttonIndex)) return;
+
+		placementManager.SpawnBuilding(buttonIndex);
+		Vector3 buildingPosition = placementManager.GetLastSpawnedBuildingPosition();
+
+		var newBuildingData = new BuildingData()
+		{
+			buildingIndex = buttonIndex,
+			position = buildingPosition,
+			isCompleted = true
+		};
+
+		if (monkeyType != -1)
+		{
+			newBuildingData.hasMonkey = true;
+			newBuildingData.monkeyType = monkeyType;
 		}
+
+		buildings.Add(newBuildingData);
+		SaveBuildingData(); // 데이터 JSON으로 저장
+
+		UpdateBuildingUI(buttonIndex);
 	}
 
 	private void UpdateBuildingUI(int buttonIndex)
