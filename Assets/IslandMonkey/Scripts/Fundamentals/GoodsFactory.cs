@@ -11,7 +11,7 @@ public class GoodsFactory : MonoBehaviour
 
 	void Awake()
 	{
-		gameManager = GameManager.instance;
+		gameManager = GameManager.Instance;
 	}
 
 	protected void EarnGoods()

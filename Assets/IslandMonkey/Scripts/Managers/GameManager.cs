@@ -1,12 +1,13 @@
+using E4.Utility;
 using IslandMonkey;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : GenericMonoSingleton<GameManager>
 {
 	GoodsManager goodsManager;
 
-	void Awake()
+	void Start()
 	{
-		goodsManager = GlobalGameManager.instance.GetGoodsManager();
+		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 	}
 
 	public void EarnGoods(GoodsType goodsType, int amount) => goodsManager.EarnGoods(goodsType, in amount);

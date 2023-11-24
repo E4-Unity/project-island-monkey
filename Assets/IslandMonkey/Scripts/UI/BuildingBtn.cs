@@ -98,7 +98,7 @@ public class BuildingBtn : MonoBehaviour
 		if (buttonIndex >= 0 && buttonIndex < payGoldList.Count)
 		{
 			int payGold = payGoldList[buttonIndex];
-			GoodsManager goodsManager = GlobalGameManager.instance.GetGoodsManager();
+			GoodsManager goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 
 			if (goodsManager.CanSpend(GoodsType.Gold, payGold))
 			{
@@ -307,6 +307,6 @@ public class BuildingBtn : MonoBehaviour
 
 
 
-	bool CanSpendGold(in int amount) => GameManager.instance.CanSpend(GoodsType.Gold, amount);
-	void SpendGold(in int amount) => GameManager.instance.SpendGoods(GoodsType.Gold, amount);
+	bool CanSpendGold(in int amount) => GameManager.Instance.CanSpend(GoodsType.Gold, amount);
+	void SpendGold(in int amount) => GameManager.Instance.SpendGoods(GoodsType.Gold, amount);
 }

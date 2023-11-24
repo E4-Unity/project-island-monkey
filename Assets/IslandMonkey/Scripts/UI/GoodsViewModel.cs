@@ -11,6 +11,12 @@ namespace IslandMonkey.MVVM
 		[SerializeField] TextMeshProUGUI bananaText;
 		[SerializeField] TextMeshProUGUI clamText;
 
+		void Start()
+		{
+			var model = GlobalGameManager.Instance.GetGoodsManager();
+			Init(model);
+		}
+
 		protected override void OnPropertyChanged_Event(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
