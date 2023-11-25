@@ -4,51 +4,48 @@ using UnityEngine;
 
 namespace IslandMonkey.MVVM
 {
-	public class GoodsView : MonoBehaviour
+	public class GoodsView : View
 	{
-		[SerializeField] GoodsViewModel goodsViewModel;
 		[SerializeField] TextMeshProUGUI goldText;
 		[SerializeField] TextMeshProUGUI bananaText;
 		[SerializeField] TextMeshProUGUI clamText;
 
-		void Start()
+		int gold;
+		int banana;
+		int clam;
+
+		public int Gold
 		{
-			if (goodsViewModel)
+			set
 			{
-				goodsViewModel.OnUpdated += OnUpdated_Event;
-				Fetch();
+				if(goldText)
+					goldText.SetText(value.FormatLargeNumber());
 			}
 		}
 
-		void OnDestroy()
+		public int Banana
 		{
-			if(goodsViewModel) goodsViewModel.OnUpdated -= OnUpdated_Event;
-		}
-
-		void Fetch()
-		{
-			OnUpdated_Event(GoodsType.Gold);
-			OnUpdated_Event(GoodsType.Banana);
-			OnUpdated_Event(GoodsType.Clam);
-		}
-
-		void OnUpdated_Event(GoodsType goodsType)
-		{
-			switch (goodsType)
+			set
 			{
-				case GoodsType.Gold:
-					if(goldText)
-						goldText.SetText(goodsViewModel.Gold.FormatLargeNumber());
-					break;
-				case GoodsType.Banana:
-					if(bananaText)
-						bananaText.SetText(goodsViewModel.Banana.FormatLargeNumber());
-					break;
-				case GoodsType.Clam:
-					if(clamText)
-						clamText.SetText(goodsViewModel.Clam.FormatLargeNumber());
-					break;
+				if(bananaText)
+					bananaText.SetText(value.FormatLargeNumber());
 			}
+		}
+
+		public int Clam
+		{
+			set
+			{
+				if(clamText)
+					clamText.SetText(value.FormatLargeNumber());
+			}
+		}
+
+		protected override void RegisterProperties()
+		{
+			RegisterProperty(nameof(Gold));
+			RegisterProperty(nameof(Banana));
+			RegisterProperty(nameof(Clam));
 		}
 	}
 }

@@ -83,8 +83,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   payGoldList: f401000020030000d0070000a00f0000401f000010270000a0860100
-  showcaseMonkeyPrefab: {fileID: 6071723936066587446, guid: c868981a8e29b5145bb0f09ca31fd673,
-    type: 3}
+  showcaseMonkey: {fileID: 0}
   buildingMonkeyPrefab: {fileID: 2231438862682943507, guid: e3be94dc69834294583c4a7b3f94bb9b,
     type: 3}
   placementManager: {fileID: 2476973309707345441}
@@ -583,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70def77b915cecf44b0425efca435084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goodsViewModel: {fileID: 1621909433594127035}
+  viewModel: {fileID: 1621909433594127035}
   goldText: {fileID: 0}
   bananaText: {fileID: 0}
   clamText: {fileID: 0}
