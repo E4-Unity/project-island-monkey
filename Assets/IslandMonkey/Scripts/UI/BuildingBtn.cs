@@ -24,9 +24,8 @@ public class BuildingBtn : MonoBehaviour
 	[SerializeField] private List<Button> buildingButtons; // 건물 버튼 리스트
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
 	[SerializeField] private List<int> payGoldList; // 건물 건설에 필요한 골드 리스트
-	[SerializeField] private ShowcaseMonkey showcaseMonkeyPrefab; // 원숭이 프리팹
+	[SerializeField] private ShowcaseMonkey showcaseMonkey; // 연출용 원숭이 프리팹
 	[SerializeField] private GameObject buildingMonkeyPrefab; // 원숭이 프리팹
-	private GameObject spawnedMonkey; // 활성화될 원숭이 오브젝트
 	private GameObject buildingMonkey;
 
 	public HexagonalPlacementManager placementManager; // 헥사곤 배치 매니저
@@ -37,17 +36,11 @@ public class BuildingBtn : MonoBehaviour
 	List<BuildingData> buildings; // 건물 정보 리스트
 
 	// 캐릭터 등장 연출
-	ShowcaseMonkey showcaseMonkey;
 	CutsceneController cutsceneController;
 
 	void Start()
 	{
 		LoadBuildingData(); // 저장된 건물 데이터 불러오기
-
-		// 원숭이 생성 및 초기화
-		showcaseMonkey = Instantiate(showcaseMonkeyPrefab, new Vector3(0, -0.025f, -1), Quaternion.Euler(0, 180, 0)); // 원숭이 생성 및 회전
-		spawnedMonkey = showcaseMonkey.gameObject;
-		spawnedMonkey.SetActive(false); // 처음에는 원숭이를 비활성화
 
 		// 이벤트 바인딩
 		cutsceneController = getAnimalPanel.GetComponent<CutsceneController>();
@@ -128,11 +121,6 @@ public class BuildingBtn : MonoBehaviour
 		getAnimalPanel.SetActive(true);
 		buildingPanel.SetActive(false);
 
-		// 원숭이 오브젝트를 활성화합니다.
-		spawnedMonkey.SetActive(true);
-		// 원숭이 오브젝트를 활성화하고 위치를 설정합니다.
-		buildingMonkey = Instantiate(buildingMonkeyPrefab, placementManager.GetLastSpawnedBuildingPosition(), Quaternion.identity);
-
 		// 원숭이 초기화
 		// 원숭이 스킨을 변경하고 저장합니다.
 		MonkeyType selectedType = MonkeyType.Basic; // 기본값 설정
@@ -150,14 +138,21 @@ public class BuildingBtn : MonoBehaviour
 		}
 
 		Debug.Log("스킨 변경 시도: " + selectedType.ToString());
+
+		// 연출용 원숭이를 활성화 후 초기화합니다.
+		showcaseMonkey.gameObject.SetActive(true);
 		InitMonkey(showcaseMonkey, selectedType);
+
+		// 건물에 상주할 원숭이 오브젝트를 생성하고 위치를 설정합니다.
+		buildingMonkey = Instantiate(buildingMonkeyPrefab, placementManager.GetLastSpawnedBuildingPosition(), Quaternion.identity);
 		InitMonkey(buildingMonkey.GetComponent<Monkey>(), selectedType);
+		buildingMonkey.SetActive(false);
+
 		SpawnBuildingAndSaveData(buttonIndex, (int)selectedType); // 건물 건설 및 데이터 저장
 
 		yield return new WaitForSeconds(10f); // 연출 지연
 
 		getAnimalPanel.SetActive(false);
-		spawnedMonkey.SetActive(false); // 원숭이 비활성화
 
 		SceneManager.LoadScene("VoyageTest"); // 샘플 씬 로드
 	}
