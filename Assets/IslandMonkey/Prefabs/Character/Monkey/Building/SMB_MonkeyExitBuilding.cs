@@ -14,6 +14,7 @@ namespace IslandMonkey.SMB
 
 			monkey.ResetModelTransform();
 			monkey.OnBuildingOutStateExit();
+			monkey.ToggleBuildingAnimation();
 		}
 	}
 }

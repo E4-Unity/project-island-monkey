@@ -14,6 +14,7 @@ namespace IslandMonkey
 			AnimatorOverrideController AnimatorController { get; }
 
 			EquipmentComponent.EquipmentSet Equipments { get; }
+			void ToggleAnimation();
 		}
 
 		enum BuildingMonkeyState
@@ -182,6 +183,13 @@ namespace IslandMonkey
 		public void OnBuildingEnter()
 		{
 			equipmentComponent.Equip(targetBuilding.Equipments);
+		}
+
+		public void ToggleBuildingAnimation()
+		{
+			if (building is null) return;
+
+			building.ToggleAnimation();
 		}
 
 		/* Method */
