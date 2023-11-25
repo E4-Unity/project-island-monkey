@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,8 +39,14 @@ public class BuildingBtn : MonoBehaviour
 	// 캐릭터 등장 연출
 	CutsceneController cutsceneController;
 
+	// 컴포넌트
+	VoyageDataManager voyageDataManager;
+
 	void Start()
 	{
+		// 컴포넌트 할당
+		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
+
 		LoadBuildingData(); // 저장된 건물 데이터 불러오기
 
 		// 이벤트 바인딩
@@ -152,7 +159,14 @@ public class BuildingBtn : MonoBehaviour
 
 		yield return new WaitForSeconds(10f); // 연출 지연
 
-		getAnimalPanel.SetActive(false);
+		// 항해 씬에 넘길 데이터
+		// 건설 시작 시간 기록
+		var now = DateTime.Now.ToLocalTime();
+		var span = now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime();
+		voyageDataManager.BuildingTimeStamp = (int)span.TotalSeconds;
+
+		// 원숭이 타입
+		voyageDataManager.MonkeyType = selectedType;
 
 		SceneManager.LoadScene("VoyageTest"); // 샘플 씬 로드
 	}
