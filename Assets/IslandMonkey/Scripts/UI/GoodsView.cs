@@ -37,13 +37,16 @@ namespace IslandMonkey.MVVM
 			switch (goodsType)
 			{
 				case GoodsType.Gold:
-					goldText.SetText(goodsViewModel.Gold.FormatLargeNumber());
+					if(goldText)
+						goldText.SetText(goodsViewModel.Gold.FormatLargeNumber());
 					break;
 				case GoodsType.Banana:
-					bananaText.SetText(goodsViewModel.Banana.FormatLargeNumber());
+					if(bananaText)
+						bananaText.SetText(goodsViewModel.Banana.FormatLargeNumber());
 					break;
 				case GoodsType.Clam:
-					clamText.SetText(goodsViewModel.Clam.FormatLargeNumber());
+					if(clamText)
+						clamText.SetText(goodsViewModel.Clam.FormatLargeNumber());
 					break;
 			}
 		}
