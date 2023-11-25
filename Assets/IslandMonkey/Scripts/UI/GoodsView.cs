@@ -6,20 +6,19 @@ namespace IslandMonkey.MVVM
 {
 	public class GoodsView : View
 	{
-		[SerializeField] TextMeshProUGUI goldText;
-		[SerializeField] TextMeshProUGUI bananaText;
-		[SerializeField] TextMeshProUGUI clamText;
-
-		int gold;
-		int banana;
-		int clam;
+		[SerializeField] TextMeshProUGUI[] goldTextList;
+		[SerializeField] TextMeshProUGUI[] bananaTextList;
+		[SerializeField] TextMeshProUGUI[] clamTextList;
 
 		public int Gold
 		{
 			set
 			{
-				if(goldText)
-					goldText.SetText(value.FormatLargeNumber());
+				foreach (var goldText in goldTextList)
+				{
+					if(goldText)
+						goldText.SetText(value.FormatLargeNumber());
+				}
 			}
 		}
 
@@ -27,8 +26,11 @@ namespace IslandMonkey.MVVM
 		{
 			set
 			{
-				if(bananaText)
-					bananaText.SetText(value.FormatLargeNumber());
+				foreach (var bananaText in bananaTextList)
+				{
+					if(bananaText)
+						bananaText.SetText(value.FormatLargeNumber());
+				}
 			}
 		}
 
@@ -36,8 +38,11 @@ namespace IslandMonkey.MVVM
 		{
 			set
 			{
-				if(clamText)
-					clamText.SetText(value.FormatLargeNumber());
+				foreach (var clamText in clamTextList)
+				{
+					if(clamText)
+						clamText.SetText(value.FormatLargeNumber());
+				}
 			}
 		}
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using IslandMonkey;
 using IslandMonkey.MVVM;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,8 +14,15 @@ public class GoldEarn : GoodsFactory
 	private bool isGoldPopupClicked = false;
 	private float timer = 0f;
 
-	private void Start()
+	MonkeyBank monkeyBank;
+
+	protected override void Start()
 	{
+		base.Start();
+
+		monkeyBank = GlobalGameManager.Instance.GetMonkeyBank();
+		if (monkeyBank is null) return;
+
 		StartCoroutine(EarnGoldRoutine());
 		goldPopupImage.SetActive(false);
 	}
@@ -41,9 +49,9 @@ public class GoldEarn : GoodsFactory
 
 			if (!isGoldPopupClicked)
 			{
-				if (!MonkeyBank.Instance.IsFull)
+				if (!monkeyBank.IsFull)
 				{
-					MonkeyBank.Instance.AddToBank(Income);
+					monkeyBank.AddToBank(Income);
 					Debug.Log("몽키뱅크에 돈이 들어가고 있습니다");
 				}
 				else

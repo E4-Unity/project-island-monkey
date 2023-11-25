@@ -10,7 +10,11 @@ namespace IslandMonkey.MVVM
 		{
 			base.Awake();
 
-			if (!viewModel) return;
+			if (!viewModel)
+			{
+				viewModel = GetComponent<ViewModel>();
+				if (viewModel is null) return;
+			}
 
 			if (viewModel.PropertyNotifier is not null)
 				Init(viewModel.PropertyNotifier);

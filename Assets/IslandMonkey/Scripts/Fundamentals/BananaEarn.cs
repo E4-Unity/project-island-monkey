@@ -8,8 +8,10 @@ public class BananaEarn : GoodsFactory
 	public float bananaEarnInterval = 1.0f;
 	public UnityEvent bananaEarnEvent;
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
+
 		StartCoroutine(EarnBananaRoutine());
 	}
 

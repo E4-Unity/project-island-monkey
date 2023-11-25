@@ -1,4 +1,5 @@
-﻿using IslandMonkey;
+﻿using System;
+using IslandMonkey;
 using UnityEngine;
 
 public class GoodsFactory : MonoBehaviour
@@ -9,9 +10,14 @@ public class GoodsFactory : MonoBehaviour
 
 	GameManager gameManager;
 
-	void Awake()
+	protected virtual void Awake()
 	{
 		gameManager = GameManager.Instance;
+	}
+
+	protected virtual void Start()
+	{
+
 	}
 
 	protected void EarnGoods()

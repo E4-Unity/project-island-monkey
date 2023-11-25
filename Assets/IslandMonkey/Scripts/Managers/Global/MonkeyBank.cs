@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MonkeyBank : Model
 {
-	public static MonkeyBank Instance { get; private set; } // Singleton 인스턴스
 	int gold = 0;
 	int goldLimit = 3000;
 
@@ -20,20 +19,6 @@ public class MonkeyBank : Model
 	}
 
 	public bool IsFull => gold == goldLimit;
-
-	/* MonoBehaviour */
-	private void Awake()
-	{
-		if (Instance == null)
-		{
-			Instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
-	}
 
 	/* API */
 	public void AddToBank(int amount)
