@@ -7,7 +7,6 @@ using IslandMonkey;
 public class FishingManager : MonoBehaviour, IPointerClickHandler
 {
 	[SerializeField] Transform fishingPos;
-	[SerializeField] GameObject catchSign;
 	[SerializeField] FishingAnimator fishingAnimator;
 	[SerializeField] GameObject waveEffect;
 	List<Transform> posList = new List<Transform>() ; //낚시 찌를 던질 위치
