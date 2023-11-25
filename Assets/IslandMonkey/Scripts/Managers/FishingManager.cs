@@ -9,6 +9,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 	[SerializeField] Transform fishingPos;
 	[SerializeField] GameObject catchSign;
 	[SerializeField] FishingAnimator fishingAnimator;
+	[SerializeField] GameObject waveEffect;
 	List<Transform> posList = new List<Transform>() ; //낚시 찌를 던질 위치
 
 	bool isFishing = false; //낚시 상태
@@ -25,7 +26,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 
 	Coroutine fishCoroutine;
 
-	GameObject sign;
+	GameObject _waveEffect;
 
 	void Start()
 	{
@@ -43,10 +44,6 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 		{
 			fishingAnimator.PlayNextAnimation();
 			Debug.Log("(찌 들어올림)");
-			if(sign)
-			{
-				Destroy(sign);
-			}
 			isFishing = false;
 			StopCoroutine(fishCoroutine);
 			switch (fishStatus)
@@ -106,9 +103,9 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			Debug.Log("조개가 물었다!");
 			fishStatus = 3;
 
-			//잡은 표시 이미지, '!'이미지 또는 파동으로 대체
-			sign = Instantiate(catchSign);
-			sign.transform.position = posList[fishingPoint].position;
+			//조개 
+			_waveEffect = Instantiate(waveEffect);
+			_waveEffect.transform.position = posList[fishingPoint].position;
 
 
 			//조개가 도망감
@@ -116,10 +113,10 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			Debug.Log("조개가 도망갔다.");
 			fishingAnimator.succeed = false;
 			fishStatus = 2;
+			fishingAnimator.PlayNextAnimation();
+			isFishing = false;
+			break;
 
-			yield return new WaitForSeconds(overTime);
-
-			SetFishingPoint();
 		}
 	}
 
