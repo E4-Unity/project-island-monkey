@@ -32,6 +32,7 @@ namespace IslandMonkey
 		/* 필드 */
 		[SerializeField] float walkSpeedFactor = 2; // 애니메이션 속도와 실제 속도 싱크에 사용
 		[SerializeField] bool stayOnly;
+		[SerializeField] GameObject defaultBuilding;
 
 		IBuilding building;
 		IBuilding targetBuilding;
@@ -62,6 +63,16 @@ namespace IslandMonkey
 					t.position = targetBuilding.Entrance.position;
 					t.rotation = targetBuilding.Entrance.rotation;
 				};
+			}
+		}
+
+		protected override void Start()
+		{
+			base.Start();
+
+			if (defaultBuilding)
+			{
+				SetBuilding(defaultBuilding.GetComponent<IBuilding>());
 			}
 		}
 
@@ -100,7 +111,12 @@ namespace IslandMonkey
 		// 초기화 시 한 번만 호출 가능
 		public void SetBuilding(IBuilding inBuilding)
 		{
+			// 유효성 검사
+			if (inBuilding is null) return;
+
+			// 이미 초기화된 상태
 			if (building is not null) return;
+
 			building = inBuilding;
 			BackToWork();
 		}

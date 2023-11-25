@@ -23,6 +23,11 @@ namespace IslandMonkey
 			Init(defaultDefinition);
 		}
 
+		protected virtual void Start()
+		{
+
+		}
+
 		public virtual void Init(MonkeyDefinition inDefinition)
 		{
 			if (!inDefinition) return;
