@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/VoyageTest.unity
-    guid: a844debc9d6fa1f4b82265ec5a04edbf
-  - enabled: 1
     path: Assets/Scenes/IngameScene.unity
     guid: 99075d73298b3a54d9070883892c1084
+  - enabled: 1
+    path: Assets/Scenes/VoyageTest.unity
+    guid: a844debc9d6fa1f4b82265ec5a04edbf
   m_configObjects: {}
