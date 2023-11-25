@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 using System.Collections;
 
 public class MonkeyBankController : MonoBehaviour
@@ -11,15 +11,14 @@ public class MonkeyBankController : MonoBehaviour
 	[SerializeField]
 	private int currentGold; // 현재 알고 있는 골드의 양
 	private MonkeyBank monkeyBank; // MonkeyBank 인스턴스 참조
-	
+
 
 	private void Start()
 	{
 		monkeyBank = MonkeyBank.Instance; // Singleton 인스턴스 할당
 		StartCoroutine(CheckGoldChange()); // 골드 변화 체크 코루틴 시작
 		currentGold = monkeyBank.Gold; // 초기 골드 값을 설정
-		goldText.text = currentGold.ToString(); // 초기 UI 업데이트
-		goldPopupText.text = currentGold.ToString();
+		Refresh(); // 초기 UI 업데이트
 	}
 
 	private IEnumerator CheckGoldChange()
@@ -31,8 +30,14 @@ public class MonkeyBankController : MonoBehaviour
 			if (newGold != currentGold) // 골드에 변화가 있는지 체크
 			{
 				currentGold = newGold; // 변화가 있으면 현재 골드 업데이트
-				goldText.text = currentGold.ToString(); // UI 업데이트 (숫자만)
+				Refresh();
 			}
 		}
+	}
+
+	void Refresh()
+	{
+		if(goldText) goldText.text = currentGold.ToString(); // UI 업데이트 (숫자만)
+		if(goldPopupText) goldPopupText.text = currentGold.ToString();
 	}
 }
