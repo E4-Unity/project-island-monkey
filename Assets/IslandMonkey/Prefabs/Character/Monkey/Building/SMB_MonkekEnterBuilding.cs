@@ -14,7 +14,7 @@ namespace IslandMonkey.SMB
 			if (monkey is null) return;
 
 			monkey.OnBuildingEnter();
-			monkey.ToggleBuildingAnimation();
+			monkey.ActivateTargetBuilding();
 		}
 	}
 }

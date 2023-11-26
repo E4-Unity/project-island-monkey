@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace IslandMonkey
 {
@@ -35,7 +36,8 @@ namespace IslandMonkey
 		[SerializeField] bool stayOnly;
 		[SerializeField] GameObject defaultBuilding;
 
-		IBuilding building;
+		IBuilding workBuilding;
+		IBuilding currentBuilding;
 		IBuilding targetBuilding;
 		Coroutine checkRemainingDistanceCoroutine;
 		BuildingMonkeyState state = BuildingMonkeyState.Init;
@@ -80,15 +82,15 @@ namespace IslandMonkey
 #if UNITY_EDITOR
 		/* TODO 테스트용 나중에 삭제 시작 */
 		[Header("Test")]
-		[SerializeField] GameObject workBuilding;
+		[SerializeField] GameObject testWorkBuilding;
 
 		[ContextMenu("Test Set Building")]
 		void TestSetBuilding()
 		{
-			SetBuilding(workBuilding.GetComponent<IBuilding>());
+			SetBuilding(testWorkBuilding.GetComponent<IBuilding>());
 		}
 
-		[SerializeField] GameObject restBuilding;
+		[SerializeField] GameObject testRestBuilding;
 		IBuilding restBuildingInterface;
 		bool isValid = true;
 
@@ -99,7 +101,7 @@ namespace IslandMonkey
 
 			if (restBuildingInterface is null)
 			{
-				restBuildingInterface = restBuilding.GetComponent<IBuilding>();
+				restBuildingInterface = testRestBuilding.GetComponent<IBuilding>();
 				if (restBuildingInterface is null) return;
 			}
 
@@ -116,14 +118,16 @@ namespace IslandMonkey
 			if (inBuilding is null) return;
 
 			// 이미 초기화된 상태
-			if (building is not null) return;
+			if (workBuilding is not null) return;
 
-			building = inBuilding;
+			workBuilding = inBuilding;
+			targetBuilding = workBuilding;
+			currentBuilding = workBuilding;
 
 			// Entrance 위치로 순간이동
 			var thisTransform = transform;
-			thisTransform.position = building.Entrance.position;
-			thisTransform.rotation = building.Entrance.rotation;
+			thisTransform.position = workBuilding.Entrance.position;
+			thisTransform.rotation = workBuilding.Entrance.rotation;
 
 			// 건물 관련 동작 실행
 			BackToWork();
@@ -147,6 +151,7 @@ namespace IslandMonkey
 				return;
 			}
 
+			currentBuilding = targetBuilding;
 			targetBuilding = inBuilding;
 			state = BuildingMonkeyState.Resting;
 			buildingMonkeyAnimator.PlayBuildingOut();
@@ -163,13 +168,14 @@ namespace IslandMonkey
 				return;
 			}
 
-			targetBuilding = building;
+			currentBuilding = targetBuilding;
+			targetBuilding = workBuilding;
 			state = BuildingMonkeyState.Working;
 
 			if(buildingMonkeyAnimator.State == BuildingMonkeyAnimator.AnimationState.Building)
 				buildingMonkeyAnimator.PlayBuildingOut();
 			else
-				EnterBuilding(building);
+				EnterBuilding(workBuilding);
 		}
 
 		/* StateMachineBehaviour 전용 */
@@ -192,11 +198,18 @@ namespace IslandMonkey
 			equipmentComponent.Equip(targetBuilding.Equipments);
 		}
 
-		public void ToggleBuildingAnimation()
+		public void DeactivateCurrentBuilding()
 		{
-			if (building is null) return;
+			if (currentBuilding is null) return;
 
-			building.ToggleAnimation();
+			currentBuilding.ToggleAnimation();
+		}
+
+		public void ActivateTargetBuilding()
+		{
+			if (targetBuilding is null) return;
+
+			targetBuilding.ToggleAnimation();
 		}
 
 		/* Method */
