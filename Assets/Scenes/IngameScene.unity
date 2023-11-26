@@ -594,7 +594,7 @@ Camera:
   far clip plane: 70
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 1.55
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -692,7 +692,7 @@ MonoBehaviour:
   dragSpeed: 5
   zoomSpeed: 1
   minZoom: 1
-  maxZoom: 10
+  maxZoom: 2.7
   dragLimitX: {x: -6, y: 6}
   dragLimitY: {x: 1, y: 11}
 --- !u!114 &1150622586 stripped
