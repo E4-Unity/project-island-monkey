@@ -3961,7 +3961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dbcfdc242aeb646afd9bc3a445ac91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cheatGold: 10000
+  cheatGold: 100000000
 --- !u!1 &8845858598279019726
 GameObject:
   m_ObjectHideFlags: 0

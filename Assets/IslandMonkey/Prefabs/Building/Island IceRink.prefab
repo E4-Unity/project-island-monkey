@@ -142,3 +142,5 @@ MonoBehaviour:
       type: 3}
     RightFootEquipment: {fileID: 4529837073759400095, guid: 6cbe92324de82ff459f01fb25f41dcf0,
       type: 3}
+  monkeyDefinition: {fileID: 0}
+  monkeyPrefab: {fileID: 0}

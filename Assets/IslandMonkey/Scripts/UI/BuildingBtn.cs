@@ -12,8 +12,6 @@ public class BuildingBtn : MonoBehaviour
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
 	[SerializeField] private List<int> payGoldList; // 건물 건설에 필요한 골드 리스트
 	[SerializeField] private ShowcaseMonkey showcaseMonkey; // 연출용 원숭이 프리팹
-	[SerializeField] private GameObject buildingMonkeyPrefab; // 원숭이 프리팹
-	private GameObject buildingMonkey;
 
 	public HexagonalPlacementManager placementManager; // 헥사곤 배치 매니저
 
@@ -130,11 +128,6 @@ public class BuildingBtn : MonoBehaviour
 		showcaseMonkey.gameObject.SetActive(true);
 		InitMonkey(showcaseMonkey, selectedType);
 
-		// 건물에 상주할 원숭이 오브젝트를 생성하고 위치를 설정합니다.
-		buildingMonkey = Instantiate(buildingMonkeyPrefab, placementManager.GetLastSpawnedBuildingPosition(), Quaternion.identity);
-		InitMonkey(buildingMonkey.GetComponent<Monkey>(), selectedType);
-		buildingMonkey.SetActive(false);
-
 		SpawnBuildingAndSaveData(buttonIndex, (int)selectedType); // 건물 건설 및 데이터 저장
 
 		yield return new WaitForSeconds(10f); // 연출 지연
@@ -206,17 +199,6 @@ public class BuildingBtn : MonoBehaviour
 				if (buildingPrefab != null)
 				{
 					Instantiate(buildingPrefab, building.position, Quaternion.identity);
-
-					// 원숭이 생성 여부를 확인합니다.
-					if (building.hasMonkey)
-					{
-						var monkeyInstance = Instantiate(buildingMonkeyPrefab, building.position, Quaternion.identity);
-						var skinController = monkeyInstance.GetComponent<MonkeySkinController>();
-						if (skinController != null)
-						{
-							skinController.ChangeSkin((MonkeyType)building.monkeyType);
-						}
-					}
 				}
 			}
 		}

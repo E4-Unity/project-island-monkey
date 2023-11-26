@@ -139,3 +139,6 @@ MonoBehaviour:
     NeckEquipment: {fileID: 0}
     LeftFootEquipment: {fileID: 0}
     RightFootEquipment: {fileID: 0}
+  monkeyDefinition: {fileID: 11400000, guid: 527b26dcef4448549b60e6451ad1f8b7, type: 2}
+  monkeyPrefab: {fileID: -8352743930469246174, guid: e3be94dc69834294583c4a7b3f94bb9b,
+    type: 3}

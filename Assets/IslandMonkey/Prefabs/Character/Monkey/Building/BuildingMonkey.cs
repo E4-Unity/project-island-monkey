@@ -119,6 +119,13 @@ namespace IslandMonkey
 			if (building is not null) return;
 
 			building = inBuilding;
+
+			// Entrance 위치로 순간이동
+			var thisTransform = transform;
+			thisTransform.position = building.Entrance.position;
+			thisTransform.rotation = building.Entrance.rotation;
+
+			// 건물 관련 동작 실행
 			BackToWork();
 		}
 

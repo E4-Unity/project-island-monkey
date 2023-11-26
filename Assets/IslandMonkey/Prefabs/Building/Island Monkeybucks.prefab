@@ -133,6 +133,9 @@ MonoBehaviour:
     NeckEquipment: {fileID: 0}
     LeftFootEquipment: {fileID: 0}
     RightFootEquipment: {fileID: 0}
+  monkeyDefinition: {fileID: 11400000, guid: 1a363ac8c83756e44af1c590ead8ed1d, type: 2}
+  monkeyPrefab: {fileID: -8352743930469246174, guid: e3be94dc69834294583c4a7b3f94bb9b,
+    type: 3}
 --- !u!4 &4877543635836249944 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3778691067401468095, guid: aca34ace4103beb48bba2ad1d7230554,
