@@ -13,8 +13,6 @@ public class BuildingBtn : MonoBehaviour
 	[SerializeField] private List<int> payGoldList; // 건물 건설에 필요한 골드 리스트
 	[SerializeField] private ShowcaseMonkey showcaseMonkey; // 연출용 원숭이 프리팹
 
-	public HexagonalPlacementManager placementManager; // 헥사곤 배치 매니저
-
 	[SerializeField] private GameObject getAnimalPanel; // 동물 획득 UI 패널
 	[SerializeField] private GameObject buildingPanel; // 건물 UI 패널
 
@@ -25,6 +23,7 @@ public class BuildingBtn : MonoBehaviour
 	VoyageDataManager voyageDataManager;
 	BuildingManager buildingManager;
 	GoodsManager goodsManager;
+	HexagonalPlacementManager placementManager;
 
 	void Start()
 	{
@@ -32,6 +31,7 @@ public class BuildingBtn : MonoBehaviour
 		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
 		buildingManager = IslandGameManager.Instance.GetBuildingManager();
+		placementManager = IslandGameManager.Instance.GetPlacementManager();
 
 		LoadBuildingData(); // 저장된 건물 데이터 불러오기
 

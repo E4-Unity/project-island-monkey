@@ -11,6 +11,8 @@ public class HexagonalPlacementManager : MonoBehaviour
 	[SerializeField] float baseDistance = 1.75f;
 
 	[SerializeField] GameObject[] buildings;
+	[SerializeField] GameObject buildingSlotPrefab;
+	[SerializeField] Transform groundSlot;
 
 	HexagonalCalculator calculator;
 
@@ -75,7 +77,10 @@ public class HexagonalPlacementManager : MonoBehaviour
 		calculator.GetCoordinates(hexIndex, out var p, out var q, out var r);
 		Vector2 pos = calculator.GetPosition(p, q, r);
 
-		GameObject buildingInstance = Instantiate(buildings[buttonIndex], new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+		GameObject buildingSlot = Instantiate(buildingSlotPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+		buildingSlot.transform.parent = groundSlot;
+
+		GameObject buildingInstance = Instantiate(buildings[buttonIndex], buildingSlot.transform);
 		instances.Add(buildingInstance);
 	}
 
