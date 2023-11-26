@@ -6,20 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using IslandMonkey;
 
-// 건물 정보를 저장할 수 있는 직렬화 가능한 클래스
-[System.Serializable]
-public class BuildingData
-{
-	public int buildingIndex; // 건물의 인덱스
-	public Vector3 position; // 건물의 위치
-	public bool isCompleted; // 건물이 완성되었는지 여부
-	public int monkeyType; // 몽키 타입 정보
-	public bool hasMonkey; // 원숭이 생성 여부를 나타내는 새로운 필드
-						   // 필요한 추가 정보를 여기에 추가
-}
-
-
-public class BuildingBtn : MonoBehaviour, DataManager.ISavable
+public class BuildingBtn : MonoBehaviour
 {
 	[SerializeField] private List<Button> buildingButtons; // 건물 버튼 리스트
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
@@ -33,18 +20,20 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 	[SerializeField] private GameObject getAnimalPanel; // 동물 획득 UI 패널
 	[SerializeField] private GameObject buildingPanel; // 건물 UI 패널
 
-	List<BuildingData> buildings; // 건물 정보 리스트
-
 	// 캐릭터 등장 연출
 	CutsceneController cutsceneController;
 
 	// 컴포넌트
 	VoyageDataManager voyageDataManager;
+	BuildingManager buildingManager;
+	GoodsManager goodsManager;
 
 	void Start()
 	{
 		// 컴포넌트 할당
+		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
+		buildingManager = IslandGameManager.Instance.GetBuildingManager();
 
 		LoadBuildingData(); // 저장된 건물 데이터 불러오기
 
@@ -60,13 +49,6 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 			int index = i;
 			buildingButtons[i].onClick.AddListener(() => OnBuildingButtonClicked(index));
 		}
-	}
-
-	// TODO 나중에 index 캐싱
-	bool IsBuildingAlreadyExist(int index)
-	{
-		var existingData = buildings.Find(data => data.buildingIndex == index);
-		return existingData is not null;
 	}
 
 	void OnCutSceneEnd_Event()
@@ -88,7 +70,7 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 	private void OnBuildingButtonClicked(int buttonIndex)
 	{
 		// 이미 존재하는 건물은 건설하지 않음
-		if (IsBuildingAlreadyExist(buttonIndex))
+		if (buildingManager.IsBuildingAlreadyExist(buttonIndex))
 		{
 			Debug.LogWarning("이미 건설된 건물입니다 : " + buttonIndex);
 			return;
@@ -97,7 +79,6 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 		if (buttonIndex >= 0 && buttonIndex < payGoldList.Count)
 		{
 			int payGold = payGoldList[buttonIndex];
-			GoodsManager goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 
 			if (goodsManager.CanSpend(GoodsType.Gold, payGold))
 			{
@@ -182,7 +163,7 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 		if (placementManager is null) return;
 
 		// 건설되지 않은 경우에만 실행
-		if (IsBuildingAlreadyExist(buttonIndex)) return;
+		if (buildingManager.IsBuildingAlreadyExist(buttonIndex)) return;
 
 		placementManager.SpawnBuilding(buttonIndex);
 		Vector3 buildingPosition = placementManager.GetLastSpawnedBuildingPosition();
@@ -200,8 +181,7 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 			newBuildingData.monkeyType = monkeyType;
 		}
 
-		buildings.Add(newBuildingData);
-		SaveBuildingData(); // 데이터 JSON으로 저장
+		buildingManager.AddBuilding(newBuildingData);
 
 		UpdateBuildingUI(buttonIndex);
 	}
@@ -212,18 +192,9 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 		finList[buttonIndex].SetActive(true); // 완료된 건물 UI 활성화
 	}
 
-	// BuildingBtn에서 이제 DataManager의 인스턴스를 사용하여 데이터를 처리합니다.
-	private void SaveBuildingData()
-	{
-		DataManager.SaveData(this);
-	}
-
 	private void LoadBuildingData()
 	{
-		var data = DataManager.LoadData<SerializableList<BuildingData>>(this);
-		buildings = data is null ? new List<BuildingData>() : data.list;
-
-		foreach (var building in buildings)
+		foreach (var building in buildingManager.Buildings)
 		{
 			// 건물이 이미 씬에 존재하는지 확인합니다.
 			if (!IsBuildingSpawned(building))
@@ -281,22 +252,4 @@ public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 		}
 		PlayerPrefs.Save();
 	}
-
-	bool CanSpendGold(in int amount) => GameManager.Instance.CanSpend(GoodsType.Gold, amount);
-	void SpendGold(in int amount) => GameManager.Instance.SpendGoods(GoodsType.Gold, amount);
-
-	/* ISavable 인터페이스 구현 */
-	[System.Serializable]
-	private class SerializableList<T>
-	{
-		public List<T> list;
-		public SerializableList(List<T> list)
-		{
-			this.list = list;
-		}
-	}
-
-	public string FileName => "buildingData.json";
-
-	public object Data => new SerializableList<BuildingData>(buildings);
 }

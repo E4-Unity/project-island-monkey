@@ -8,20 +8,20 @@ public class GoodsFactory : MonoBehaviour
 	[SerializeField] int income = 100;
 	protected int Income => income;
 
-	GameManager gameManager;
+	GoodsManager goodsManager;
 
 	protected virtual void Awake()
 	{
-		gameManager = GameManager.Instance;
+
 	}
 
 	protected virtual void Start()
 	{
-
+		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 	}
 
 	protected void EarnGoods()
 	{
-		gameManager.EarnGoods(goodsType, income);
+		goodsManager.EarnGoods(goodsType, income);
 	}
 }
