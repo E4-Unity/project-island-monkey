@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
 using UnityEngine.SceneManagement;
 using IslandMonkey;
 
@@ -20,7 +19,7 @@ public class BuildingData
 }
 
 
-public class BuildingBtn : MonoBehaviour
+public class BuildingBtn : MonoBehaviour, DataManager.ISavable
 {
 	[SerializeField] private List<Button> buildingButtons; // 건물 버튼 리스트
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
@@ -216,13 +215,13 @@ public class BuildingBtn : MonoBehaviour
 	// BuildingBtn에서 이제 DataManager의 인스턴스를 사용하여 데이터를 처리합니다.
 	private void SaveBuildingData()
 	{
-		DataManager.Instance.SaveBuildingData();
+		DataManager.SaveData(this);
 	}
 
 	private void LoadBuildingData()
 	{
-		DataManager.Instance.LoadBuildingData();
-		buildings = DataManager.Instance.Buildings;
+		var data = DataManager.LoadData<SerializableList<BuildingData>>(this);
+		buildings = data is null ? new List<BuildingData>() : data.list;
 
 		foreach (var building in buildings)
 		{
@@ -263,27 +262,6 @@ public class BuildingBtn : MonoBehaviour
 		return false; // 씬에 건물이 존재하지 않음
 	}
 
-	private void DeleteBuildingData()
-	{
-		DataManager.Instance.DeleteBuildingData();
-		// Buildings 리스트를 클리어합니다.
-
-		string filePath = Path.Combine(Application.persistentDataPath, "buildingData.json");
-		if (File.Exists(filePath))
-		{
-			File.Delete(filePath);
-			Debug.Log("건물 데이터가 삭제되었습니다.");
-		}
-		else
-		{
-			Debug.LogWarning("삭제할 건물 데이터가 없습니다!");
-		}
-
-		// 데이터 파일의 존재 여부와 상관없이 UI와 건물 데이터를 리셋합니다.
-		buildings.Clear();
-		ResetUI();
-	}
-
 	private void ResetUI()
 	{
 		// 모든 건물 버튼을 활성화하고, 완료된 건물 UI를 비활성화합니다.
@@ -304,6 +282,10 @@ public class BuildingBtn : MonoBehaviour
 		PlayerPrefs.Save();
 	}
 
+	bool CanSpendGold(in int amount) => GameManager.Instance.CanSpend(GoodsType.Gold, amount);
+	void SpendGold(in int amount) => GameManager.Instance.SpendGoods(GoodsType.Gold, amount);
+
+	/* ISavable 인터페이스 구현 */
 	[System.Serializable]
 	private class SerializableList<T>
 	{
@@ -314,8 +296,7 @@ public class BuildingBtn : MonoBehaviour
 		}
 	}
 
+	public string FileName => "buildingData.json";
 
-
-	bool CanSpendGold(in int amount) => GameManager.Instance.CanSpend(GoodsType.Gold, amount);
-	void SpendGold(in int amount) => GameManager.Instance.SpendGoods(GoodsType.Gold, amount);
+	public object Data => new SerializableList<BuildingData>(buildings);
 }
