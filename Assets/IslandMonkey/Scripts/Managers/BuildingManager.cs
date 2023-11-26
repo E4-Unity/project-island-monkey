@@ -28,14 +28,14 @@ namespace IslandMonkey
 		// 필요한 추가 정보를 여기에 추가
 	}
 
-	public class BuildingManager : MonoBehaviour, DataManager.ISavable
+	public class BuildingManager : MonoBehaviour, DataManager.ISavable<SerializableList<BuildingData>>
 	{
 		List<BuildingData> buildings; // 건물 정보 리스트
 		public List<BuildingData> Buildings => buildings;
 
 		void Awake()
 		{
-			var data = DataManager.LoadData<SerializableList<BuildingData>>(this);
+			var data = DataManager.LoadData(this);
 			buildings = data is null ? new List<BuildingData>() : data.list;
 		}
 
@@ -54,6 +54,6 @@ namespace IslandMonkey
 
 		/* ISavable 인터페이스 구현 */
 		public string FileName => "buildingData.json";
-		public object Data => new SerializableList<BuildingData>(buildings);
+		public SerializableList<BuildingData> Data => new SerializableList<BuildingData>(buildings);
 	}
 }

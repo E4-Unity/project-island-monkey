@@ -7,17 +7,17 @@ namespace IslandMonkey
 {
 	public class DataManager
 	{
-		public interface ISavable
+		public interface ISavable<out T> where T : class
 		{
 			string FileName { get; }
-			object Data { get; }
+			T Data { get; }
 		}
 
 		static string DefaultDataPath = Application.persistentDataPath;
 
-		public static void SaveData(ISavable target) => SaveData(target, DefaultDataPath);
+		public static void SaveData<T>(ISavable<T> target) where T : class => SaveData(target, DefaultDataPath);
 
-		public static void SaveData(ISavable target, string filePath)
+		public static void SaveData<T>(ISavable<T> target, string filePath) where T : class
 		{
 			if (target is null) return;
 
@@ -31,9 +31,9 @@ namespace IslandMonkey
 #endif
 		}
 
-		public static T LoadData<T>(ISavable target) where T : class => LoadData<T>(target, DefaultDataPath);
+		public static T LoadData<T>(ISavable<T> target) where T : class => LoadData<T>(target, DefaultDataPath);
 
-		public static T LoadData<T>(ISavable target, string filePath) where T : class
+		public static T LoadData<T>(ISavable<T> target, string filePath) where T : class
 		{
 			if (target is null) return null;
 
@@ -48,7 +48,7 @@ namespace IslandMonkey
 			return JsonUtility.FromJson<T>(json);
 		}
 
-		public static void DeleteData(ISavable target, string filePath)
+		public static void DeleteData<T>(ISavable<T> target, string filePath) where T : class
 		{
 			if (target is null) return;
 
