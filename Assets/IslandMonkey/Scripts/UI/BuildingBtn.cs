@@ -165,14 +165,17 @@ public class BuildingBtn : MonoBehaviour
 		// 건설되지 않은 경우에만 실행
 		if (buildingManager.IsBuildingAlreadyExist(buttonIndex)) return;
 
-		placementManager.SpawnBuilding(buttonIndex);
+		placementManager.SpawnBuilding(buttonIndex, out var hexIndex);
+		if (hexIndex == -1) return; // 건설 불가
+
 		Vector3 buildingPosition = placementManager.GetLastSpawnedBuildingPosition();
 
 		var newBuildingData = new BuildingData()
 		{
 			buildingIndex = buttonIndex,
 			position = buildingPosition,
-			isCompleted = true
+			isCompleted = true,
+			HexIndex = hexIndex
 		};
 
 		if (monkeyType != -1)

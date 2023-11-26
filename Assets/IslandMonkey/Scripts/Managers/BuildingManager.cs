@@ -23,6 +23,8 @@ namespace IslandMonkey
 		public bool isCompleted; // 건물이 완성되었는지 여부
 		public int monkeyType; // 몽키 타입 정보
 		public bool hasMonkey; // 원숭이 생성 여부를 나타내는 새로운 필드
+
+		public int HexIndex; // 건물 위치 인덱스 (육각 좌표계)
 		// 필요한 추가 정보를 여기에 추가
 	}
 

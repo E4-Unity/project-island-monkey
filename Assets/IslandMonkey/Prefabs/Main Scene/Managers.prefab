@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47758d65f158c484aa188fa7eb758682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseDistance: 2
-  _buildings:
+  baseDistance: 1.75
+  buildings:
   - {fileID: 6995952561956060843, guid: c062a79cde16879478db370f8aaced16, type: 3}
   - {fileID: 2540479403802071824, guid: 63d93aa94686dd44384eba6ae7cfb476, type: 3}
   - {fileID: 8673208496545699124, guid: f6e9a3ae556158f4f9ce892a00163c23, type: 3}
@@ -99,6 +99,7 @@ GameObject:
   m_Component:
   - component: {fileID: 51939849205630805}
   - component: {fileID: 4707852626793299268}
+  - component: {fileID: 4249812177851467011}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -133,6 +134,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a73ca5e085fa342849b0c0e199d6b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4249812177851467011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944393498911945496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993d9832ebce3704fb35eb8bd08b77b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5313534493197938262

@@ -6,7 +6,7 @@ public class HexagonalCalculator
 	readonly Vector2 _qOffset;
 	readonly Vector2 _rOffset;
 
-	public HexagonalCalculator(int distance)
+	public HexagonalCalculator(float distance)
 	{
 		float xOffset = 0.5f * distance; // x
 		float yOffset = Mathf.Sqrt(3) * 0.5f * distance; // y
