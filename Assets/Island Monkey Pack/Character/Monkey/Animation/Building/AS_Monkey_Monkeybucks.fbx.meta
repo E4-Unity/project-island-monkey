@@ -40,7 +40,7 @@ ModelImporter:
       lastFrame: 53
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: 2
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -69,7 +69,7 @@ ModelImporter:
       lastFrame: 285
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: 2
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -97,8 +97,8 @@ ModelImporter:
       firstFrame: 0
       lastFrame: 62
       wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
+      orientationOffsetY: 80
+      level: 10
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
