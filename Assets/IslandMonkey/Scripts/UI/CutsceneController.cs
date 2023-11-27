@@ -44,11 +44,11 @@ public class CutsceneController : MonoBehaviour
 		// 캐릭터 등장 연출
 		OnCutSceneEnd?.Invoke();
 
-		yield return new WaitForSeconds(5f); // 5초 동안 유지
+		/*yield return new WaitForSeconds(5f); // 5초 동안 유지
 		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.one, Vector3.zero, 0.5f)); // 작아지는 연출
 		smallCircle.gameObject.SetActive(false); // 원 UI 비활성화
 
-		gameObject.SetActive(false); // 컷신 컨트롤러 비활성화
+		gameObject.SetActive(false); // 컷신 컨트롤러 비활성화*/
 	}
 
 	IEnumerator FadeToClear()

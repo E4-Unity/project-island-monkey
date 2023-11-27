@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using IslandMonkey;
 
 public class BuildingBtn : MonoBehaviour
@@ -139,6 +137,7 @@ public class BuildingBtn : MonoBehaviour
 		// 연출용 원숭이를 활성화 후 초기화합니다.
 		showcaseMonkey.gameObject.SetActive(true);
 		InitMonkey(showcaseMonkey, selectedType);
+		voyageDataManager.MonkeyType = selectedType;
 
 		// 건설 없이 건물 데이터만 저장
 		RequestSpawnBuilding(buttonIndex, false);
@@ -149,7 +148,7 @@ public class BuildingBtn : MonoBehaviour
 		// 원숭이 타입
 		voyageDataManager.MonkeyType = selectedType;
 
-		SceneManager.LoadScene("VoyageTest"); // 샘플 씬 로드
+		SceneLoadingManager.Instance.ChangeScene(BuildScene.Voyage); // 항해 씬 넘어가기
 	}
 
 	private void RequestSpawnBuilding(int buttonIndex, bool spawnImmediately = true)
