@@ -22,7 +22,10 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 	float overTime = 1.0f;//놓침 판정 범위
 	float validTime = 1.0f; //잡음 판정 범위
 
-	int fishStatus = 0; // 0 : 아무 일 없음, 1: 빨리 건져서 놓침, 2: 느리게 건져서 놓침, 3: 잡음. 4: 시간 초과
+	int fishStatus = 0; // 0 : 아무 일 없음, 1: 빨리 건져서 놓침, 2: 느리게 건져서 놓침, 3: 잡음. 4: 시간 초과\
+
+	float clickInterval = 1; //더블 클릭 기준 시간
+	float doubleClickTime = 0;
 
 	Coroutine fishCoroutine;
 
@@ -40,43 +43,49 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 	//화면 터치 시
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		//낚시 중이면 찌 꺼내기
-		if(isFishing)
+		//더블 클릭 방지
+		if (Time.time - doubleClickTime > clickInterval)
 		{
-			fishingAnimator.PlayNextAnimation();
-			Debug.Log("(찌 들어올림)");
-			isFishing = false;
-			StopCoroutine(fishCoroutine);
-			switch (fishStatus)
+			doubleClickTime = Time.time;
+			//낚시 중이면 찌 꺼내기
+			if (isFishing)
 			{
-				case 0:
-					Debug.Log("아무 일도 없다.");
-					break;
-				case 1:
-					Debug.Log("너무 빨리 건졌다.");
-					break;
-				case 2:
-					Debug.Log("너무 느리게 건졌다.");
-					break;
-				case 3:
-					Debug.Log("잡았다!");
-					fishingAnimator.succeed = true;
-					fishingAnimator.PlayAndShowPopup();
-					break;
-				case 4:
-					Debug.Log("시간초과");
-					break;
-			}
+				fishingAnimator.PlayNextAnimation();
+				Debug.Log("(찌 들어올림)");
+				isFishing = false;
+				StopCoroutine(fishCoroutine);
+				switch (fishStatus)
+				{
+					case 0:
+						Debug.Log("아무 일도 없다.");
+						break;
+					case 1:
+						Debug.Log("너무 빨리 건졌다.");
+						break;
+					case 2:
+						Debug.Log("너무 느리게 건졌다.");
+						break;
+					case 3:
+						Debug.Log("잡았다!");
+						fishingAnimator.succeed = true;
+						fishingAnimator.PlayAndShowPopup();
+						break;
+					case 4:
+						Debug.Log("시간초과");
+						break;
+				}
 
+			}
+			else //찌 던지기
+			{
+				fishingAnimator.PlayNextAnimation();
+				fishingAnimator.succeed = false;
+				SetFishingPoint();
+				isFishing = true;
+				fishCoroutine = StartCoroutine(Fishing());
+			}
 		}
-		else //찌 던지기
-		{
-			fishingAnimator.PlayNextAnimation();
-			fishingAnimator.succeed = false;
-			SetFishingPoint();
-			isFishing = true;
-			fishCoroutine = StartCoroutine(Fishing());
-		}
+		
 	}
 
 	void SetFishingPoint()
@@ -112,12 +121,12 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			_waveEffect = Instantiate(waveEffect);
 			_waveEffect.transform.position = posList[fishingPoint].position;
 
-
 			//조개가 도망감
 			yield return new WaitForSeconds(validTime);
 			Debug.Log("조개가 도망갔다.");
 			fishingAnimator.succeed = false;
 			fishStatus = 2;
+			yield return new WaitForSeconds(1f);
 			fishingAnimator.PlayNextAnimation();
 			Debug.Log("자동 건지기");
 			isFishing = false;

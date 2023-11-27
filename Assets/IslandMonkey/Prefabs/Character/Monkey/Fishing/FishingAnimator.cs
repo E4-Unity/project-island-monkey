@@ -44,6 +44,7 @@ namespace IslandMonkey
 
 		IEnumerator WaitforAnimation()
 		{
+			//Idle 애니메이션 재생 될 때까지 기다리기
 			while (!_animator.GetCurrentAnimatorStateInfo(0).IsName("AS_Monkey_Fishing_Stand"))
 			{
 				yield return null;
