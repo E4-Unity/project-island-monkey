@@ -1,8 +1,15 @@
+using System;
 using IslandMonkey.MVVM;
 using UnityEngine;
 
 namespace IslandMonkey
 {
+	public class GoodsSaveData
+	{
+		public int Gold;
+		public int Banana;
+		public int Clam;
+	}
 	public enum GoodsType
 	{
 		None,
@@ -11,28 +18,45 @@ namespace IslandMonkey
 		Clam
 	}
 
-	public class GoodsManager : Model
+	public class GoodsManager : Model, DataManager.ISavable<GoodsSaveData>
 	{
-		int gold;
-		int banana;
-		int clam;
+		GoodsSaveData data = new GoodsSaveData();
 
 		public int Gold
 		{
-			get => gold;
-			private set => SetField(ref gold, Mathf.Max(0, value));
+			get => data.Gold;
+			private set
+			{
+				SetField(ref data.Gold, Mathf.Max(0, value));
+				DataManager.SaveData(this);
+			}
 		}
 
 		public int Banana
 		{
-			get => banana;
-			private set => SetField(ref banana, Mathf.Max(0, value));
+			get => data.Banana;
+			private set
+			{
+				SetField(ref data.Banana, Mathf.Max(0, value));
+				DataManager.SaveData(this);
+			}
 		}
 
 		public int Clam
 		{
-			get => clam;
-			private set => SetField(ref clam, Mathf.Max(0, value));
+			get => data.Clam;
+			private set
+			{
+				SetField(ref data.Clam, Mathf.Max(0, value));
+				DataManager.SaveData(this);
+			}
+		}
+
+		void Awake()
+		{
+			var saveData = DataManager.LoadData(this);
+			if (saveData is not null)
+				data = saveData;
 		}
 
 		public void EarnGoods(GoodsType goodsType, in int amount)
@@ -97,5 +121,10 @@ namespace IslandMonkey
 
 			return result;
 		}
+
+		/* ISavable */
+		public string FileName => "GoodsSaveData.json";
+
+		public GoodsSaveData Data => data;
 	}
 }
