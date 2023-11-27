@@ -7,7 +7,7 @@ namespace IslandMonkey
 	[Serializable]
 	public class BuildingSaveData
 	{
-		public List<BuildingData> BuildingDataList;
+		public List<BuildingData> BuildingDataList = new List<BuildingData>();
 	}
 
 	// 건물 정보를 저장할 수 있는 직렬화 가능한 클래스
