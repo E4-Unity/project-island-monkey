@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8775283b36909514db7c6c494667af8d, type: 3}
+  m_Name: BD_Monkeybucks
+  m_EditorClassIdentifier: 
+  enableTest: 0
+  buildingID: 4
+  buildingType: 1
+  buildingPrefab: {fileID: 856035062903400266, guid: 6cb6290af01c9a64980b87f7c8f27eb9,
+    type: 3}
+  goodsIncome: 601
+  goodsProducingInterval: 45
+  goodsPopupInterval: 6

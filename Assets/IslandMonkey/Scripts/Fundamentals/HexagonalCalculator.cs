@@ -16,10 +16,17 @@ public class HexagonalCalculator
 		_rOffset = new Vector2(0, - yOffset * 2 / 3); // - 2/3 y
 	}
 
-	// 육각 좌표(p, q, r)를 실제 좌표(x, 0, z)로 변환하는 메서드이다.
+	// 육각 좌표(p, q, r)를 실제 좌표(x, 0, z)로 변환해준다.
 	public Vector2 GetPosition(int p, int q, int r)
 	{
 		return p * _pOffset + q * _qOffset + r * _rOffset;
+	}
+
+	// 육각 좌표 인덱스를 실제 좌표(x, 0, z)로 변환해준다.
+	public Vector2 GetPosition(int hexIndex)
+	{
+		GetCoordinates(hexIndex, out var p, out var q, out var r);
+		return GetPosition(p, q, r);
 	}
 
 	/**
