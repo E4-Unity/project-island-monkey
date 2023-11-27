@@ -9,9 +9,11 @@ namespace IslandMonkey
 	{
 		[Tooltip("칸 간격")] [SerializeField] float baseDistance = 1.75f;
 
-		[SerializeField] GameObject[] buildings;
+		[SerializeField] BuildingDefinition[] buildings;
 		[SerializeField] GameObject buildingSlotPrefab;
 		[SerializeField] Transform groundSlot;
+
+		Dictionary<int, BuildingDefinition> buildingDatabase;
 
 		HexagonalCalculator calculator;
 		BuildingManager buildingManager;
@@ -28,6 +30,14 @@ namespace IslandMonkey
 		void Awake()
 		{
 			calculator = new HexagonalCalculator(baseDistance);
+
+			// Building Definition 캐싱
+			buildingDatabase = new Dictionary<int, BuildingDefinition>(buildings.Length);
+			foreach (var building in buildings)
+			{
+				if(!building || building.ID < 0) continue; // ID 유효성 검사
+				buildingDatabase.Add(building.ID, building);
+			}
 		}
 
 		void Start()
@@ -54,16 +64,37 @@ namespace IslandMonkey
 			// 건설이 완료되었는지 확인
 			if (!buildingData.IsBuildCompleted) return;
 
-			// 인덱스에 대응하는 좌표에 스폰
+			// Hex Index에 대응하는 좌표 구하기
 			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
+			Vector3 spawnPosition = new Vector3(pos.x, 0, pos.y);
+
+			// Building Definition 로드
+			if (!buildingDatabase.ContainsKey(buildingData.BuildingIndex))
+			{
+#if UNITY_EDITOR
+				Debug.LogError("BuildingData.BuildingIndex (" + buildingData.BuildingIndex +")에 대응하는 BuildingDefinition 을 찾을 수 없습니다.");
+#endif
+				return;
+			}
+
+			var buildingDefinition = buildingDatabase[buildingData.BuildingIndex];
 
 			// Building Slot 스폰
+			if (!buildingSlotPrefab) return;
 			GameObject buildingSlot =
-				Instantiate(buildingSlotPrefab, new Vector3(pos.x, 0, pos.y), Quaternion.identity);
+				Instantiate(buildingSlotPrefab, spawnPosition, Quaternion.identity);
 			buildingSlot.transform.parent = groundSlot;
 
+			// GoodsFactory 초기화
+			var goodsFactory = buildingSlot.GetComponentInChildren<GoodsFactory>();
+			if (goodsFactory)
+			{
+				goodsFactory.Init(buildingDefinition);
+			}
+
 			// Building 스폰
-			GameObject buildingInstance = Instantiate(buildings[buildingData.BuildingIndex], buildingSlot.transform);
+			if (!buildingDefinition.BuildingPrefab) return;
+			GameObject buildingInstance = Instantiate(buildingDefinition.BuildingPrefab, buildingSlot.transform);
 		}
 
 		// TODO 반환이 아니라 즉시 BuildingManager 에 추가?
@@ -120,32 +151,5 @@ namespace IslandMonkey
 				}
 			}
 		}
-
-		[ContextMenu("Test")]
-		public void Test()
-		{
-			for (int i = 0; i < 75; i++)
-			{
-				calculator.GetCoordinates(i, out var p, out var q, out var r);
-				Vector2 pos = calculator.GetPosition(p, q, r);
-				Instantiate(buildings[0], new Vector3(pos.x, 0, pos.y), Quaternion.identity);
-			}
-		}
-
-		public Vector3 GetLastSpawnedBuildingPosition() =>
-			usedHexIndices.Count != 0
-				? calculator.GetPosition(usedHexIndices[^1])
-				: Vector3.zero;
-
-		public GameObject GetBuildingPrefab(int index)
-		{
-			if (index >= 0 && index < buildings.Length)
-			{
-				return buildings[index];
-			}
-
-			return null;
-		}
-
 	}
 }

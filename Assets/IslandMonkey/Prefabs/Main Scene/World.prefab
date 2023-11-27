@@ -137,13 +137,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseDistance: 1.75
   buildings:
-  - {fileID: 6995952561956060843, guid: c062a79cde16879478db370f8aaced16, type: 3}
-  - {fileID: 2540479403802071824, guid: 63d93aa94686dd44384eba6ae7cfb476, type: 3}
-  - {fileID: 8673208496545699124, guid: f6e9a3ae556158f4f9ce892a00163c23, type: 3}
-  - {fileID: 6660878886936667017, guid: 2230b7fbf768fb5418d166f1e24b0402, type: 3}
-  - {fileID: 856035062903400266, guid: 6cb6290af01c9a64980b87f7c8f27eb9, type: 3}
-  - {fileID: 2823044316522827041, guid: 30a30ca300229a249887f02bdbffe0a1, type: 3}
-  - {fileID: 5105247033075119214, guid: 8baa28e1dddd89146872773b82f79929, type: 3}
+  - {fileID: 11400000, guid: c0aae107a60888743a43cbb624f11645, type: 2}
+  - {fileID: 11400000, guid: 995614fafaeb70c41a6e8bede323a117, type: 2}
+  - {fileID: 11400000, guid: 9ac7611bfbe5fe247a7c088775e0a8b1, type: 2}
+  - {fileID: 11400000, guid: a469d091ef782d74c8dc7e31b4a3ef66, type: 2}
+  - {fileID: 11400000, guid: bfadd113c0808404cbece9e1fad3f5b6, type: 2}
+  - {fileID: 11400000, guid: 4e7b16e157440cb40a37071ab7444ead, type: 2}
+  - {fileID: 11400000, guid: 2633b3a0bdb4b30458c1463e873391d0, type: 2}
   buildingSlotPrefab: {fileID: 3420824251539141103, guid: d913f290b42f9864ca8fbb1826255bad,
     type: 3}
   groundSlot: {fileID: 917647181948949911}
@@ -585,6 +585,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6124383015184290599, guid: d913f290b42f9864ca8fbb1826255bad,
+        type: 3}
+      propertyPath: autoConfig
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124383015184290599, guid: d913f290b42f9864ca8fbb1826255bad,
+        type: 3}
+      propertyPath: defaultDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 511cb8ef499f5514facf4a3843dd40c5,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -5,6 +5,7 @@ namespace IslandMonkey
 {
 	public enum GoodsType
 	{
+		None,
 		Gold,
 		Banana,
 		Clam
@@ -36,7 +37,8 @@ namespace IslandMonkey
 
 		public void EarnGoods(GoodsType goodsType, in int amount)
 		{
-			if (amount <= 0) return;
+			// 유효성 검사
+			if (goodsType == GoodsType.None || amount < 0) return;
 
 			switch (goodsType)
 			{
@@ -54,7 +56,7 @@ namespace IslandMonkey
 
 		public void SpendGoods(GoodsType goodsType, in int amount)
 		{
-			if (amount <= 0) return;
+			if (!CanSpend(goodsType, amount)) return;
 
 			switch (goodsType)
 			{
@@ -72,7 +74,8 @@ namespace IslandMonkey
 
 		public bool CanSpend(GoodsType goodsType, in int amount)
 		{
-			if (amount < 0) return false;
+			// 유효성 검사
+			if (goodsType == GoodsType.None || amount < 0) return false;
 
 			bool result = false;
 

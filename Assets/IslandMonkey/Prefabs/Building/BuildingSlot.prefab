@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 5646787815300271247}
   - component: {fileID: 7012687704752331397}
   - component: {fileID: 1531532135024880205}
+  - component: {fileID: 6124383015184290599}
   m_Layer: 0
   m_Name: BuildingSlot
   m_TagString: Untagged
@@ -174,6 +175,25 @@ MonoBehaviour:
   iconMonkey: {fileID: 8233054497456898790}
   buildingUpgradePanel: {fileID: 0}
   isPlaced: 0
+--- !u!114 &6124383015184290599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420824251539141103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4327e14163b4ef0a0b0a3f54b6cf3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goodsType: 0
+  income: 100
+  interval: 6
+  popupInterval: 2
+  popupImage: {fileID: 5865351004218875479}
+  autoConfig: 0
+  defaultDefinition: {fileID: 0}
 --- !u!1 &4825386130830293948
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,8 +427,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9157735702149875613}
-  - component: {fileID: 3273300537576246548}
   - component: {fileID: 1366508277356831950}
+  - component: {fileID: 1250975309942254089}
   m_Layer: 0
   m_Name: GoldEvent
   m_TagString: Untagged
@@ -432,26 +452,6 @@ Transform:
   - {fileID: 7483347461258139924}
   m_Father: {fileID: 5646787815300271247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3273300537576246548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6681729551960626225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90312976987b70942840f62f0c519d3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goodsType: 0
-  income: 100
-  goldPopupInterval: 2
-  goldPopupImage: {fileID: 5865351004218875479}
-  goldEarnEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  monkeyBankTime: 5
 --- !u!65 &1366508277356831950
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -473,6 +473,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1250975309942254089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6681729551960626225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c79e7b93e0c8d44fb08857fe889322a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6124383015184290599}
+        m_TargetAssemblyTypeName: IslandMonkey.GoodsFactory, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8061548219613043080
 GameObject:
   m_ObjectHideFlags: 0
