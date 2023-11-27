@@ -14,10 +14,12 @@ namespace IslandMonkey
 	[Serializable]
 	public class BuildingData
 	{
-		public int BuildingIndex; // 건물의 인덱스 // TODO BuildingDefinition 으로 대체
+		public int BuildingIndex = -1; // 건물의 인덱스 // TODO BuildingDefinition 으로 대체
 		public bool IsBuildCompleted; // 건물이 완성되었는지 여부
 		public int HexIndex; // 건물 위치 인덱스 (육각 좌표계)
 		public int BuildStartedTime; //
+
+		public bool IsValid => BuildingIndex >= 0;
 	}
 
 	/// <summary>
@@ -60,7 +62,7 @@ namespace IslandMonkey
 		}
 
 		/* ISavable 인터페이스 구현 */
-		public string FileName => "buildingData.json";
+		public string FileName => "BuildingSaveData.json";
 		public BuildingSaveData Data => buildingSaveData;
 	}
 }

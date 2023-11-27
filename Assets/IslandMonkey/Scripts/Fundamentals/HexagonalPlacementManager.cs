@@ -114,7 +114,6 @@ namespace IslandMonkey
 			// 건설 시작 시간 기록
 			var now = DateTime.Now.ToLocalTime();
 			var span = now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime();
-			voyageDataManager.BuildingTimeStamp = (int)span.TotalSeconds;
 
 			// 건물 데이터 저장
 			var newBuildingData = new BuildingData()
@@ -126,7 +125,7 @@ namespace IslandMonkey
 			};
 
 			buildingManager.RegisterBuildingData(newBuildingData);
-			voyageDataManager.BuildingTimeStamp = newBuildingData.BuildStartedTime;
+			voyageDataManager.CurrentBuildingData = newBuildingData;
 
 			// 스폰
 			SpawnBuilding(newBuildingData);
