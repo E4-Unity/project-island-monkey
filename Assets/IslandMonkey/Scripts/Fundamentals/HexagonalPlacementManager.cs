@@ -89,7 +89,8 @@ namespace IslandMonkey
 			var goodsFactory = buildingSlot.GetComponentInChildren<GoodsFactory>();
 			if (goodsFactory)
 			{
-				goodsFactory.Init(buildingDefinition);
+				bool activate = buildingDefinition.BuildingType == BuildingType.Voyage;
+				goodsFactory.Init(buildingDefinition, activate);
 			}
 
 			// Building 스폰

@@ -1,8 +1,10 @@
+using System;
 using IslandMonkey.MVVM;
 using UnityEngine;
 
 namespace IslandMonkey
 {
+	[Serializable]
 	public class GoodsSaveData
 	{
 		public int Gold;
