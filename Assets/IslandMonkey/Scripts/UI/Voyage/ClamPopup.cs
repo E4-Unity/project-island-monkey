@@ -9,12 +9,11 @@ using IslandMonkey;
 public class ClamPopup : Popup
 {
 	[Header("UI")]
-	[SerializeField] Image clamImage;
+	[SerializeField] Transform clamImages;
 	[SerializeField] TextMeshProUGUI clamText;
 	[SerializeField] Button GetButton;
 
 	[Header("Clam Resource(낮은 등급 순)")]
-	[SerializeField] Sprite[] ImageSource;
 	[SerializeField] string[] GradeText;
 
 	[Range(0,100f)]
@@ -22,6 +21,7 @@ public class ClamPopup : Popup
 
 	float randNum = 0;
 	int clamNum;
+	List<GameObject> clams = new List<GameObject>();
 	Dictionary<int, float> clamPercent;
 
 	[SerializeField] GoodsManager goodsManager;
@@ -32,6 +32,12 @@ public class ClamPopup : Popup
 		for(int i = 0; i < percent.Length; i++)
 		{
 			clamPercent.Add(i, percent[i]);
+		}
+
+		for (int i = 0; i < clamImages.childCount; i++)
+		{
+			clams.Add(clamImages.GetChild(i).gameObject);
+			clams[i].SetActive(false);
 		}
 
 		//확률을 기준으로 오름차순 정렬
@@ -61,7 +67,13 @@ public class ClamPopup : Popup
 		{
 			Debug.Log("난수 : " + randNum);
 			clamText.text = GradeText[clamNum];
-			clamImage.sprite = ImageSource[clamNum];
+			
+			for(int i = 0; i < clams.Count; i++)
+			{
+				clams[i].SetActive(false);
+			}
+
+			clams[clamNum].SetActive(true);
 		}
 		else
 		{
@@ -74,7 +86,6 @@ public class ClamPopup : Popup
 	private int PickClam()
 	{
 		randNum = Random.Range(0, 100);
-		randNum = 22;
 		foreach(int key in clamPercent.Keys)
 		{
 			if(randNum < clamPercent[key])
