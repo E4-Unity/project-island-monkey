@@ -1,4 +1,3 @@
-using System;
 using IslandMonkey.MVVM;
 using UnityEngine;
 
@@ -18,36 +17,39 @@ namespace IslandMonkey
 		Clam
 	}
 
+	/// <summary>
+	/// 프로퍼티가 SaveData를 직접 참고하기 때문에 주의해야합니다.
+	/// </summary>
 	public class GoodsManager : Model, DataManager.ISavable<GoodsSaveData>
 	{
-		GoodsSaveData data = new GoodsSaveData();
+		GoodsSaveData goodsSaveData = new GoodsSaveData();
 
 		public int Gold
 		{
-			get => data.Gold;
+			get => goodsSaveData.Gold;
 			private set
 			{
-				SetField(ref data.Gold, Mathf.Max(0, value));
+				SetField(ref goodsSaveData.Gold, Mathf.Max(0, value));
 				DataManager.SaveData(this);
 			}
 		}
 
 		public int Banana
 		{
-			get => data.Banana;
+			get => goodsSaveData.Banana;
 			private set
 			{
-				SetField(ref data.Banana, Mathf.Max(0, value));
+				SetField(ref goodsSaveData.Banana, Mathf.Max(0, value));
 				DataManager.SaveData(this);
 			}
 		}
 
 		public int Clam
 		{
-			get => data.Clam;
+			get => goodsSaveData.Clam;
 			private set
 			{
-				SetField(ref data.Clam, Mathf.Max(0, value));
+				SetField(ref goodsSaveData.Clam, Mathf.Max(0, value));
 				DataManager.SaveData(this);
 			}
 		}
@@ -56,7 +58,7 @@ namespace IslandMonkey
 		{
 			var saveData = DataManager.LoadData(this);
 			if (saveData is not null)
-				data = saveData;
+				goodsSaveData = saveData;
 		}
 
 		public void EarnGoods(GoodsType goodsType, in int amount)
@@ -125,6 +127,6 @@ namespace IslandMonkey
 		/* ISavable */
 		public string FileName => "GoodsSaveData.json";
 
-		public GoodsSaveData Data => data;
+		public GoodsSaveData Data => goodsSaveData;
 	}
 }
