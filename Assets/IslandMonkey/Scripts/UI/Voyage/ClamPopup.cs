@@ -24,10 +24,11 @@ public class ClamPopup : Popup
 	List<GameObject> clams = new List<GameObject>();
 	Dictionary<int, float> clamPercent;
 
-	[SerializeField] GoodsManager goodsManager;
+	GoodsManager goodsManager;
 
 	public override void Initialize()
 	{
+		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		clamPercent = new Dictionary<int, float>();
 		for(int i = 0; i < percent.Length; i++)
 		{
