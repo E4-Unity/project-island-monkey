@@ -49,7 +49,7 @@ namespace IslandMonkey
 			{
 				yield return null;
 			}
-			VoyageUIManager.Show<ClamPopup>();
+			VoyageUIManager.Show<ClamPopup>(true);
 		}
 	}
 }
