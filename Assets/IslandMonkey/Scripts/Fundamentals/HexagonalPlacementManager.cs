@@ -124,8 +124,11 @@ namespace IslandMonkey
 				BuildStartedTime = (int)span.TotalSeconds
 			};
 
+			// 건물 데이터 전송
 			buildingManager.RegisterBuildingData(newBuildingData);
-			voyageDataManager.CurrentBuildingData = newBuildingData;
+
+			if(!newBuildingData.IsBuildCompleted) // 유학 건물(건설 시간 존재)일 경우에만 전송
+				voyageDataManager.CurrentBuildingData = newBuildingData;
 
 			// 스폰
 			SpawnBuilding(newBuildingData);
