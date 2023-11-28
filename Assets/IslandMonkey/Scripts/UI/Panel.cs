@@ -31,10 +31,9 @@ public class Panel : MonoBehaviour
 	// 카메라의 움직임을 토글하는 메소드입니다.
 	void ToggleCameraControl(bool enable)
 	{
-		CameraMove cameraMove = Camera.main.GetComponent<CameraMove>();
-		if (cameraMove != null)
-		{
-			cameraMove.enabled = enable;
-		}
+		CameraMove cameraMove = Camera.main?.GetComponent<CameraMove>();
+		if (cameraMove is null) return;
+
+		cameraMove.enabled = enable;
 	}
 }
