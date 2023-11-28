@@ -18,6 +18,7 @@ MonoBehaviour:
   buildingPrefab: {fileID: 2540479403802071824, guid: 63d93aa94686dd44384eba6ae7cfb476,
     type: 3}
   buildingTime: -1
+  activeTime: 31
   goodsIncome: 441
   goodsProducingInterval: 6
   goodsPopupInterval: -1

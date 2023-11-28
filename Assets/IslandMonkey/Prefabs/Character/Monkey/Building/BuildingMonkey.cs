@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace IslandMonkey
 {
@@ -15,11 +14,14 @@ namespace IslandMonkey
 			AnimatorOverrideController AnimatorController { get; }
 
 			EquipmentComponent.EquipmentSet Equipments { get; }
-			void Activate();
+			void Activate(BuildingMonkey monkey);
 			void Deactivate();
+			bool IsActivated { get; }
+			bool IsBusy { get; set; }
+			void Init(BuildingData buildingData);
 		}
 
-		enum BuildingMonkeyState
+		public enum BuildingMonkeyState
 		{
 			Init,
 			Working,
@@ -42,6 +44,9 @@ namespace IslandMonkey
 		IBuilding targetBuilding;
 		Coroutine checkRemainingDistanceCoroutine;
 		BuildingMonkeyState state = BuildingMonkeyState.Init;
+
+		// TODO 임시
+		public BuildingMonkeyState State => state;
 
 		/* 이벤트 */
 		public event Action OnArrived;
@@ -210,7 +215,7 @@ namespace IslandMonkey
 		{
 			if (targetBuilding is null) return;
 
-			targetBuilding.Activate();
+			targetBuilding.Activate(this);
 		}
 
 		/* Method */

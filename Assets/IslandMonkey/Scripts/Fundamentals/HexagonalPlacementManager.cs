@@ -16,6 +16,10 @@ namespace IslandMonkey
 
 		Dictionary<int, BuildingDefinition> buildingDatabase;
 
+		// TODO 임시, 나중에 BuildingManager 로 이전
+		List<BuildingMonkey.IBuilding> functionalBuildings = new List<BuildingMonkey.IBuilding>();
+		public List<BuildingMonkey.IBuilding> FunctionalBuildings => functionalBuildings;
+
 		HexagonalCalculator calculator;
 		BuildingManager buildingManager;
 		VoyageDataManager voyageDataManager;
@@ -109,6 +113,24 @@ namespace IslandMonkey
 				if (buildingAnimator)
 				{
 					buildingAnimator.Activate();
+				}
+			}
+
+			// TODO 리팩토링 필요
+			// Building 초기화
+			BuildingMonkey.IBuilding building = buildingInstance.GetComponent<BuildingMonkey.IBuilding>();
+			if (building is not null)
+			{
+				building.Init(buildingData);
+			}
+
+			// TODO 리팩토링 필요
+			// 기능 건물 등록
+			if (buildingData.Definition.BuildingType == BuildingType.Functional)
+			{
+				if (building is not null)
+				{
+					functionalBuildings.Add(building);
 				}
 			}
 		}
