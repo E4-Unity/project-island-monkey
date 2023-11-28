@@ -23,6 +23,9 @@ namespace IslandMonkey
 			set
 			{
 				voyageSaveData.CurrentBuildingData = value;
+
+				OnCurrentBuildingDataUpdated?.Invoke();
+
 				DataManager.SaveData(this);
 			}
 		}
@@ -32,6 +35,9 @@ namespace IslandMonkey
 			get => voyageSaveData.MonkeyType;
 			set => voyageSaveData.MonkeyType = value;
 		}
+
+		/* Event */
+		public event Action OnCurrentBuildingDataUpdated;
 
 		/* MonoBehaviour */
 		void Awake()
