@@ -115,7 +115,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5646787815300271247}
-  - component: {fileID: 7012687704752331397}
   - component: {fileID: 1531532135024880205}
   - component: {fileID: 6124383015184290599}
   m_Layer: 0
@@ -143,18 +142,6 @@ Transform:
   - {fileID: 427421226196836007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7012687704752331397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3420824251539141103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 376ab609ca6b9f44496084608b3f1cab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1531532135024880205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,14 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45d034f882038d4dba4fb67158acd35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
-  onBuildEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  iconBuilding: {fileID: 895374073870882540}
-  iconMonkey: {fileID: 8233054497456898790}
-  buildingUpgradePanel: {fileID: 0}
-  isPlaced: 0
 --- !u!114 &6124383015184290599
 MonoBehaviour:
   m_ObjectHideFlags: 0

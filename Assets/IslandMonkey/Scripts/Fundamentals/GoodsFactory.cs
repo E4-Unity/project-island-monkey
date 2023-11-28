@@ -77,7 +77,8 @@ namespace IslandMonkey
 
 		public void Activate()
 		{
-			if (state == FactoryState.Activated) return;
+			if (state == FactoryState.Activated || goodsType == GoodsType.None) return;
+			state = FactoryState.Activated;
 
 			// 재화 생산 시작
 			producingCoroutine = StartCoroutine(Producing());
@@ -85,10 +86,14 @@ namespace IslandMonkey
 
 		public void Deactivate()
 		{
-			if (state != FactoryState.Activated) return;
+			if (state == FactoryState.Deactivated) return;
+			state = FactoryState.Deactivated;
 
 			// 재화 생산 중단
+			if (producingCoroutine is null) return;
+
 			StopCoroutine(producingCoroutine);
+			producingCoroutine = null;
 		}
 
 		public void ResetTimer() => shouldResetTimer = true;

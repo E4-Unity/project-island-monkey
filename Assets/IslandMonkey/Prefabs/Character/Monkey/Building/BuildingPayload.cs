@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace IslandMonkey
 {
+	// TODO Building 과 병합?
 	public class BuildingPayload : MonoBehaviour, BuildingMonkey.IBuilding
 	{
 		[SerializeField] Transform entrance;
@@ -11,12 +12,14 @@ namespace IslandMonkey
 		[SerializeField] MonkeyDefinition monkeyDefinition;
 		[SerializeField] BuildingMonkey monkeyPrefab; // TODO 팩토리 패턴 적용
 
-		BuildingAnimator buildingAnimator;
 		BuildingMonkey monkey;
+		BuildingAnimator buildingAnimator;
+		GoodsFactory goodsFactory;
 
 		void Awake()
 		{
 			buildingAnimator = GetComponent<BuildingAnimator>();
+			goodsFactory = GetComponentInParent<GoodsFactory>();
 		}
 
 		void Start()
@@ -40,6 +43,17 @@ namespace IslandMonkey
 		public AnimatorOverrideController AnimatorController => animatorController;
 
 		public EquipmentComponent.EquipmentSet Equipments => equipmentSet;
-		public void ToggleAnimation() => buildingAnimator.ToggleAnimation();
+
+		public void Activate()
+		{
+			buildingAnimator?.Activate();
+			goodsFactory?.Activate();
+		}
+
+		public void Deactivate()
+		{
+			buildingAnimator?.Deactivate();
+			goodsFactory?.Deactivate();
+		}
 	}
 }
