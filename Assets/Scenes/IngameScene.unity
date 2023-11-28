@@ -324,6 +324,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &457851624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3953836988497286297, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7149510758041952888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1100444653
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +503,12 @@ MonoBehaviour:
   maxZoom: 2.7
   dragLimitX: {x: -6, y: 6}
   dragLimitY: {x: 1, y: 11}
+--- !u!1 &1251899072 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7184854235407046499, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7149510758041952888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1257826701 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8778783345945131515, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
@@ -509,6 +521,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612873cfa921eb7489fc934b0d6c86a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1502017846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5256394844210495635, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7149510758041952888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1510328818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -577,12 +595,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb7fba05883264e41874ce04e8d80b96, type: 3}
---- !u!1 &1585148101 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7189323386407296187, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2776492129749505085}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1846241031
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +695,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen
       objectReference: {fileID: 0}
+    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+        type: 3}
+      propertyPath: upgradePool
+      value: 
+      objectReference: {fileID: 1251899072}
+    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+        type: 3}
+      propertyPath: upgradeMonkey
+      value: 
+      objectReference: {fileID: 1502017846}
+    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+        type: 3}
+      propertyPath: upgradeBuilding
+      value: 
+      objectReference: {fileID: 457851624}
     - target: {fileID: 7722697770914059927, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
       propertyPath: m_Camera
@@ -756,11 +783,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7141617430400865253, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
-        type: 3}
-      propertyPath: buildingUpgradePanel
-      value: 
-      objectReference: {fileID: 1585148101}
     - target: {fileID: 7699625343978364118, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
         type: 3}
       propertyPath: m_Name

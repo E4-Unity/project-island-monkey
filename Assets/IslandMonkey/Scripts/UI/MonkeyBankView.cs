@@ -7,6 +7,7 @@ namespace IslandMonkey.MVVM
 	public class MonkeyBankView : View
 	{
 		[SerializeField] TextMeshProUGUI[] goldTextList;
+		[SerializeField] GameObject GoldBankMonkey;
 
 		public int Gold
 		{
@@ -14,9 +15,11 @@ namespace IslandMonkey.MVVM
 			{
 				foreach (var goldText in goldTextList)
 				{
-					if(goldText)
+					if (goldText)
 						goldText.SetText(value.FormatLargeNumber());
 				}
+
+				GoldBankMonkey.SetActive(value > 0);
 			}
 		}
 
