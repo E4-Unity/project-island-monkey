@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using IslandMonkey.AssetCollections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -99,6 +100,17 @@ namespace IslandMonkey
 			// Building 스폰
 			if (!buildingData.Definition.BuildingPrefab) return;
 			GameObject buildingInstance = Instantiate(buildingData.Definition.BuildingPrefab, buildingSlot.transform);
+
+			// TODO 리팩토링 필요
+			// 특별 건물 활성화
+			if (buildingData.Definition.BuildingType == BuildingType.Special)
+			{
+				BuildingAnimator buildingAnimator = buildingInstance.GetComponent<BuildingAnimator>();
+				if (buildingAnimator)
+				{
+					buildingAnimator.Activate();
+				}
+			}
 		}
 
 		// TODO 반환이 아니라 즉시 BuildingManager 에 추가?
