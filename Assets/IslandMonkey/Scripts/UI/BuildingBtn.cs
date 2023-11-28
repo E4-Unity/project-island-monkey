@@ -43,6 +43,13 @@ public class BuildingBtn : MonoBehaviour
 			int index = i;
 			buildingButtons[i].onClick.AddListener(() => OnBuildingButtonClicked(index));
 		}
+
+		// UI 업데이트
+		for (int i = 0; i < buildingButtons.Count; i++)
+		{
+			if(buildingManager.IsBuildingExist(i))
+				UpdateBuildingUI(i);
+		}
 	}
 
 	void OnCutSceneEnd_Event()
