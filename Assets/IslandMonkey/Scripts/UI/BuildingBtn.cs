@@ -64,7 +64,7 @@ public class BuildingBtn : MonoBehaviour
 	private void OnBuildingButtonClicked(int buttonIndex)
 	{
 		// 이미 존재하는 건물은 건설하지 않음
-		if (buildingManager.IsBuildingAlreadyExist(buttonIndex))
+		if (buildingManager.IsBuildingExist(buttonIndex))
 		{
 #if UNITY_EDITOR
 			Debug.LogWarning("이미 건설되었거나 건설중인 건물입니다 : " + buttonIndex);
@@ -76,7 +76,7 @@ public class BuildingBtn : MonoBehaviour
 		if (voyageDataManager.CanEnterVoyageScene)
 		{
 #if UNITY_EDITOR
-			Debug.LogWarning("이미 다른 건물이 건설중입니다 : " + voyageDataManager.CurrentBuildingData.BuildingIndex);
+			Debug.LogWarning("이미 다른 건물이 건설중입니다 : " + voyageDataManager.CurrentBuildingData.Definition.ID);
 #endif
 			return;
 		}
@@ -157,7 +157,7 @@ public class BuildingBtn : MonoBehaviour
 		if (placementManager is null) return;
 
 		// 건설되지 않은 경우에만 실행
-		if (buildingManager.IsBuildingAlreadyExist(buttonIndex)) return;
+		if (buildingManager.IsBuildingExist(buttonIndex)) return;
 
 		// 건설 요청
 		placementManager.RequestSpawnBuilding(buttonIndex, spawnImmediately);

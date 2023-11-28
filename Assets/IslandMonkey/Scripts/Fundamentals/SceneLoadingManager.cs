@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using E4.Utility;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,9 +7,9 @@ namespace IslandMonkey
 {
 	public enum BuildScene
 	{
-		None,
-		Main,
-		Voyage
+		None = -1,
+		Main = 0,
+		Voyage = 1
 	}
 	public class SceneLoadingManager : GenericMonoSingleton<SceneLoadingManager>
 	{
@@ -25,11 +24,6 @@ namespace IslandMonkey
 		[SerializeField] float fadeDelayTime = 0.3f;
 		[SerializeField] float fadeTime = 1f;
 		bool isLoading;
-		Dictionary<BuildScene, int> buildSceneIndex = new Dictionary<BuildScene, int>()
-		{
-			{ BuildScene.Main, 0 },
-			{ BuildScene.Voyage, 1}
-		};
 
 		bool IsLoading
 		{
@@ -59,7 +53,6 @@ namespace IslandMonkey
 		public void ChangeScene(BuildScene buildScene)
 		{
 			if (IsLoading || buildScene == BuildScene.None) return;
-			if (!buildSceneIndex.ContainsKey(buildScene)) return;
 
 			switch (buildScene)
 			{
@@ -83,7 +76,7 @@ namespace IslandMonkey
 		void LoadScene(BuildScene buildScene)
 		{
 			FadeIn();
-			StartCoroutine(LoadScene(buildSceneIndex[buildScene], fadeDelayTime + fadeTime + 0.1f));
+			StartCoroutine(LoadScene((int)buildScene, fadeDelayTime + fadeTime + 0.1f));
 		}
 
 		void FadeIn()

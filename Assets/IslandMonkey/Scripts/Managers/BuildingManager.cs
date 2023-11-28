@@ -14,12 +14,12 @@ namespace IslandMonkey
 	[Serializable]
 	public class BuildingData
 	{
-		public int BuildingIndex = -1; // 건물의 인덱스 // TODO BuildingDefinition 으로 대체
+		public BuildingDefinition Definition;
 		public bool IsBuildCompleted; // 건물이 완성되었는지 여부
 		public int HexIndex; // 건물 위치 인덱스 (육각 좌표계)
 		public int BuildStartedTime; //
 
-		public bool IsValid => BuildingIndex >= 0;
+		public bool IsValid => Definition is not null && Definition.ID >= 0;
 	}
 
 	/// <summary>
@@ -47,16 +47,33 @@ namespace IslandMonkey
 				buildingDataBase = new Dictionary<int, BuildingData>(saveData.BuildingDataList.Count);
 				foreach (var buildingData in saveData.BuildingDataList)
 				{
-					buildingDataBase.Add(buildingData.BuildingIndex, buildingData);
+					buildingDataBase.Add(buildingData.Definition.ID, buildingData);
 				}
 			}
 		}
 
+		public BuildingData GetBuildingData(int index)
+		{
+			if (IsBuildingExist(index))
+			{
+				return buildingDataBase[index];
+			}
+
+			return null;
+		}
+
+		public void Save() // TODO 임시
+		{
+			DataManager.SaveData(this);
+		}
+
 		// TODO 인덱스 캐싱
-		public bool IsBuildingAlreadyExist(int index) => buildingDataBase.ContainsKey(index);
+		public bool IsBuildingExist(int index) => buildingDataBase.ContainsKey(index);
 
 		public void RegisterBuildingData(BuildingData buildingData)
 		{
+			if (buildingData is null) return;
+
 			buildingSaveData.BuildingDataList.Add(buildingData);
 			DataManager.SaveData(this);
 		}

@@ -43,12 +43,26 @@ namespace IslandMonkey
 		void Start()
 		{
 			buildingManager = IslandGameManager.Instance.GetBuildingManager();
+			voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
+
 			foreach (var buildingData in buildingManager.BuildingDataList)
 			{
 				SpawnBuilding(buildingData);
 			}
 
-			voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
+			// TODO 건설 연출 추가
+			if (voyageDataManager.ShouldBuild)
+			{
+				var buildingData = buildingManager.GetBuildingData(voyageDataManager.CurrentBuildingData.Definition.ID);
+				if (buildingData is null) return;
+
+				buildingData.IsBuildCompleted = true;
+				SpawnBuilding(buildingData);
+
+				voyageDataManager.Clear();
+
+				buildingManager.Save(); // TODO 리팩토링 필요
+			}
 		}
 
 		public void OnTerritoryExpanded() => maxRow++;
@@ -68,17 +82,6 @@ namespace IslandMonkey
 			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
 			Vector3 spawnPosition = new Vector3(pos.x, 0, pos.y);
 
-			// Building Definition 로드
-			if (!buildingDatabase.ContainsKey(buildingData.BuildingIndex))
-			{
-#if UNITY_EDITOR
-				Debug.LogError("BuildingData.BuildingIndex (" + buildingData.BuildingIndex +")에 대응하는 BuildingDefinition 을 찾을 수 없습니다.");
-#endif
-				return;
-			}
-
-			var buildingDefinition = buildingDatabase[buildingData.BuildingIndex];
-
 			// Building Slot 스폰
 			if (!buildingSlotPrefab) return;
 			GameObject buildingSlot =
@@ -89,13 +92,13 @@ namespace IslandMonkey
 			var goodsFactory = buildingSlot.GetComponentInChildren<GoodsFactory>();
 			if (goodsFactory)
 			{
-				bool activate = buildingDefinition.BuildingType == BuildingType.Voyage;
-				goodsFactory.Init(buildingDefinition, activate);
+				bool activate = buildingData.Definition.BuildingType == BuildingType.Voyage;
+				goodsFactory.Init(buildingData.Definition, activate);
 			}
 
 			// Building 스폰
-			if (!buildingDefinition.BuildingPrefab) return;
-			GameObject buildingInstance = Instantiate(buildingDefinition.BuildingPrefab, buildingSlot.transform);
+			if (!buildingData.Definition.BuildingPrefab) return;
+			GameObject buildingInstance = Instantiate(buildingData.Definition.BuildingPrefab, buildingSlot.transform);
 		}
 
 		// TODO 반환이 아니라 즉시 BuildingManager 에 추가?
@@ -115,10 +118,19 @@ namespace IslandMonkey
 			var now = DateTime.Now.ToLocalTime();
 			var span = now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime();
 
+			// Building Definition 로드
+			if (!buildingDatabase.ContainsKey(buildingIndex))
+			{
+#if UNITY_EDITOR
+				Debug.LogError("BuildingData.BuildingIndex (" + buildingIndex +")에 대응하는 BuildingDefinition 을 찾을 수 없습니다.");
+#endif
+				return;
+			}
+
 			// 건물 데이터 저장
 			var newBuildingData = new BuildingData()
 			{
-				BuildingIndex = buildingIndex,
+				Definition = buildingDatabase[buildingIndex],
 				IsBuildCompleted = spawnImmediately,
 				HexIndex = hexIndex,
 				BuildStartedTime = (int)span.TotalSeconds
@@ -136,6 +148,9 @@ namespace IslandMonkey
 
 		void DisableHexIndex(int hexIndex)
 		{
+			// 이미 제거된 Hex Index 는 무시
+			if (!availableHexIndices.Contains(hexIndex)) return;
+
 			availableHexIndices.Remove(hexIndex);
 			usedHexIndices.Add(hexIndex);
 
