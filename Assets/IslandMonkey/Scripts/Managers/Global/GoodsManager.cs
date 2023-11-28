@@ -127,7 +127,8 @@ namespace IslandMonkey
 		}
 
 		/* ISavable */
-		public string FileName => "GoodsSaveData.json";
+		public const string SaveFileName = "GoodsSaveData.json";
+		public string FileName => SaveFileName;
 
 		public GoodsSaveData Data => goodsSaveData;
 	}

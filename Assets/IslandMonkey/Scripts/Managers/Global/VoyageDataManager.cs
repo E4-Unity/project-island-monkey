@@ -41,7 +41,8 @@ namespace IslandMonkey
 		}
 
 		/* ISavable 인터페이스 구현 */
-		public string FileName => "VoyageSaveData.json";
+		public const string SaveFileName = "VoyageSaveData.json";
+		public string FileName => SaveFileName;
 
 		public VoyageSaveData Data => voyageSaveData;
 	}

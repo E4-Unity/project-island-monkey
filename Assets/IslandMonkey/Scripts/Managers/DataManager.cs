@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -27,7 +25,7 @@ namespace IslandMonkey
 			File.WriteAllText(path, json);
 
 #if UNITY_EDITOR
-			Debug.Log("Data Saved At " + path);
+			Debug.Log("Save Data At " + path);
 #endif
 		}
 
@@ -41,24 +39,30 @@ namespace IslandMonkey
 			if (!File.Exists(path)) return null;
 
 #if UNITY_EDITOR
-			Debug.Log("Data Loaded From " + path);
+			Debug.Log("Load Data From " + path);
 #endif
 
 			var json = File.ReadAllText(path);
 			return JsonUtility.FromJson<T>(json);
 		}
 
-		public static void DeleteData<T>(ISavable<T> target, string filePath) where T : class
-		{
-			if (target is null) return;
+		public static void DeleteData(string fileName) => DeleteData(fileName, DefaultDataPath);
 
-			var path = Path.Combine(filePath, target.FileName);
-			if (!File.Exists(path)) return;
+		public static void DeleteData(string fileName, string filePath)
+		{
+			var path = Path.Combine(filePath, fileName);
+			if (!File.Exists(path))
+			{
+#if UNITY_EDITOR
+				Debug.Log("No Data At " + path);
+#endif
+				return;
+			}
 
 			File.Delete(path);
 
 #if UNITY_EDITOR
-			Debug.Log("Data Deleted At " + path);
+			Debug.Log("Delete Data At " + path);
 #endif
 		}
 
