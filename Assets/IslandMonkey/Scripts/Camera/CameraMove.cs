@@ -23,7 +23,6 @@ public class CameraMove : MonoBehaviour
 		if (Input.GetMouseButton(0))
 		{
 			Vector3 difference = dragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
 			Camera.main.transform.position = ClampCameraPosition(Camera.main.transform.position + difference);
 		}
 
@@ -35,7 +34,6 @@ public class CameraMove : MonoBehaviour
 			if (touch.phase == TouchPhase.Moved)
 			{
 				Vector3 touchDeltaPosition = (Vector3)touch.deltaPosition * dragSpeed;
-
 				Camera.main.transform.position = ClampCameraPosition(Camera.main.transform.position - touchDeltaPosition);
 			}
 		}

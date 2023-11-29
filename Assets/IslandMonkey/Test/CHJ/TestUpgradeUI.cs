@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TestUpgradeUI : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class TestUpgradeUI : MonoBehaviour
 
 	private void Update()
 	{
+		if (EventSystem.current.IsPointerOverGameObject()) // UI 위에 포인터가 있는지 확인
+			return; // UI 위에 있으면 아래의 3D Raycast를 실행하지 않음
+
 		if (Input.GetMouseButtonDown(0))
 		{
 			CheckRaycast(Camera.main.ScreenPointToRay(Input.mousePosition));
@@ -20,7 +24,7 @@ public class TestUpgradeUI : MonoBehaviour
 		if (Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
-			if (touch.phase == TouchPhase.Began)
+			if (touch.phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(touch.fingerId))
 			{
 				CheckRaycast(Camera.main.ScreenPointToRay(touch.position));
 			}
@@ -46,7 +50,7 @@ public class TestUpgradeUI : MonoBehaviour
 				upgradeMonkey.SetActive(true);
 				upgradeBuilding.SetActive(true);
 			}
-			else if (hitObject.name == "Island MonkeyBank")
+			else if (hitObject.name == "Island MonkeyBank(Clone)")
 			{
 				MonkeyBankPopupPanel.SetActive(true);
 			}
