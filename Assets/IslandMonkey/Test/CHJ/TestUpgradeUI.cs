@@ -54,7 +54,7 @@ public class TestUpgradeUI : MonoBehaviour
 			{
 				MonkeyBankPopupPanel.SetActive(true);
 			}
-			else if (hitObject.name == "Island LuckyDraw")
+			else if (hitObject.name == "Island LuckyDraw(Clone)")
 			{
 				DrawMachinePanel.SetActive(true);
 			}

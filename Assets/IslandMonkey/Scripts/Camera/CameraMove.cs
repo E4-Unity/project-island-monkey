@@ -15,7 +15,22 @@ public class CameraMove : MonoBehaviour
 
 	void Update()
 	{
+#if UNITY_EDITOR || UNITY_STANDALONE
 		// PC에서의 마우스 드래그
+		HandleMouseInput();
+#endif
+
+#if UNITY_ANDROID
+		// 모바일 터치 드래그
+		HandleTouchInput();
+#endif
+
+		// 스크롤에 의한 카메라 줌 처리 (PC)
+		HandleZoom();
+	}
+
+	private void HandleMouseInput()
+	{
 		if (Input.GetMouseButtonDown(0))
 		{
 			dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -25,8 +40,10 @@ public class CameraMove : MonoBehaviour
 			Vector3 difference = dragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			Camera.main.transform.position = ClampCameraPosition(Camera.main.transform.position + difference);
 		}
+	}
 
-		// 모바일 터치 드래그
+	private void HandleTouchInput()
+	{
 		if (Input.touchCount == 1)
 		{
 			Touch touch = Input.GetTouch(0);
@@ -37,8 +54,10 @@ public class CameraMove : MonoBehaviour
 				Camera.main.transform.position = ClampCameraPosition(Camera.main.transform.position - touchDeltaPosition);
 			}
 		}
+	}
 
-		// 스크롤에 의한 카메라 줌 처리 (PC)
+	private void HandleZoom()
+	{
 		float scroll = Input.GetAxis("Mouse ScrollWheel");
 		Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - scroll * zoomSpeed, minZoom, maxZoom);
 	}
