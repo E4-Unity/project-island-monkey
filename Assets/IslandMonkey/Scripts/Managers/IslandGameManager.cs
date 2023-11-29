@@ -12,9 +12,9 @@ namespace IslandMonkey
 		public BuildingManager GetBuildingManager() => buildingManager;
 		public HexagonalPlacementManager GetPlacementManager() => placementManager;
 
-		protected override void Awake()
+		protected override void Init()
 		{
-			base.Awake();
+			base.Init();
 
 			buildingManager = GetComponent<BuildingManager>();
 			placementManager = GetComponent<HexagonalPlacementManager>();

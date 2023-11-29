@@ -15,11 +15,9 @@ namespace IslandMonkey
 		public MonkeyBank GetMonkeyBank() => monkeyBank;
 		public VoyageDataManager GetVoyageDataManager() => voyageDataManager;
 
-		protected override void Awake()
+		protected override void Init()
 		{
-			base.Awake();
-
-			if (!ReferenceEquals(Instance, this)) return;
+			base.Init();
 
 			goodsManager = GetComponent<GoodsManager>();
 			monkeyBank = GetComponent<MonkeyBank>();
