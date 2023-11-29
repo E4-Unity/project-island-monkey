@@ -28,6 +28,8 @@ public class UIManager : Singleton<UIManager>
 	public List<MPanel> panels = new List<MPanel>();
 	public List<MButton> buttons = new List<MButton>();
 
+	public AudioClip clip;
+
 	public void Awake()
 	{
 		foreach (var panel in panels)
@@ -38,7 +40,11 @@ public class UIManager : Singleton<UIManager>
 
 		foreach (var btn in buttons)
 		{
-			btn.button.onClick.AddListener(() => btn.onClickEvent.Invoke());
+			btn.button.onClick.AddListener(() =>
+			{
+				btn.onClickEvent.Invoke();
+				SoundManager.instance.PlaySoundEffect("Button_Click");
+			});
 		}
 	}
 }

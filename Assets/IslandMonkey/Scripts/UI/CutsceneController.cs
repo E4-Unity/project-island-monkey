@@ -24,14 +24,31 @@ public class CutsceneController : MonoBehaviour
 	IEnumerator PlayCutscenesSequence()
 	{
 		cutscenesBG.SetActive(true);
-		// 기존 컷신 재생
+		int cutsceneIndex = 0;
+
 		foreach (GameObject cutscene in cutscenes)
 		{
 			cutscene.SetActive(true); // 컷신 활성화
+			// 컷신 인덱스에 따라 다른 사운드 재생
+			switch (cutsceneIndex)
+			{
+				case 0:
+					SoundManager.instance.PlaySoundEffect("Cutscene_1");
+					break;
+				case 1:
+					SoundManager.instance.PlaySoundEffect("Cutscene_2");
+					break;
+				case 2:
+					SoundManager.instance.PlaySoundEffect("Cutscene_3");
+					break;
+			}
+
 			yield return StartCoroutine(FadeToClear()); // 페이드 인
 			yield return new WaitForSeconds(cutsceneDuration); // 지속 시간 동안 대기
 			yield return StartCoroutine(FadeToWhite()); // 페이드 아웃
 			cutscene.SetActive(false); // 컷신 비활성화
+
+			cutsceneIndex++; // 다음 컷신을 위한 인덱스 증가
 		}
 
 		cutscenesBG.SetActive(false);
@@ -43,6 +60,7 @@ public class CutsceneController : MonoBehaviour
 
 		// 캐릭터 등장 연출
 		OnCutSceneEnd?.Invoke();
+		SoundManager.instance.PlaySoundEffect("Acquisition_Monkey");
 
 		/*yield return new WaitForSeconds(5f); // 5초 동안 유지
 		yield return StartCoroutine(ScaleCircle(smallCircle, Vector3.one, Vector3.zero, 0.5f)); // 작아지는 연출

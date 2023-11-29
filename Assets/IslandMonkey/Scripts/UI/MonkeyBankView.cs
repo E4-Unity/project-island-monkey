@@ -74,6 +74,7 @@ namespace IslandMonkey.MVVM
 
 			// 은행의 골드를 0으로 설정합니다.
 			Gold = 0;
+			GoldBankMonkey.SetActive(false);
 		}
 	}
 }

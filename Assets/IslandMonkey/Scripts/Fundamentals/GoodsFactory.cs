@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -126,6 +126,7 @@ namespace IslandMonkey
 
 			ResetTimer();
 			EarnGoods();
+			SoundManager.instance.PlaySoundEffect("Acquisition_Goods");
 		}
 
 		IEnumerator Producing()
