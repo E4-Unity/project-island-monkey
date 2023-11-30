@@ -23,6 +23,7 @@ namespace IslandMonkey
 		HexagonalCalculator calculator;
 		BuildingManager buildingManager;
 		VoyageDataManager voyageDataManager;
+		Camera mainCamera;
 
 		int row = 1;
 		int maxRow = 3;
@@ -43,6 +44,8 @@ namespace IslandMonkey
 				if(!building || building.ID < 0) continue; // ID 유효성 검사
 				buildingDatabase.Add(building.ID, building);
 			}
+
+			mainCamera = Camera.main;
 		}
 
 		void Start()
@@ -52,7 +55,7 @@ namespace IslandMonkey
 
 			foreach (var buildingData in buildingManager.BuildingDataList)
 			{
-				SpawnBuilding(buildingData);
+				SpawnBuilding(buildingData, true);
 			}
 
 			// TODO 건설 연출 추가
@@ -72,7 +75,7 @@ namespace IslandMonkey
 
 		public void OnTerritoryExpanded() => maxRow++;
 
-		public void SpawnBuilding(BuildingData buildingData)
+		public void SpawnBuilding(BuildingData buildingData, bool disableBuildEffects = false)
 		{
 			// 유효성 검사
 			if (buildingData is null) return;
@@ -86,6 +89,18 @@ namespace IslandMonkey
 			// Hex Index에 대응하는 좌표 구하기
 			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
 			Vector3 spawnPosition = new Vector3(pos.x, 0, pos.y);
+
+			if (!disableBuildEffects)
+			{
+				// TODO 리팩토링
+				// 카메라 이동
+				Vector3 cameraOffset = new Vector3(0, 6.14f, -11);
+
+				// Hex Index에 대응하는 좌표 구하기
+				mainCamera.transform.position = cameraOffset + spawnPosition;
+
+				// TODO 건설 이펙트 스폰
+			}
 
 			// Building Slot 스폰
 			if (!buildingSlotPrefab) return;

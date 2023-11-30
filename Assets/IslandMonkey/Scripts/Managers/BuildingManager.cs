@@ -18,7 +18,8 @@ namespace IslandMonkey
 		public BuildingDefinition Definition;
 		public bool IsBuildCompleted; // 건물이 완성되었는지 여부
 		public int HexIndex; // 건물 위치 인덱스 (육각 좌표계)
-		public int BuildStartedTime; //
+		public int BuildStartedTime;
+		public bool ShouldBuild; // 건설 연출 필요
 
 		public bool IsValid => Definition is not null && Definition.ID >= 0;
 	}
