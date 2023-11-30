@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 namespace IslandMonkey
 {
@@ -44,6 +47,12 @@ namespace IslandMonkey
 
 		/* Event */
 		public event Action<int> OnGoodsProduced; // 스크립트 전용 이벤트
+
+		// clickedPosition 선언 및 초기화
+		private Vector2 clickedPosition = Vector2.zero; 
+												
+		[SerializeField] Transform target; 
+		[SerializeField] ItemAcquireFx prefabItem; 
 
 		void Start()
 		{
@@ -120,11 +129,24 @@ namespace IslandMonkey
 			goodsManager.EarnGoods(goodsType, income);
 		}
 
-		public void OnClicked()
+		public void OnClicked(PointerEventData eventData)
 		{
 			if (!popupImage.activeSelf) return;
 
+			// world 좌표를 클릭된 지점의 UI 좌표로 변환
+			Vector2 clickedPosition;
+			RectTransformUtility.ScreenPointToLocalPointInRectangle(
+				popupImage.transform.parent as RectTransform,
+				eventData.position,
+				eventData.pressEventCamera,
+				out clickedPosition);
+
 			ResetTimer();
+
+			// clickedPosition을 타겟으로 하는 Tween을 사용하여 이미지 이동 구현
+			var itemFx = GameObject.Instantiate<ItemAcquireFx>(prefabItem, this.transform);
+			itemFx.Explosion(clickedPosition, target.position, 150.0f);
+
 			EarnGoods();
 			SoundManager.instance.PlaySoundEffect("Acquisition_Goods");
 		}

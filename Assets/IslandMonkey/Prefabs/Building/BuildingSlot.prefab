@@ -172,7 +172,11 @@ MonoBehaviour:
   popupInterval: 2
   popupImage: {fileID: 5865351004218875479}
   autoConfig: 0
-  defaultDefinition: {fileID: 0}
+  defaultConfig: {fileID: 0}
+  goldAcquireFx: {fileID: 2241982727112881482, guid: 3f67cd78fe579fa49a9878a730eeed65,
+    type: 3}
+  targetPositionTransform: {fileID: 323595997050026817, guid: 7d42f1555e135244c86cd065646c0dc7,
+    type: 3}
 --- !u!1 &4825386130830293948
 GameObject:
   m_ObjectHideFlags: 0
