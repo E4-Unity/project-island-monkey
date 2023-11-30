@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8775283b36909514db7c6c494667af8d, type: 3}
   m_Name: BD_BananaHouse
   m_EditorClassIdentifier: 
+  goodsFactoryConfig: {fileID: 11400000, guid: 61aa7f3b9ae9df54a86d82cbe1f628ea, type: 2}
   enableTest: 0
   buildingID: 3101
   buildingType: 1
@@ -21,6 +22,3 @@ MonoBehaviour:
   activeTime: -1
   buildCost: 0
   buildCostGoodsType: 1
-  goodsIncome: 406
-  goodsProducingInterval: 45
-  goodsPopupInterval: 6

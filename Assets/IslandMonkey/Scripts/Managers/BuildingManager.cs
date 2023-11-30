@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using IslandMonkey.MVVM;
 using UnityEngine;
 
 namespace IslandMonkey
@@ -17,7 +18,8 @@ namespace IslandMonkey
 		public BuildingDefinition Definition;
 		public bool IsBuildCompleted; // 건물이 완성되었는지 여부
 		public int HexIndex; // 건물 위치 인덱스 (육각 좌표계)
-		public int BuildStartedTime; //
+		public int BuildStartedTime;
+		public bool ShouldBuild; // 건설 연출 필요
 
 		public bool IsValid => Definition is not null && Definition.ID >= 0;
 	}
@@ -32,8 +34,12 @@ namespace IslandMonkey
 		BuildingSaveData buildingSaveData;
 		Dictionary<int, BuildingData> cachedData;
 		Dictionary<int, BuildingDefinition> cachedDefinition;
+		Dictionary<BuildingType, int> buildingCountByType = new Dictionary<BuildingType, int>();
 
 		public List<BuildingData> BuildingDataList => buildingSaveData.BuildingDataList;
+		public Dictionary<BuildingType, int> BuildingCountByType => buildingCountByType;
+
+		public event Action OnBuildingDataRegistered;
 
 		void Awake()
 		{
@@ -76,6 +82,9 @@ namespace IslandMonkey
 
 			// 데이터 저장
 			DataManager.SaveData(this);
+
+			// 이벤트 호출
+			OnBuildingDataRegistered?.Invoke();
 		}
 
 		void Init()
@@ -102,6 +111,7 @@ namespace IslandMonkey
 			if (data is null || !data.IsValid) return;
 
 			cachedData.Add(data.Definition.ID, data);
+			CountBuildingByType(data.Definition);
 		}
 
 		void CachingBuildingDefinitionList(IEnumerable<BuildingDefinition> definitionList)
@@ -117,8 +127,23 @@ namespace IslandMonkey
 			if (definition is null) return;
 
 			cachedDefinition.Add(definition.ID, definition);
+			CountBuildingByType(definition);
 		}
 
+		void CountBuildingByType(BuildingDefinition definition)
+		{
+			if (definition is null) return;
+
+			if (buildingCountByType.TryGetValue(definition.BuildingType, out var count))
+			{
+				buildingCountByType.Remove(definition.BuildingType);
+				buildingCountByType.Add(definition.BuildingType, count + 1);
+			}
+			else
+			{
+				buildingCountByType.Add(definition.BuildingType, 1);
+			}
+		}
 
 		/* ISavable 인터페이스 구현 */
 		public const string SaveFileName = "BuildingSaveData.json";

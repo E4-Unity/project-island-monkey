@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8775283b36909514db7c6c494667af8d, type: 3}
-  m_Name: BD_Jobseeking
+  m_Name: BD_RooftopGarden
   m_EditorClassIdentifier: 
+  goodsFactoryConfig: {fileID: 11400000, guid: 56cf952dc3c285f4b8f9f7a055bd9c87, type: 2}
   enableTest: 0
-  buildingID: 6
-  buildingType: 1
-  buildingPrefab: {fileID: 5105247033075119214, guid: 8baa28e1dddd89146872773b82f79929,
+  buildingID: 5
+  buildingType: 2
+  buildingPrefab: {fileID: 2823044316522827041, guid: 30a30ca300229a249887f02bdbffe0a1,
     type: 3}
-  buildingTime: 300
-  activeTime: -1
-  buildCost: 1000000
+  buildingTime: -1
+  activeTime: 37
+  buildCost: 100000
   buildCostGoodsType: 1
-  goodsIncome: 741
-  goodsProducingInterval: 45
-  goodsPopupInterval: 6

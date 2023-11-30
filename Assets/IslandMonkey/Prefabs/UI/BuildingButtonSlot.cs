@@ -65,6 +65,11 @@ namespace IslandMonkey
 			ChangeState(CheckBuildingState());
 		}
 
+		void OnDestroy()
+		{
+			UnbindEvents();
+		}
+
 		void BindEvents()
 		{
 			if (isEventBound) return;

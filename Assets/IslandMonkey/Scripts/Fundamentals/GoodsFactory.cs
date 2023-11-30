@@ -30,7 +30,7 @@ namespace IslandMonkey
 
 		// 자동 활성화 설정
 		[SerializeField] bool autoConfig;
-		[SerializeField] BuildingDefinition defaultDefinition;
+		[SerializeField] GoodsFactoryConfig defaultConfig;
 
 		/* Component */
 		GoodsManager goodsManager;
@@ -54,7 +54,7 @@ namespace IslandMonkey
 
 			if (autoConfig)
 			{
-				Init(defaultDefinition);
+				Init(defaultConfig);
 			}
 		}
 

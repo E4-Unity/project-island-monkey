@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8775283b36909514db7c6c494667af8d, type: 3}
-  m_Name: BD_RooftopGarden
+  m_Name: BD_FireStation
   m_EditorClassIdentifier: 
+  goodsFactoryConfig: {fileID: 11400000, guid: d270abab11671bd4691e7b8b9f142a46, type: 2}
   enableTest: 0
-  buildingID: 5
-  buildingType: 2
-  buildingPrefab: {fileID: 2823044316522827041, guid: 30a30ca300229a249887f02bdbffe0a1,
+  buildingID: 0
+  buildingType: 1
+  buildingPrefab: {fileID: 6995952561956060843, guid: c062a79cde16879478db370f8aaced16,
     type: 3}
-  buildingTime: -1
-  activeTime: 37
-  buildCost: 100000
+  buildingTime: 60
+  activeTime: 46
+  buildCost: 500
   buildCostGoodsType: 1
-  goodsIncome: 736
-  goodsProducingInterval: 6
-  goodsPopupInterval: -1
