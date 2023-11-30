@@ -58,7 +58,6 @@ namespace IslandMonkey
 				SpawnBuilding(buildingData, true);
 			}
 
-			// TODO 건설 연출 추가
 			if (voyageDataManager.ShouldBuild)
 			{
 				var buildingData = buildingManager.GetBuildingData(voyageDataManager.CurrentBuildingData.Definition.ID);
@@ -100,6 +99,7 @@ namespace IslandMonkey
 				mainCamera.transform.position = cameraOffset + spawnPosition;
 
 				// TODO 건설 이펙트 스폰
+				EffectManager.instance.PlayEffect(EffectManager.EffectType.BuildEffect, spawnPosition);
 			}
 
 			// Building Slot 스폰

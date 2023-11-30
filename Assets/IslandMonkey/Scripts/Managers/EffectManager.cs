@@ -15,7 +15,8 @@ public class EffectManager : Singleton<EffectManager>
 		FX_Mobile_Element_Buff_Base_00,
 		Flash_star_ellow_green,
 		Smoke_09,
-		Smoke_05
+		Smoke_05,
+		BuildEffect
 	}
 
 	[Serializable]

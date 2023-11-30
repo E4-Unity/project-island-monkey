@@ -360,6 +360,9 @@ MonoBehaviour:
   - effectType: 6
     effectPrefab: {fileID: 1449242181322416601, guid: 052d5f6cf7d3ebc44bba49fbe653f9a8,
       type: 3}
+  - effectType: 9
+    effectPrefab: {fileID: 3562637465595766820, guid: 11cbbf019f6c1f44fb2c28de305f0c83,
+      type: 3}
   voyageSceneEffects:
   - effectType: 7
     effectPrefab: {fileID: 2702705411672854768, guid: 817ab03994bf7ee4fa1e82b5bedb9ef5,
