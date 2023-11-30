@@ -31,12 +31,14 @@ public class SoundManager : Singleton<SoundManager>
 
 	private Dictionary<string, AudioClip> soundEffects = new Dictionary<string, AudioClip>();
 
-
 	private void Awake()
 	{
 		DontDestroyOnLoad(gameObject); // 씬 전환 시 인스턴스 유지
 		SceneManager.sceneLoaded += OnSceneLoaded;
 
+		// AudioSource 컴포넌트 초기화
+		Main_BGM = GetComponent<AudioSource>();
+		Additional_BGM = gameObject.AddComponent<AudioSource>();
 		Additional_BGM.clip = voyageWaveClip; // Voyage_WAVE 사운드 설정
 
 		InitializeSoundEffects(mainSceneSoundEffects);
@@ -54,27 +56,34 @@ public class SoundManager : Singleton<SoundManager>
 		}
 	}
 
-
 	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
+		// 싱글톤 인스턴스가 null인지 확인
+		if (instance == null)
+		{
+			Debug.LogError("SoundManager 인스턴스가 존재하지 않습니다.");
+			return;
+		}
+
+		// 이하의 코드는 instance가 null이 아닌 경우에만 실행됩니다.
 		foreach (var sceneBGM in sceneBGMs)
 		{
 			if (sceneBGM.sceneName == scene.name)
 			{
 				// 메인 배경음악 재생
-				Main_BGM.clip = sceneBGM.bgm;
-				Main_BGM.loop = true;
-				Main_BGM.Play();
+				instance.Main_BGM.clip = sceneBGM.bgm;
+				instance.Main_BGM.loop = true;
+				instance.Main_BGM.Play();
 
 				// 추가 사운드 재생 여부 확인 및 처리
 				if (sceneBGM.playAdditionalSound)
 				{
-					Additional_BGM.loop = true;
-					Additional_BGM.Play();
+					instance.Additional_BGM.loop = true;
+					instance.Additional_BGM.Play();
 				}
 				else
 				{
-					Additional_BGM.Stop();
+					instance.Additional_BGM.Stop();
 				}
 
 				break;
