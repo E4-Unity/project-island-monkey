@@ -98,7 +98,7 @@ namespace IslandMonkey
 			if (goodsFactory)
 			{
 				bool activate = buildingData.Definition.BuildingType == BuildingType.Voyage;
-				goodsFactory.Init(buildingData.Definition, activate);
+				goodsFactory.Init(buildingData.Definition.GetGoodsFactoryConfig(), activate);
 			}
 
 			// Building 스폰
