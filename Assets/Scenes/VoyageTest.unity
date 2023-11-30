@@ -1356,7 +1356,7 @@ MonoBehaviour:
   endPos: {fileID: 1260391241}
   minInterval: 0.5
   maxInterval: 2
-  speed: 3
+  speed: 0.7
 --- !u!1001 &395141006
 PrefabInstance:
   m_ObjectHideFlags: 0

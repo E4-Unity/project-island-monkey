@@ -11,15 +11,18 @@ public class VoyageTimer : MonoBehaviour
 	private void Start()
 	{
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
-
 		timer.fillAmount = voyageDataManager.TimeLeftRatio;
+		Debug.Log(voyageDataManager.Timer);
 		timer.DOFillAmount(0, voyageDataManager.Timer);
-
-		voyageDataManager.OnBuildingFinished += VoyageFinished;
-
-		if(voyageDataManager.CurrentBuildingData.IsBuildCompleted)
+		Debug.Log(voyageDataManager.Timer);
+		
+		if (voyageDataManager.Timer == 0)
 		{
 			VoyageFinished();
+		}
+		else
+		{
+			voyageDataManager.OnBuildingFinished += VoyageFinished;
 		}
 	}
 
@@ -28,4 +31,8 @@ public class VoyageTimer : MonoBehaviour
 		VoyageUIManager.Show<VoyageRewardPopup>(false);
 	}
 
+	private void OnDestroy()
+	{
+		voyageDataManager.OnBuildingFinished -= VoyageFinished;
+	}
 }

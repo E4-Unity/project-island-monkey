@@ -67,7 +67,7 @@ public class VoyageUIManager : MonoBehaviour
 		s_instance = this;
 	}
 
-	private void Start()
+	private void OnEnable()
 	{
 		for(int i = 0; i < popups.Length; i++)
 		{
