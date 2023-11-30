@@ -39,7 +39,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Crocked: 3
-    - _OutlineThick: 0.025
+    - _OutlineThick: 0.012
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
