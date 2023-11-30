@@ -13,8 +13,9 @@ namespace IslandMonkey.MVVM
 
 		private GoodsManager goodsManager; // 굿즈 매니저에 대한 참조를 저장합니다.
 
-		void Start()
+		protected override void Start()
 		{
+			base.Start();
 			goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		}
 		public int Gold

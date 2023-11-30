@@ -1,5 +1,6 @@
 using System;
 using IslandMonkey.MVVM;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace IslandMonkey
@@ -32,6 +33,7 @@ namespace IslandMonkey
 			private set
 			{
 				SetField(ref goodsSaveData.Gold, Mathf.Max(0, value));
+				OnGoodsUpdated?.Invoke(GoodsType.Gold);
 				DataManager.SaveData(this);
 			}
 		}
@@ -42,6 +44,7 @@ namespace IslandMonkey
 			private set
 			{
 				SetField(ref goodsSaveData.Banana, Mathf.Max(0, value));
+				OnGoodsUpdated?.Invoke(GoodsType.Banana);
 				DataManager.SaveData(this);
 			}
 		}
@@ -52,9 +55,13 @@ namespace IslandMonkey
 			private set
 			{
 				SetField(ref goodsSaveData.Clam, Mathf.Max(0, value));
+				OnGoodsUpdated?.Invoke(GoodsType.Clam);
 				DataManager.SaveData(this);
 			}
 		}
+
+		/* Event */
+		public event Action<GoodsType> OnGoodsUpdated;
 
 		void Awake()
 		{

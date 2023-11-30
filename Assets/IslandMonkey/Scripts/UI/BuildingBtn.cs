@@ -43,13 +43,6 @@ public class BuildingBtn : MonoBehaviour
 			int index = i;
 			buildingButtons[i].onClick.AddListener(() => OnBuildingButtonClicked(index));
 		}
-
-		// UI 업데이트
-		for (int i = 0; i < buildingButtons.Count; i++)
-		{
-			if(buildingManager.IsBuildingExist(i))
-				UpdateBuildingUI(i);
-		}
 	}
 
 	void OnCutSceneEnd_Event()
@@ -168,33 +161,5 @@ public class BuildingBtn : MonoBehaviour
 
 		// 건설 요청
 		placementManager.RequestSpawnBuilding(buttonIndex, spawnImmediately);
-
-		UpdateBuildingUI(buttonIndex);
-	}
-
-	private void UpdateBuildingUI(int buttonIndex)
-	{
-		buildingButtons[buttonIndex].gameObject.SetActive(false); // 해당 건물 버튼 비활성화
-		finList[buttonIndex].SetActive(true); // 완료된 건물 UI 활성화
-	}
-
-	private void ResetUI()
-	{
-		// 모든 건물 버튼을 활성화하고, 완료된 건물 UI를 비활성화합니다.
-		for (int i = 0; i < buildingButtons.Count; i++)
-		{
-			buildingButtons[i].gameObject.SetActive(true);
-			if (i < finList.Count)
-			{
-				finList[i].SetActive(false);
-			}
-		}
-
-		// PlayerPrefs에서 저장된 건물 완성 정보를 삭제합니다.
-		for (int i = 0; i < buildingButtons.Count; i++)
-		{
-			PlayerPrefs.DeleteKey("BuildingCompleted_" + i);
-		}
-		PlayerPrefs.Save();
 	}
 }

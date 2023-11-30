@@ -19,6 +19,8 @@ MonoBehaviour:
     type: 3}
   buildingTime: 180
   activeTime: 72
+  buildCost: 4000
+  buildCostGoodsType: 1
   goodsIncome: 601
   goodsProducingInterval: 45
   goodsPopupInterval: 6

@@ -27,36 +27,29 @@ namespace IslandMonkey
 	/// </summary>
 	public class BuildingManager : MonoBehaviour, DataManager.ISavable<BuildingSaveData>
 	{
+		[SerializeField] BuildingDefinition[] defaultBuildings;
+
 		BuildingSaveData buildingSaveData;
-		Dictionary<int, BuildingData> buildingDataBase;
+		Dictionary<int, BuildingData> cachedData;
+		Dictionary<int, BuildingDefinition> cachedDefinition;
 
 		public List<BuildingData> BuildingDataList => buildingSaveData.BuildingDataList;
 
 		void Awake()
 		{
+			// 저장된 데이터 로드
 			var saveData = DataManager.LoadData(this);
-			if (saveData is null)
-			{
-				buildingSaveData = new BuildingSaveData();
-				buildingDataBase = new Dictionary<int, BuildingData>();
-			}
-			else
-			{
-				buildingSaveData = saveData;
+			buildingSaveData = saveData ?? new BuildingSaveData();
 
-				buildingDataBase = new Dictionary<int, BuildingData>(saveData.BuildingDataList.Count);
-				foreach (var buildingData in saveData.BuildingDataList)
-				{
-					buildingDataBase.Add(buildingData.Definition.ID, buildingData);
-				}
-			}
+			// 초기화
+			Init();
 		}
 
 		public BuildingData GetBuildingData(int index)
 		{
 			if (IsBuildingExist(index))
 			{
-				return buildingDataBase[index];
+				return cachedData[index];
 			}
 
 			return null;
@@ -68,15 +61,64 @@ namespace IslandMonkey
 		}
 
 		// TODO 인덱스 캐싱
-		public bool IsBuildingExist(int index) => buildingDataBase.ContainsKey(index);
+		public bool IsBuildingExist(int index) => index >= 0 && (cachedData.ContainsKey(index) || cachedDefinition.ContainsKey(index));
+
+		public bool IsBuildingExist(BuildingDefinition definition) =>
+			definition is not null && IsBuildingExist(definition.ID);
 
 		public void RegisterBuildingData(BuildingData buildingData)
 		{
 			if (buildingData is null) return;
 
+			// 데이터 추가 및 캐싱
 			buildingSaveData.BuildingDataList.Add(buildingData);
+			CachingBuildingData(buildingData);
+
+			// 데이터 저장
 			DataManager.SaveData(this);
 		}
+
+		void Init()
+		{
+			// 저장된 데이터 처리
+			cachedData = new Dictionary<int, BuildingData>(BuildingDataList.Count);
+			CachingBuildingDataList(BuildingDataList);
+
+			// 기본 건물 캐싱
+			cachedDefinition = new Dictionary<int, BuildingDefinition>(defaultBuildings.Length);
+			CachingBuildingDefinitionList(defaultBuildings);
+		}
+
+		void CachingBuildingDataList(IEnumerable<BuildingData> dataList)
+		{
+			foreach (var data in dataList)
+			{
+				CachingBuildingData(data);
+			}
+		}
+
+		void CachingBuildingData(BuildingData data)
+		{
+			if (data is null || !data.IsValid) return;
+
+			cachedData.Add(data.Definition.ID, data);
+		}
+
+		void CachingBuildingDefinitionList(IEnumerable<BuildingDefinition> definitionList)
+		{
+			foreach (var definition in definitionList)
+			{
+				CachingBuildingDefinition(definition);
+			}
+		}
+
+		void CachingBuildingDefinition(BuildingDefinition definition)
+		{
+			if (definition is null) return;
+
+			cachedDefinition.Add(definition.ID, definition);
+		}
+
 
 		/* ISavable 인터페이스 구현 */
 		public const string SaveFileName = "BuildingSaveData.json";
