@@ -339,32 +339,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainSceneEffects:
-  - effectName: Smoke 02
+  - effectType: 0
     effectPrefab: {fileID: 3729895299785127905, guid: 0908d96e5c625cc418934d87688a806e,
       type: 3}
-  - effectName: FX_Desktop_Element_Smoke_01
+  - effectType: 1
     effectPrefab: {fileID: 1282857370291112, guid: dfc5c4001c2153842a4ecade30453ab6,
       type: 3}
-  - effectName: Smoke 01
+  - effectType: 2
     effectPrefab: {fileID: 7840795379530326231, guid: 95657ffa43b17824eab693a7566d7344,
       type: 3}
-  - effectName: Smoke 10
+  - effectType: 3
     effectPrefab: {fileID: 3162715924553722476, guid: 596ad2a7ed4473242bb9879482b02f12,
       type: 3}
-  - effectName: Smoke 08
+  - effectType: 4
     effectPrefab: {fileID: 2965135308339976987, guid: 801ed9f01ab8ca24aa16bb58dc3db7ab,
       type: 3}
-  - effectName: FX_Mobile_Element_Buff_Base_00
+  - effectType: 5
     effectPrefab: {fileID: 1425512847686216, guid: 4d5b6f75a19693d4286f892550108f7d,
       type: 3}
-  - effectName: Flash_star_ellow_green
+  - effectType: 6
     effectPrefab: {fileID: 1449242181322416601, guid: 052d5f6cf7d3ebc44bba49fbe653f9a8,
       type: 3}
   voyageSceneEffects:
-  - effectName: Smoke 09
+  - effectType: 7
     effectPrefab: {fileID: 2702705411672854768, guid: 817ab03994bf7ee4fa1e82b5bedb9ef5,
       type: 3}
-  - effectName: Smoke 05
+  - effectType: 8
     effectPrefab: {fileID: 8382174431396970368, guid: ee62108b64dba5241858cab3ff967cd5,
       type: 3}
 --- !u!1 &7618300939546973134

@@ -40,10 +40,9 @@ public class EffectManager : Singleton<EffectManager>
 	{
 		foreach (var effect in effectList)
 		{
-			if (!effects.ContainsKey(effect.effectType))
-			{
-				effects[effect.effectType] = effect.effectPrefab;
-			}
+			if(!effect.effectPrefab) continue;
+
+			effects.TryAdd(effect.effectType, effect.effectPrefab);
 		}
 	}
 
@@ -55,7 +54,9 @@ public class EffectManager : Singleton<EffectManager>
 		}
 		else
 		{
+#if UNITY_EDITOR
 			Debug.LogWarning("이 이펙트에 오류: " + effectType);
+#endif
 		}
 	}
 }
