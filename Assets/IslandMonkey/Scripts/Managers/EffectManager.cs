@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class EffectManager : Singleton<EffectManager>
 {
+	// 이펙트 유형을 정의하는 enum
+	public enum EffectType
+	{
+		Smoke_02,
+		FX_Desktop_Element_Smoke_01,
+		Smoke_01,
+		Smoke_10,
+		Smoke_08,
+		FX_Mobile_Element_Buff_Base_00,
+		Flash_star_ellow_green,
+		Smoke_09,
+		Smoke_05
+	}
+
 	[Serializable]
 	public class SceneEffect
 	{
-		public string effectName;
+		public EffectType effectType; // enum 타입으로 변경
 		public GameObject effectPrefab; // 이펙트 프리팹
 	}
 
 	public List<SceneEffect> mainSceneEffects; // 메인씬 이펙트 리스트
 	public List<SceneEffect> voyageSceneEffects; // 항해씬 이펙트 리스트
 
-	private Dictionary<string, GameObject> effects = new Dictionary<string, GameObject>();
+	private Dictionary<EffectType, GameObject> effects = new Dictionary<EffectType, GameObject>();
 
 	private void Awake()
 	{
@@ -26,22 +40,22 @@ public class EffectManager : Singleton<EffectManager>
 	{
 		foreach (var effect in effectList)
 		{
-			if (!effects.ContainsKey(effect.effectName))
+			if (!effects.ContainsKey(effect.effectType))
 			{
-				effects[effect.effectName] = effect.effectPrefab;
+				effects[effect.effectType] = effect.effectPrefab;
 			}
 		}
 	}
 
-	public void PlayEffect(string effectName, Vector3 position)
+	public void PlayEffect(EffectType effectType, Vector3 position)
 	{
-		if (effects.TryGetValue(effectName, out GameObject effectPrefab))
+		if (effects.TryGetValue(effectType, out GameObject effectPrefab))
 		{
 			Instantiate(effectPrefab, position, Quaternion.identity);
 		}
 		else
 		{
-			Debug.LogWarning("이 이펙트에 오류: " + effectName);
+			Debug.LogWarning("이 이펙트에 오류: " + effectType);
 		}
 	}
 }
