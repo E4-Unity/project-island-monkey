@@ -14,7 +14,7 @@ public class VoyageBackgroundManager : MonoBehaviour
 
 	[SerializeField] float minInterval = 0.5f;
 	[SerializeField] float maxInterval = 2;
-	[SerializeField] float speed = 5;
+	[SerializeField] float speed = 2;
 
 	float randomInterval; //스폰 간격
 	float randomX; //스폰 위치

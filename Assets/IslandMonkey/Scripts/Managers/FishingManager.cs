@@ -116,6 +116,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			yield return new WaitForSeconds(overTime);
 			Debug.Log("조개가 물었다!");
 			fishStatus = 3;
+			Handheld.Vibrate();
 
 			//파동 이펙트
 			_waveEffect = Instantiate(waveEffect);
