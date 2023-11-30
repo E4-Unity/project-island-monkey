@@ -8,8 +8,9 @@ namespace IslandMonkey
 	public enum BuildScene
 	{
 		None = -1,
-		Main = 0,
-		Voyage = 1
+		Title = 0,
+		Main = 1,
+		Voyage = 2
 	}
 	public class SceneLoadingManager : GenericMonoSingleton<SceneLoadingManager>
 	{
