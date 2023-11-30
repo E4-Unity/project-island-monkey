@@ -1,0 +1,15 @@
+diff a/Assets/IslandMonkey/Scripts/Fundamentals/GoodsFactory.cs b/Assets/IslandMonkey/Scripts/Fundamentals/GoodsFactory.cs	(rejected hunks)
+@@ -1,4 +1,4 @@
+-﻿using System;
++using System;
+ using System.Collections;
+ using UnityEngine;
+ 
+@@ -126,6 +126,7 @@
+ 
+ 			ResetTimer();
+ 			EarnGoods();
++			SoundManager.instance.PlaySoundEffect("Acquisition_Goods");
+ 		}
+ 
+ 		IEnumerator Producing()
