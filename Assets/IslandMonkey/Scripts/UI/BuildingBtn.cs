@@ -142,7 +142,8 @@ public class BuildingBtn : MonoBehaviour
 		// 건설 없이 건물 데이터만 저장
 		RequestSpawnBuilding(buttonIndex, false);
 
-		yield return new WaitForSeconds(10f); // 연출 지연
+		// TODO 리팩토링
+		yield return new WaitForSeconds(11f); // 연출 지연
 
 		// TODO BuildingSpawnManager 에서 처리
 		// 원숭이 타입
