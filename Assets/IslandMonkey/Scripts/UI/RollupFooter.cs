@@ -28,4 +28,10 @@ public class RollupFooter : MonoBehaviour
 		                   (rollupButtonRectTransform.anchoredPosition.y == 0 ? buttonTargetY : -buttonTargetY);
 		rollupButtonRectTransform.DOAnchorPosY(newButtonY, duration);
 	}
+	private void OnDestroy()
+	{
+		// 이 오브젝트에 대한 모든 DOTween 애니메이션을 즉시 완료된 상태로 중지하고 제거합니다.
+		footer.DOKill(true);
+		rollupButtonRectTransform.DOKill(true);
+	}
 }

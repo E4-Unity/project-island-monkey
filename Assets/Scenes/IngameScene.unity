@@ -374,7 +374,7 @@ MonoBehaviour:
   minZoom: 1
   maxZoom: 2.7
   dragLimitX: {x: -6, y: 6}
-  dragLimitY: {x: 1, y: 11}
+  dragLimitY: {x: 1, y: 7}
 --- !u!1 &1251899072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7184854235407046499, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
