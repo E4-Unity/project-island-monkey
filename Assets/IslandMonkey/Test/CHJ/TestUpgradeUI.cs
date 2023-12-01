@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TestUpgradeUI : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class TestUpgradeUI : MonoBehaviour
 	[SerializeField] private GameObject DrawMachinePanel;
 
 	[SerializeField] private List<GameObject> buildingIconImages; // 아이콘 이미지 리스트
+	[SerializeField] private Image iconDisplay; // UI에서 아이콘을 표시할 Image 컴포넌트
 
 	private void Update()
 	{
@@ -65,6 +67,13 @@ public class TestUpgradeUI : MonoBehaviour
 			{
 				// 'Upgrade' 이름을 가진 자식들을 활성화합니다.
 				SetActiveForChildWithName(hitObject, "Upgrade", true);
+				ActivateBuildingImageWithTag(hitObject);
+			}
+			else if (hitObject.name == "icon_building")
+			{
+				ActivateBuildingImageWithTag(hitObject);
+				upgradeBuildingPanel.SetActive(true);
+				ActivateBuildingImageWithTag(hitObject);
 			}
 
 			else
@@ -100,6 +109,7 @@ public class TestUpgradeUI : MonoBehaviour
 		}
 	}
 
+
 	private void DeactivateAllPanels()
 	{
 		// 모든 패널을 비활성화하는 메소드
@@ -115,6 +125,26 @@ public class TestUpgradeUI : MonoBehaviour
 			{
 				SetActiveForChildWithName(obj, "Upgrade", false);
 			}
+		}
+	}
+	private void ActivateBuildingImageWithTag(GameObject hitObject)
+	{
+		// 모든 이미지 비활성화
+		foreach (var icon in buildingIconImages)
+		{
+			icon.SetActive(false);
+		}
+
+		// 히트된 오브젝트의 태그에 따라 적절한 이미지 활성화
+		switch (hitObject.tag)
+		{
+			case "Island FireStation":
+				iconDisplay.sprite = buildingIconImages[0].GetComponent<Image>().sprite; // FireStation 이미지
+				break;
+			case "Island IceRink":
+				iconDisplay.sprite = buildingIconImages[1].GetComponent<Image>().sprite; // IceRink 이미지
+				break;
+			// 다른 태그에 대한 케이스 추가
 		}
 	}
 }
