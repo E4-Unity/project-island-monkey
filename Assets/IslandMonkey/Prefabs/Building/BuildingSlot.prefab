@@ -106,6 +106,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.92, y: 2, z: 0.2}
   m_Center: {x: 0, y: -0.00000047683716, z: 0}
+--- !u!1 &2589379354345138585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5097140739158745902}
+  m_Layer: 0
+  m_Name: Popup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5097140739158745902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2589379354345138585}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7483347461258139924}
+  m_Father: {fileID: 5646787815300271247}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3420824251539141103
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +170,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7373382753136772958}
-  - {fileID: 9157735702149875613}
+  - {fileID: 5097140739158745902}
   - {fileID: 427421226196836007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -173,10 +205,8 @@ MonoBehaviour:
   popupImage: {fileID: 5865351004218875479}
   autoConfig: 0
   defaultConfig: {fileID: 0}
-  goldAcquireFx: {fileID: 2241982727112881482, guid: 3f67cd78fe579fa49a9878a730eeed65,
-    type: 3}
-  targetPositionTransform: {fileID: 323595997050026817, guid: 7d42f1555e135244c86cd065646c0dc7,
-    type: 3}
+  target: {fileID: 0}
+  prefabItem: {fileID: 0}
 --- !u!1 &4825386130830293948
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,8 +233,8 @@ Transform:
   m_GameObject: {fileID: 4825386130830293948}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.075, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.03, y: 0.075, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7483347461258139924}
@@ -272,8 +302,9 @@ GameObject:
   - component: {fileID: 7483347461258139924}
   - component: {fileID: 4265120818503633589}
   - component: {fileID: 835498528557375177}
+  - component: {fileID: 7395247973972428474}
   m_Layer: 0
-  m_Name: GoldPopup
+  m_Name: Background
   m_TagString: GoldPopup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,11 +320,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2584085803614002455}
-  m_Father: {fileID: 9157735702149875613}
+  m_Father: {fileID: 5097140739158745902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4265120818503633589
 SpriteRenderer:
@@ -336,7 +367,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2d179b9e2d46740478777c55d10e75f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72ad2c931819c654092427ae07671ea1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -368,6 +399,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.76, y: 1.36, z: 0.2}
   m_Center: {x: 0, y: -0.00000047683716, z: 0}
+--- !u!114 &7395247973972428474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865351004218875479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c79e7b93e0c8d44fb08857fe889322a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6124383015184290599}
+        m_TargetAssemblyTypeName: IslandMonkey.GoodsFactory, Assembly-CSharp
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6414923498700969238
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,88 +459,6 @@ Transform:
   - {fileID: 6597734995508554014}
   m_Father: {fileID: 5646787815300271247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6681729551960626225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9157735702149875613}
-  - component: {fileID: 1366508277356831950}
-  - component: {fileID: 1250975309942254089}
-  m_Layer: 0
-  m_Name: GoldEvent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9157735702149875613
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6681729551960626225}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7483347461258139924}
-  m_Father: {fileID: 5646787815300271247}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1366508277356831950
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6681729551960626225}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1250975309942254089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6681729551960626225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c79e7b93e0c8d44fb08857fe889322a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnClickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6124383015184290599}
-        m_TargetAssemblyTypeName: IslandMonkey.GoodsFactory, Assembly-CSharp
-        m_MethodName: OnClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8061548219613043080
 GameObject:
   m_ObjectHideFlags: 0

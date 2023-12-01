@@ -16,4 +16,4 @@ MonoBehaviour:
   income: 601
   producingInterval: 45
   popupInterval: 6
-  popupOffset: {x: 1.52, y: -1.93, z: 0}
+  popupOffset: {x: 0.175, y: -0.167, z: 0}
