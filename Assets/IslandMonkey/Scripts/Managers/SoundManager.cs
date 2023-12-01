@@ -2,16 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
 	public AudioSource Main_BGM;
 	public AudioSource Additional_BGM;
-
-	// 볼륨 슬라이더를 위한 public 변수 추가
-	public Slider mainBGMSlider;
-	public Slider additionalBGMSlider;
+	public AudioClip voyageWaveClip;
 
 	[Serializable]
 	public class SceneBGM
@@ -22,7 +18,7 @@ public class SoundManager : Singleton<SoundManager>
 	}
 
 	public List<SceneBGM> sceneBGMs;
-	public AudioClip voyageWaveClip;
+
 
 	[Serializable]
 	public class SceneSoundEffect
@@ -48,13 +44,9 @@ public class SoundManager : Singleton<SoundManager>
 		InitializeSoundEffects(mainSceneSoundEffects);
 		InitializeSoundEffects(voyageSceneSoundEffects);
 
-		// 볼륨 슬라이더 초기화
-		mainBGMSlider.value = PlayerPrefs.GetFloat("MainBGMVolume", 1f);
-		additionalBGMSlider.value = PlayerPrefs.GetFloat("AdditionalBGMVolume", 1f);
-
-		// 슬라이더의 OnValueChanged 이벤트에 메소드 연결
-		mainBGMSlider.onValueChanged.AddListener(HandleMainBGMVolumeChange);
-		additionalBGMSlider.onValueChanged.AddListener(HandleAdditionalBGMVolumeChange);
+		// 볼륨 설정 초기화
+		Main_BGM.volume = PlayerPrefs.GetFloat("MainBGMVolume", 1f);
+		Additional_BGM.volume = PlayerPrefs.GetFloat("AdditionalBGMVolume", 1f);
 	}
 
 	private void InitializeSoundEffects(List<SceneSoundEffect> soundEffectList)
@@ -101,12 +93,12 @@ public class SoundManager : Singleton<SoundManager>
 		}
 		else
 		{
-			Debug.LogWarning("이 사운드 이펙트에 오류: " + soundName);
+			Debug.LogWarning("사운드 이펙트를 찾을 수 없습니다: " + soundName);
 		}
 	}
 
 	// 메인 BGM 볼륨 조절 메소드
-	private void HandleMainBGMVolumeChange(float volume)
+	public void SetMainBGMVolume(float volume)
 	{
 		Main_BGM.volume = volume;
 		PlayerPrefs.SetFloat("MainBGMVolume", volume);
@@ -114,7 +106,7 @@ public class SoundManager : Singleton<SoundManager>
 	}
 
 	// 추가 BGM 볼륨 조절 메소드
-	private void HandleAdditionalBGMVolumeChange(float volume)
+	public void SetAdditionalBGMVolume(float volume)
 	{
 		Additional_BGM.volume = volume;
 		PlayerPrefs.SetFloat("AdditionalBGMVolume", volume);

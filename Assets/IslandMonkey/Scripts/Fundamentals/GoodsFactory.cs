@@ -135,6 +135,13 @@ namespace IslandMonkey
 			ResetTimer();
 			EarnGoods();
 			SoundManager.instance.PlaySoundEffect("Acquisition_Goods");
+
+			// Example 스크립트 활성화
+			Example exampleScript = FindObjectOfType<Example>();
+			if (exampleScript != null)
+			{
+				exampleScript.ActivateItemFx();
+			}
 		}
 
 		IEnumerator Producing()
