@@ -8,6 +8,23 @@ public class VoyageTimer : MonoBehaviour
 	[SerializeField] Image timer;
 
 	VoyageDataManager voyageDataManager;
+
+	void OnEnable()
+	{
+		if (Application.isEditor) //fix dotween's live recompile speed issue
+		{
+			float someValue = 0f;
+			float startTime = Time.time;
+			DOTween.To(() => someValue, x => someValue = x, 1f, 1f).OnComplete(() =>
+			{
+				float timeScale = Time.time - startTime;
+				Debug.Log($"Dotween TimeScale: {Time.time - startTime}");
+				if (timeScale < 0.9f)
+					DOTween.timeScale = timeScale;
+			});
+		}
+	}
+
 	private void Start()
 	{
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
