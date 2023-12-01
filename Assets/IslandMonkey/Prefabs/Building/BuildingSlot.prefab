@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5567650292712216947
 Transform:
   m_ObjectHideFlags: 0
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 5646787815300271247}
   - component: {fileID: 1531532135024880205}
   - component: {fileID: 6124383015184290599}
+  - component: {fileID: -5681769970007171442}
   m_Layer: 0
   m_Name: BuildingSlot
   m_TagString: Untagged
@@ -207,6 +208,27 @@ MonoBehaviour:
   defaultConfig: {fileID: 0}
   target: {fileID: 0}
   prefabItem: {fileID: 0}
+--- !u!65 &-5681769970007171442
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420824251539141103}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4825386130830293948
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,11 +459,11 @@ GameObject:
   - component: {fileID: 427421226196836007}
   m_Layer: 0
   m_Name: Upgrade
-  m_TagString: Untagged
+  m_TagString: iconBuilding
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &427421226196836007
 Transform:
   m_ObjectHideFlags: 0
@@ -559,7 +581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6597734995508554014
 Transform:
   m_ObjectHideFlags: 0

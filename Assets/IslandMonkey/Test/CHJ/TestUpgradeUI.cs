@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +11,8 @@ public class TestUpgradeUI : MonoBehaviour
 
 	[SerializeField] private GameObject MonkeyBankPopupPanel;
 	[SerializeField] private GameObject DrawMachinePanel;
+
+	[SerializeField] private List<GameObject> buildingIconImages; // 아이콘 이미지 리스트
 
 	private void Update()
 	{
@@ -58,6 +61,12 @@ public class TestUpgradeUI : MonoBehaviour
 			{
 				DrawMachinePanel.SetActive(true);
 			}
+			else if (hitObject.name == "BuildingSlot(Clone)")
+			{
+				// 'Upgrade' 이름을 가진 자식들을 활성화합니다.
+				SetActiveForChildWithName(hitObject, "Upgrade", true);
+			}
+
 			else
 			{
 				// 아무것도 클릭되지 않았을 때 모든 패널을 비활성화합니다.
@@ -65,16 +74,47 @@ public class TestUpgradeUI : MonoBehaviour
 				upgradeBuildingPanel.SetActive(false);
 				MonkeyBankPopupPanel.SetActive(false);
 				DrawMachinePanel.SetActive(false);
+				// 'Upgrade' 이름을 가진 자식들을 활성화합니다.
+				SetActiveForChildWithName(hitObject, "Upgrade", true);
+				DeactivateAllPanels();
 			}
 		}
 		else
 		{
 			Debug.Log("No hit"); // 레이캐스트가 아무것도 맞추지 않았을 때 로그로 출력
-								 // 레이캐스트가 아무것도 맞추지 않았을 때 모든 패널을 비활성화합니다.
-			upgradePool.SetActive(false);
-			upgradeBuildingPanel.SetActive(false);
-			MonkeyBankPopupPanel.SetActive(false);
-			DrawMachinePanel.SetActive(false);
+			
+		}
+
+
+	}
+
+	private void SetActiveForChildWithName(GameObject parent, string childName, bool active)
+	{
+		Transform[] children = parent.GetComponentsInChildren<Transform>(true);
+		foreach (Transform child in children)
+		{
+			if (child.name == childName)
+			{
+				child.gameObject.SetActive(active);
+			}
+		}
+	}
+
+	private void DeactivateAllPanels()
+	{
+		// 모든 패널을 비활성화하는 메소드
+		upgradePool.SetActive(false);
+		upgradeBuildingPanel.SetActive(false);
+		MonkeyBankPopupPanel.SetActive(false);
+		DrawMachinePanel.SetActive(false);
+
+		GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+		foreach (GameObject obj in allObjects)
+		{
+			if (obj.name == "BuildingSlot(Clone)")
+			{
+				SetActiveForChildWithName(obj, "Upgrade", false);
+			}
 		}
 	}
 }
