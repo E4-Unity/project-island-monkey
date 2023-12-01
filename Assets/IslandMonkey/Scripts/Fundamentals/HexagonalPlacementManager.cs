@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using IslandMonkey.AssetCollections;
+using Unity.AI.Navigation;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ namespace IslandMonkey
 	{
 		[Tooltip("칸 간격")] [SerializeField] float baseDistance = 1.75f;
 
+		[SerializeField] NavMeshSurface navMeshSurface;
 		[SerializeField] BuildingDefinition[] buildings;
 		[SerializeField] GameObject buildingSlotPrefab;
 		[SerializeField] Transform groundSlot;
@@ -58,6 +60,8 @@ namespace IslandMonkey
 				SpawnBuilding(buildingData, true);
 			}
 
+			RefreshNavMesh();
+
 			if (voyageDataManager.ShouldBuild)
 			{
 				var buildingData = buildingManager.GetBuildingData(voyageDataManager.CurrentBuildingData.Definition.ID);
@@ -89,19 +93,6 @@ namespace IslandMonkey
 			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
 			Vector3 spawnPosition = new Vector3(pos.x, 0, pos.y);
 
-			if (!disableBuildEffects)
-			{
-				// TODO 리팩토링
-				// 카메라 이동
-				Vector3 cameraOffset = new Vector3(0, 6.14f, -11);
-
-				// Hex Index에 대응하는 좌표 구하기
-				mainCamera.transform.position = cameraOffset + spawnPosition;
-
-				// TODO 건설 이펙트 스폰
-				EffectManager.instance.PlayEffect(EffectManager.EffectType.BuildEffect, spawnPosition);
-			}
-
 			// Building Slot 스폰
 			if (!buildingSlotPrefab) return;
 			GameObject buildingSlot =
@@ -119,6 +110,22 @@ namespace IslandMonkey
 			// Building 스폰
 			if (!buildingData.Definition.BuildingPrefab) return;
 			GameObject buildingInstance = Instantiate(buildingData.Definition.BuildingPrefab, buildingSlot.transform);
+
+			if (!disableBuildEffects)
+			{
+				// TODO 리팩토링
+				// 카메라 이동
+				Vector3 cameraOffset = new Vector3(0, 6.14f, -11);
+
+				// Hex Index에 대응하는 좌표 구하기
+				mainCamera.transform.position = cameraOffset + spawnPosition;
+
+				// TODO 건설 이펙트 스폰
+				EffectManager.instance.PlayEffect(EffectManager.EffectType.BuildEffect, spawnPosition);
+
+				// 네브 메시 굽기
+				RefreshNavMesh();
+			}
 
 			// TODO 리팩토링 필요
 			// 특별 건물 활성화
@@ -194,6 +201,9 @@ namespace IslandMonkey
 			// 스폰
 			SpawnBuilding(newBuildingData);
 		}
+
+		/* Method */
+		void RefreshNavMesh() => navMeshSurface.BuildNavMesh();
 
 		void DisableHexIndex(int hexIndex)
 		{

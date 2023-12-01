@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDistance: 1.75
+  navMeshSurface: {fileID: 2620638593936650693}
   buildings:
   - {fileID: 11400000, guid: c0aae107a60888743a43cbb624f11645, type: 2}
   - {fileID: 11400000, guid: 995614fafaeb70c41a6e8bede323a117, type: 2}
