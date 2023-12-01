@@ -129,24 +129,10 @@ namespace IslandMonkey
 			goodsManager.EarnGoods(goodsType, income);
 		}
 
-		public void OnClicked(PointerEventData eventData)
+		public void OnClicked()
 		{
 			if (!popupImage.activeSelf) return;
-
-			// world 좌표를 클릭된 지점의 UI 좌표로 변환
-			Vector2 clickedPosition;
-			RectTransformUtility.ScreenPointToLocalPointInRectangle(
-				popupImage.transform.parent as RectTransform,
-				eventData.position,
-				eventData.pressEventCamera,
-				out clickedPosition);
-
 			ResetTimer();
-
-			// clickedPosition을 타겟으로 하는 Tween을 사용하여 이미지 이동 구현
-			var itemFx = GameObject.Instantiate<ItemAcquireFx>(prefabItem, this.transform);
-			itemFx.Explosion(clickedPosition, target.position, 150.0f);
-
 			EarnGoods();
 			SoundManager.instance.PlaySoundEffect("Acquisition_Goods");
 		}
