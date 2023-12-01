@@ -56,6 +56,7 @@ public class ClamPopup : Popup
 		GetButton.onClick.AddListener(() => {
 			VoyageUIManager.Hide();
 			goodsManager.EarnGoods(GoodsType.Clam, clamNum*2 + 1);
+			SoundManager.instance.PlaySoundEffect("Button_Click");
 		});
 	}
 

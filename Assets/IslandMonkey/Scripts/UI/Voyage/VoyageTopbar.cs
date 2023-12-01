@@ -9,6 +9,10 @@ public class VoyageTopbar : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-		storageButton.onClick.AddListener(() => VoyageUIManager.Show<StoragePopup>(true));
+		storageButton.onClick.AddListener(() =>
+		{
+			VoyageUIManager.Show<StoragePopup>(true);
+			SoundManager.instance.PlaySoundEffect("Button_Click");
+		});
     }
 }

@@ -8219,7 +8219,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC989\uC2DC \uC720\uD559 \uAC74\uBB3C\uC774 \uC0DD\uC131\uB3FC\uC694!"
+  m_text: "\uC18C\uBC29\uC22D\uC774 \uC720\uD559 \uC885\uB8CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24da22ee4ea6ba94c84f3e13620eeecc, type: 2}
   m_sharedMaterial: {fileID: 3612799562308904246, guid: 24da22ee4ea6ba94c84f3e13620eeecc,
