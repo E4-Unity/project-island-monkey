@@ -3023,7 +3023,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 900, y: 0}
+  m_AnchoredPosition: {x: 899, y: 0}
   m_SizeDelta: {x: 1800, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4953176809841717301
@@ -3802,6 +3802,23 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 5480463308475035225}
+          m_TargetAssemblyTypeName: Panel, Assembly-CSharp
+          m_MethodName: React
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: MonkeyBankRewardQuitBtn2
+    button: {fileID: 3076423901531497047}
+    onClickEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2587821814112233992}
           m_TargetAssemblyTypeName: Panel, Assembly-CSharp
           m_MethodName: React
           m_Mode: 1
@@ -6248,32 +6265,32 @@ PrefabInstance:
     - target: {fileID: 2540914127212827853, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2540914127212827853, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2540914127212827853, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4128077412965772068, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4128077412965772068, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4128077412965772068, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.0000008940697
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5533285066322492817, guid: a583c406eef78dd43bab54ba9a6db5fe,
         type: 3}

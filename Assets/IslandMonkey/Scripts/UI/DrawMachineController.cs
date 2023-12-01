@@ -60,6 +60,13 @@ public class DrawMachinePanel : MonoBehaviour
 			}
 		}
 
+		// 클릭된 선물 상자의 위치를 찾습니다.
+		if (index >= 0 && index < presentButtons.Length && presentButtons[index] != null)
+		{
+			Vector3 effectPosition = presentButtons[index].transform.position; // 버튼의 위치
+			EffectManager.instance.PlayUIEffect(EffectManager.EffectType.Flash_star_ellow_green, effectPosition);
+		}
+
 		// 골드 획득 로직을 실행합니다.
 		StartCoroutine(ShowGoldAcquired());
 	}

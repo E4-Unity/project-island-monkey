@@ -60,4 +60,18 @@ public class EffectManager : Singleton<EffectManager>
 #endif
 		}
 	}
+
+	public void PlayUIEffect(EffectManager.EffectType effectType, Vector3 position)
+	{
+		if (effects.TryGetValue(effectType, out GameObject effectPrefab))
+		{
+			GameObject effectInstance = Instantiate(effectPrefab, position, Quaternion.identity);
+			effectInstance.layer = LayerMask.NameToLayer("UI"); // "UI" 레이어로 변경
+		}
+		else
+		{
+			Debug.LogWarning("이 이펙트에 오류: " + effectType);
+		}
+	}
+
 }
