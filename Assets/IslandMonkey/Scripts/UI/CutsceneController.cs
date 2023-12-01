@@ -40,6 +40,7 @@ public class CutsceneController : MonoBehaviour
 					break;
 				case 2:
 					SoundManager.instance.PlaySoundEffect("Cutscene_3");
+					Handheld.Vibrate();
 					break;
 			}
 

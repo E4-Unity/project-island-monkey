@@ -1,65 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
 	[SerializeField] private float dragSpeed = 0.01f;
-	[SerializeField] private float zoomSpeed = 1f;
+	[SerializeField] private float zoomSpeed = 0.05f;
 	[SerializeField] private float minZoom = 5f;
 	[SerializeField] private float maxZoom = 15f;
-	[SerializeField] private Vector2 dragLimitX = new Vector2(-5f, 5f);
-	[SerializeField] private Vector2 dragLimitY = new Vector2(-5f, 5f);
+	[SerializeField] private Vector2 dragLimitX = new Vector2(-6f, 1f);
+	[SerializeField] private Vector2 dragLimitY = new Vector2(6f, 7f);
 
 	private Vector3 dragOrigin;
+	private Camera cam;
+	private float lastTouchDistance;
+
+	private void Awake()
+	{
+		cam = Camera.main;
+	}
 
 	void Update()
 	{
-#if UNITY_EDITOR || UNITY_STANDALONE
-		// PC에서의 마우스 드래그
-		HandleMouseInput();
-#endif
-
-#if UNITY_ANDROID
-		// 모바일 터치 드래그
-		HandleTouchInput();
-#endif
-
-		// 스크롤에 의한 카메라 줌 처리 (PC)
+		HandleInput();
 		HandleZoom();
 	}
 
-	private void HandleMouseInput()
+	private void HandleInput()
 	{
 		if (Input.GetMouseButtonDown(0))
 		{
-			dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			dragOrigin = cam.ScreenToWorldPoint(Input.mousePosition);
 		}
+
 		if (Input.GetMouseButton(0))
 		{
-			Vector3 difference = dragOrigin - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			Camera.main.transform.position = ClampCameraPosition(Camera.main.transform.position + difference);
-		}
-	}
-
-	private void HandleTouchInput()
-	{
-		if (Input.touchCount == 1)
-		{
-			Touch touch = Input.GetTouch(0);
-
-			if (touch.phase == TouchPhase.Moved)
-			{
-				Vector3 touchDeltaPosition = (Vector3)touch.deltaPosition * dragSpeed;
-				Camera.main.transform.position = ClampCameraPosition(Camera.main.transform.position - touchDeltaPosition);
-			}
+			Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(Input.mousePosition);
+			cam.transform.position = ClampCameraPosition(cam.transform.position + difference);
 		}
 	}
 
 	private void HandleZoom()
 	{
+		// PC에서는 마우스 스크롤 휠로 줌 처리
+#if UNITY_EDITOR || UNITY_STANDALONE
 		float scroll = Input.GetAxis("Mouse ScrollWheel");
-		Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - scroll * zoomSpeed, minZoom, maxZoom);
+		cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - scroll * (zoomSpeed * 1000), minZoom, maxZoom);
+#endif
+
+		// 안드로이드에서는 멀티터치 핀치 줌으로 줌 처리
+#if UNITY_ANDROID
+		if (Input.touchCount == 2)
+		{
+			Touch touchZero = Input.GetTouch(0);
+			Touch touchOne = Input.GetTouch(1);
+
+			// 각 터치의 이전 프레임에서의 위치를 찾습니다.
+			Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+			Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+			// 각 프레임 간의 벡터(거리)의 크기를 구합니다.
+			float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+			float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+			// 두 벡터 간의 거리 차이를 구합니다.
+			float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+			// 카메라 줌을 변경합니다.
+			cam.orthographicSize += deltaMagnitudeDiff * zoomSpeed;
+			cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
+		}
+#endif
 	}
 
 	private Vector3 ClampCameraPosition(Vector3 targetPosition)
