@@ -3777,8 +3777,8 @@ MonoBehaviour:
   - {fileID: 1070429219992538263}
   - {fileID: 6477687448968295177}
   - {fileID: 8288851989163537593}
-  - {fileID: 707020866069427776}
   - {fileID: 844240281693550173}
+  - {fileID: 707020866069427776}
   - {fileID: 3841404260705839174}
   - {fileID: 8713412350118078079}
   finList:
@@ -3823,6 +3823,8 @@ MonoBehaviour:
   upgradeBuildingPanel: {fileID: 7189323386407296187}
   MonkeyBankPopupPanel: {fileID: 3633622585383911274}
   DrawMachinePanel: {fileID: 4652443023514538049}
+  buildingIconImages: []
+  iconDisplay: {fileID: 0}
 --- !u!114 &4049931774579602586
 MonoBehaviour:
   m_ObjectHideFlags: 0

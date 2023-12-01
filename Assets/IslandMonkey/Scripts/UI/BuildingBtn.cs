@@ -94,7 +94,7 @@ public class BuildingBtn : MonoBehaviour
 				// 건설 패널 비활성화
 				buildingPanel.SetActive(false);
 
-				if (buttonIndex == 0 || buttonIndex == 4 || buttonIndex == 6)
+				if (buttonIndex == 0 || buttonIndex == 3 || buttonIndex == 6)
 				{
 					StartCoroutine(BuildingSequence(buttonIndex)); // 연출 시작
 				}
@@ -126,7 +126,7 @@ public class BuildingBtn : MonoBehaviour
 			case 0:
 				selectedType = MonkeyType.Basic;
 				break;
-			case 4:
+			case 3:
 				selectedType = MonkeyType.Barista;
 				break;
 			case 6:
