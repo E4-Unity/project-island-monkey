@@ -7,15 +7,16 @@ public class EffectManager : Singleton<EffectManager>
 	// 이펙트 유형을 정의하는 enum
 	public enum EffectType
 	{
-		Smoke_02,
-		FX_Desktop_Element_Smoke_01,
+		Smoke_01_2D,
+		Smoke_02_2D,
+		Smoke_10_2D,
 		Smoke_01,
-		Smoke_10,
-		Smoke_08,
-		FX_Mobile_Element_Buff_Base_00,
-		Flash_star_ellow_green,
-		Smoke_09,
+		Smoke_02,
 		Smoke_05,
+		Smoke_08,
+		Smoke_09,
+		FX_Desktop_Element_Smoke_01,
+		Flash_star_ellow_green,
 		BuildEffect
 	}
 
