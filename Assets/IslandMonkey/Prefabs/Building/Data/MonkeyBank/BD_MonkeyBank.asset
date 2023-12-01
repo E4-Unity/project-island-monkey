@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8775283b36909514db7c6c494667af8d, type: 3}
   m_Name: BD_MonkeyBank
   m_EditorClassIdentifier: 
-  enableTest: 0
+  goodsFactoryConfig: {fileID: 0}
   buildingID: 2
   buildingType: 3
   buildingPrefab: {fileID: 8673208496545699124, guid: f6e9a3ae556158f4f9ce892a00163c23,
     type: 3}
   buildingTime: -1
   activeTime: -1
-  buildCost: 8000
   buildCostGoodsType: 1
-  goodsIncome: -1
-  goodsProducingInterval: -1
-  goodsPopupInterval: -1
+  buildCost: 2000
+  enableTest: 0
