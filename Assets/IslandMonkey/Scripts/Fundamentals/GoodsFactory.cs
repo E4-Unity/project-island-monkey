@@ -22,6 +22,7 @@ namespace IslandMonkey
 			int Income { get; }
 			float ProducingInterval { get; }
 			float PopupInterval { get; }
+			Vector3 PopupOffset { get; }
 		}
 
 		/* Config */
@@ -49,10 +50,10 @@ namespace IslandMonkey
 		public event Action<int> OnGoodsProduced; // 스크립트 전용 이벤트
 
 		// clickedPosition 선언 및 초기화
-		private Vector2 clickedPosition = Vector2.zero; 
-												
-		[SerializeField] Transform target; 
-		[SerializeField] ItemAcquireFx prefabItem; 
+		private Vector2 clickedPosition = Vector2.zero;
+
+		[SerializeField] Transform target;
+		[SerializeField] ItemAcquireFx prefabItem;
 
 		void Start()
 		{
@@ -82,6 +83,9 @@ namespace IslandMonkey
 			{
 				Activate();
 			}
+
+			// TODO 임시
+			popupImage.transform.localPosition = config.PopupOffset;
 		}
 
 		public void Activate()
