@@ -26,6 +26,11 @@ public class CutsceneController : MonoBehaviour
 
 	IEnumerator PlayCutscenesSequence()
 	{
+		// 카메라 위치 변경
+		cutsceneCamera.transform.position = new Vector3(0, 6, -11);
+		cutsceneCamera.orthographicSize = 1; // Orthographic Size를 1로 설정
+
+		// 컷신 재생
 		cutscenesBG.SetActive(true);
 		int cutsceneIndex = 0;
 
@@ -61,9 +66,7 @@ public class CutsceneController : MonoBehaviour
 		yield return StartCoroutine(FadeToWhite(panelFadeImage, 1.25f));
 		cutscenesBG.SetActive(false);
 
-		// 카메라 위치 변경 및 추가 연출 실행
-		cutsceneCamera.transform.position = new Vector3(0, 6, -11);
-		cutsceneCamera.orthographicSize = 1; // Orthographic Size를 1로 설정
+		// 추가 연출 실행
 		smallCircle.gameObject.SetActive(true); // 원 UI 활성화
 
 		StartCoroutine(FadeToClear(panelFadeImage, 0.5f)); // 패널 페이드 아웃
