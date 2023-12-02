@@ -6,12 +6,12 @@ namespace IslandMonkey
 	{
 		public void GoToMainScene()
 		{
-			SceneLoadingManager.Instance.ChangeScene(BuildScene.Main);
+			SceneLoadingManager.Instance.ChangeScene(BuildScene.Main, SceneLoadingManager.ChangeSceneType.Animation);
 		}
 
 		public void GoToVoyageScene()
 		{
-			SceneLoadingManager.Instance.ChangeScene(BuildScene.Voyage);
+			SceneLoadingManager.Instance.ChangeScene(BuildScene.Voyage, SceneLoadingManager.ChangeSceneType.Animation);
 		}
 	}
 }

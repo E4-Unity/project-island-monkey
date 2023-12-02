@@ -149,7 +149,7 @@ public class BuildingBtn : MonoBehaviour
 		// 원숭이 타입
 		voyageDataManager.MonkeyType = selectedType;
 
-		SceneLoadingManager.Instance.ChangeScene(BuildScene.Voyage); // 항해 씬 넘어가기
+		SceneLoadingManager.Instance.ChangeScene(BuildScene.Voyage, SceneLoadingManager.ChangeSceneType.Animation); // 항해 씬 넘어가기
 	}
 
 	private void RequestSpawnBuilding(int buttonIndex, bool spawnImmediately = true)

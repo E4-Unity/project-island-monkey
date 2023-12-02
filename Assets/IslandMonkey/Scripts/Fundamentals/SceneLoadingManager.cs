@@ -15,6 +15,12 @@ namespace IslandMonkey
 	}
 	public class SceneLoadingManager : GenericMonoSingleton<SceneLoadingManager>
 	{
+		public enum ChangeSceneType
+		{
+			Fade,
+			Animation
+		}
+
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		static void GenerateSceneLoadingManager()
 		{
@@ -23,15 +29,23 @@ namespace IslandMonkey
 		}
 
 		[SerializeField] Image fadeImage;
+		[SerializeField] Image animationImage;
+
+		Animator animator;
+
 		[SerializeField] float fadeDelayTime = 0.3f;
 		[SerializeField] float fadeTime = 1f;
 		bool isLoading;
 
 		float timer = 0f;
+		static readonly int HashFadeIn = Animator.StringToHash("FadeIn");
+		static readonly int HashFadeOut = Animator.StringToHash("FadeOut");
+		static readonly WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
 		protected override void Awake()
 		{
 			base.Awake();
+			animator = animationImage.GetComponent<Animator>();
 			SceneManager.sceneLoaded += OnSceneLoaded_Event;
 		}
 
@@ -40,7 +54,7 @@ namespace IslandMonkey
 			DontDestroyOnLoad(gameObject);
 		}
 
-		public void ChangeScene(BuildScene buildScene)
+		public void ChangeScene(BuildScene buildScene, ChangeSceneType changeSceneType = ChangeSceneType.Fade)
 		{
 			if (isLoading || buildScene == BuildScene.None) return;
 			isLoading = true;
@@ -60,12 +74,12 @@ namespace IslandMonkey
 					break;
 			}
 
-			LoadScene(buildScene);
+			LoadScene(buildScene, changeSceneType);
 		}
 
-		void LoadScene(BuildScene buildScene)
+		void LoadScene(BuildScene buildScene, ChangeSceneType changeSceneType)
 		{
-			StartCoroutine(LoadScene((int)buildScene, 0.1f));
+			StartCoroutine(LoadScene((int)buildScene, 0.1f, changeSceneType));
 		}
 
 		IEnumerator FadeIn() => Fade(0, 1);
@@ -88,10 +102,23 @@ namespace IslandMonkey
 		}
 
 		// TODO 비동기 로딩
-		IEnumerator LoadScene(int index, float delayTime)
+		IEnumerator LoadScene(int index, float delayTime, ChangeSceneType changeSceneType)
 		{
-			fadeImage.gameObject.SetActive(true);
-			yield return StartCoroutine(FadeIn());
+			yield return new WaitForSeconds(0.5f);
+
+			if (changeSceneType == ChangeSceneType.Animation)
+			{
+				animationImage.gameObject.SetActive(true);
+				animator.SetTrigger(HashFadeIn);
+				yield return StartCoroutine(WaitForAnimationStart());
+				yield return StartCoroutine(WaitForAnimationEnd());
+			}
+			else
+			{
+				fadeImage.gameObject.SetActive(true);
+				yield return StartCoroutine(FadeIn());
+			}
+
 			yield return new WaitForSeconds(delayTime);
 			SceneManager.LoadScene(index);
 		}
@@ -100,11 +127,42 @@ namespace IslandMonkey
 		{
 			isLoading = true;
 
-			yield return new WaitForSeconds(fadeDelayTime);
-			yield return StartCoroutine(FadeOut());
-			fadeImage.gameObject.SetActive(false);
+			if (animationImage.gameObject.activeSelf)
+			{
+				// Play Fade Out Animation
+				animator.SetTrigger(HashFadeOut);
+				yield return StartCoroutine(WaitForAnimationStart());
+				yield return StartCoroutine(WaitForAnimationEnd());
+				animationImage.gameObject.SetActive(false);
+			}
+			else
+			{
+				if(!fadeImage.gameObject.activeSelf) fadeImage.gameObject.SetActive(true);
+
+				// Fade Out Image
+				yield return new WaitForSeconds(fadeDelayTime);
+				yield return StartCoroutine(FadeOut());
+
+				fadeImage.gameObject.SetActive(false);
+			}
 
 			isLoading = false;
+		}
+
+		IEnumerator WaitForAnimationStart()
+		{
+			while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+			{
+				yield return waitForFixedUpdate;
+			}
+		}
+
+		IEnumerator WaitForAnimationEnd()
+		{
+			while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+			{
+				yield return waitForFixedUpdate;
+			}
 		}
 
 		void OnSceneLoaded_Event(Scene scene, LoadSceneMode mode)
