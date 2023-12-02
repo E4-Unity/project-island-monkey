@@ -2,6 +2,7 @@ using System.Collections;
 using E4.Utility;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace IslandMonkey
 {
@@ -21,39 +22,28 @@ namespace IslandMonkey
 			Instantiate(sceneLoadingManager);
 		}
 
-		[SerializeField] CanvasGroup canvasGroup;
+		[SerializeField] Image fadeImage;
 		[SerializeField] float fadeDelayTime = 0.3f;
 		[SerializeField] float fadeTime = 1f;
 		bool isLoading;
-
-		bool IsLoading
-		{
-			get => isLoading;
-			set
-			{
-				isLoading = value;
-				canvasGroup.gameObject.SetActive(value);
-			}
-		}
 
 		float timer = 0f;
 
 		protected override void Awake()
 		{
 			base.Awake();
-			SceneManager.sceneLoaded += (arg0, mode) => FadeOut();
+			SceneManager.sceneLoaded += OnSceneLoaded_Event;
 		}
 
 		void Start()
 		{
 			DontDestroyOnLoad(gameObject);
-
-			IsLoading = true;
 		}
 
 		public void ChangeScene(BuildScene buildScene)
 		{
-			if (IsLoading || buildScene == BuildScene.None) return;
+			if (isLoading || buildScene == BuildScene.None) return;
+			isLoading = true;
 
 			switch (buildScene)
 			{
@@ -70,48 +60,61 @@ namespace IslandMonkey
 					break;
 			}
 
-			IsLoading = true;
 			LoadScene(buildScene);
 		}
 
 		void LoadScene(BuildScene buildScene)
 		{
-			FadeIn();
-			StartCoroutine(LoadScene((int)buildScene, fadeDelayTime + fadeTime + 0.1f));
+			StartCoroutine(LoadScene((int)buildScene, 0.1f));
 		}
 
-		void FadeIn()
-		{
-			StartCoroutine(Fade(0, 1, false));
-		}
+		IEnumerator FadeIn() => Fade(0, 1);
+		IEnumerator FadeOut() => Fade(1, 0);
 
-		void FadeOut()
+		IEnumerator Fade(float start, float end)
 		{
-			StartCoroutine(Fade(1, 0));
-		}
-
-		IEnumerator Fade(float start, float end, bool endLoading = true)
-		{
-			yield return new WaitForSeconds(fadeDelayTime);
+			timer = 0;
+			SetImageAlpha(fadeImage, start);
 
 			while (timer < fadeTime)
 			{
 				yield return null;
 				timer += Time.deltaTime;
 				var alpha = Mathf.Lerp(start, end, timer / fadeTime);
-				canvasGroup.alpha = alpha;
+				SetImageAlpha(fadeImage, alpha);
 			}
 
-			timer = 0;
-			canvasGroup.alpha = end;
-			IsLoading = !endLoading;
+			SetImageAlpha(fadeImage, end);
 		}
 
 		// TODO 비동기 로딩
 		IEnumerator LoadScene(int index, float delayTime)
 		{
+			fadeImage.gameObject.SetActive(true);
+			yield return StartCoroutine(FadeIn());
 			yield return new WaitForSeconds(delayTime);
 			SceneManager.LoadScene(index);
+		}
+
+		IEnumerator OnSceneLoaded()
+		{
+			isLoading = true;
+
+			yield return new WaitForSeconds(fadeDelayTime);
+			yield return StartCoroutine(FadeOut());
+			fadeImage.gameObject.SetActive(false);
+
+			isLoading = false;
+		}
+
+		void OnSceneLoaded_Event(Scene scene, LoadSceneMode mode)
+		{
+			StartCoroutine(OnSceneLoaded());
+		}
+
+		void SetImageAlpha(Image image, float alpha)
+		{
+			image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
 		}
 	}
 }
