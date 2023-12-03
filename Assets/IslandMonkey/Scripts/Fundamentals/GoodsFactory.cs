@@ -68,7 +68,7 @@ namespace IslandMonkey
 			}
 		}
 
-		public void Init(IGoodsFactoryConfig config, bool activate = true)
+		public void Init(IGoodsFactoryConfig config)
 		{
 			if (config is null || config.GoodsType == GoodsType.None) return;
 
@@ -78,11 +78,6 @@ namespace IslandMonkey
 			popupInterval = config.PopupInterval;
 
 			state = FactoryState.Deactivated;
-
-			if (activate)
-			{
-				Activate();
-			}
 
 			// TODO 임시
 			popupImage.transform.localPosition = config.PopupOffset;

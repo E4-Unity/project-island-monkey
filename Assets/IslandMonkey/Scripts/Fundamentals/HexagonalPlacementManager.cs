@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using IslandMonkey.AssetCollections;
 using Unity.AI.Navigation;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -93,24 +92,7 @@ namespace IslandMonkey
 			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
 			Vector3 spawnPosition = new Vector3(pos.x, 0, pos.y);
 
-			// Building Slot 스폰
-			if (!buildingSlotPrefab) return;
-			GameObject buildingSlot =
-				Instantiate(buildingSlotPrefab, spawnPosition, Quaternion.identity);
-			buildingSlot.transform.parent = groundSlot;
-
-			// GoodsFactory 초기화
-			var goodsFactory = buildingSlot.GetComponentInChildren<GoodsFactory>();
-			if (goodsFactory)
-			{
-				bool activate = buildingData.Definition.BuildingType == BuildingType.Voyage;
-				goodsFactory.Init(buildingData.Definition.GetGoodsFactoryConfig(), activate);
-			}
-
-			// Building 스폰
-			if (!buildingData.Definition.BuildingPrefab) return;
-			GameObject buildingInstance = Instantiate(buildingData.Definition.BuildingPrefab, buildingSlot.transform);
-
+			// 이펙트 연출
 			if (!disableBuildEffects)
 			{
 				// TODO 리팩토링
@@ -127,34 +109,15 @@ namespace IslandMonkey
 				RefreshNavMesh();
 			}
 
-			// TODO 리팩토링 필요
-			// 특별 건물 활성화
-			if (buildingData.Definition.BuildingType == BuildingType.Special)
-			{
-				BuildingAnimator buildingAnimator = buildingInstance.GetComponent<BuildingAnimator>();
-				if (buildingAnimator)
-				{
-					buildingAnimator.Activate();
-				}
-			}
+			// Building 스폰
+			if (!buildingSlotPrefab) return;
+			GameObject buildingSlot =
+				Instantiate(buildingSlotPrefab, spawnPosition, Quaternion.identity);
+			buildingSlot.transform.parent = groundSlot;
 
-			// TODO 리팩토링 필요
 			// Building 초기화
-			BuildingMonkey.IBuilding building = buildingInstance.GetComponent<BuildingMonkey.IBuilding>();
-			if (building is not null)
-			{
-				building.Init(buildingData);
-			}
-
-			// TODO 리팩토링 필요
-			// 기능 건물 등록
-			if (buildingData.Definition.BuildingType == BuildingType.Functional)
-			{
-				if (building is not null)
-				{
-					functionalBuildings.Add(building);
-				}
-			}
+			Building building = buildingSlot.GetComponent<Building>();
+			building.InitComponent(buildingData);
 		}
 
 		// TODO 반환이 아니라 즉시 BuildingManager 에 추가?
