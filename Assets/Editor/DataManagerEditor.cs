@@ -28,5 +28,11 @@ public class DataManagerEditor : Editor
 	{
 		DataManager.DeleteData(VoyageDataManager.SaveFileName);
 	}
+
+	[MenuItem("DataManager/Delete/MonkeyBankData")]
+	public static void DeleteMonkeyBankData()
+	{
+		DataManager.DeleteData(MonkeyBank.SaveFileName);
+	}
 }
 #endif

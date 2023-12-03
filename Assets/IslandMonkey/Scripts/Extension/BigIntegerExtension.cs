@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace IslandMonkey.Utils
 {
@@ -52,6 +51,8 @@ namespace IslandMonkey.Utils
 
         public static BigInteger ToBigInteger(this string numString)
         {
+	        if (numString is null || numString == string.Empty) return BigInteger.Zero;
+
 	        char lastChar = numString[^1];
 
 	        if (lastChar < AsciiAlphabetStart || lastChar > AsciiAlphabetEnd)

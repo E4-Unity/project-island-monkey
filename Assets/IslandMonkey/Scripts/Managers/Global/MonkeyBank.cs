@@ -1,39 +1,86 @@
+using System;
 using System.Numerics;
 using IslandMonkey.MVVM;
 using IslandMonkey.Utils;
 using UnityEngine;
 
-public class MonkeyBank : Model
+namespace IslandMonkey
 {
-	BigInteger gold = 0;
-	BigInteger goldLimit = 3000;
-
-	/* 프로퍼티 */
-	public BigInteger Gold
+	[Serializable]
+	public class MonkeyBankSaveData : ISerializationCallbackReceiver
 	{
-		get => gold;
-		set
-		{
-			var newCurrentGold = value.Clamp(BigInteger.Zero, goldLimit);;
+		public BigInteger Gold;
 
-			SetField(ref gold, newCurrentGold);
+		[SerializeField] string goldString;
+
+		public void OnBeforeSerialize()
+		{
+			goldString = Gold.ToString();
+		}
+
+		public void OnAfterDeserialize()
+		{
+			Gold = BigInteger.Parse(goldString);
 		}
 	}
 
-	public bool IsFull => gold == goldLimit;
-
-	/* API */
-	public void AddToBank(int amount)
+	public class MonkeyBank : Model, ISerializationCallbackReceiver, DataManager.ISavable<MonkeyBankSaveData>
 	{
-		if (IsFull)
+		MonkeyBankSaveData saveData = new MonkeyBankSaveData();
+
+		BigInteger goldLimit = 3000;
+
+		string goldLimitString;
+
+		/* 프로퍼티 */
+		public BigInteger Gold
 		{
-#if UNITY_EDITOR
-			Debug.Log("몽키뱅크 꽉 참!");
-#endif
-			return;
+			get => saveData.Gold;
+			set
+			{
+				var newCurrentGold = value.Clamp(BigInteger.Zero, goldLimit);
+				SetField(ref saveData.Gold, newCurrentGold);
+				DataManager.SaveData(this);
+			}
 		}
 
-		Gold += amount;
-		// TODO UI 업데이트, 사운드 재생 등
+		public bool IsFull => saveData.Gold == goldLimit;
+
+		/* MonoBehaviour */
+		void Awake()
+		{
+			var loadData = DataManager.LoadData(this);
+			if (loadData is not null)
+				saveData = loadData;
+		}
+
+		/* API */
+		public void AddToBank(int amount)
+		{
+			if (IsFull)
+			{
+#if UNITY_EDITOR
+				Debug.Log("몽키뱅크 꽉 참!");
+#endif
+				return;
+			}
+
+			Gold += amount;
+			// TODO UI 업데이트, 사운드 재생 등
+		}
+
+		public void OnBeforeSerialize()
+		{
+			goldLimitString = goldLimit.ToString();
+		}
+
+		public void OnAfterDeserialize()
+		{
+		}
+
+		/* ISavable 인터페이스 */
+		public const string SaveFileName = "MonkeyBankSaveData.json";
+		public string FileName => SaveFileName;
+		public MonkeyBankSaveData Data => saveData;
 	}
 }
