@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 namespace IslandMonkey
 {
@@ -44,7 +41,6 @@ namespace IslandMonkey
 		FactoryState state = FactoryState.Init;
 		Coroutine producingCoroutine;
 		float timer = 0;
-		bool shouldResetTimer;
 
 		/* Event */
 		public event Action<int> OnGoodsProduced; // 스크립트 전용 이벤트
@@ -104,12 +100,14 @@ namespace IslandMonkey
 			producingCoroutine = null;
 		}
 
-		public void ResetTimer() => shouldResetTimer = true;
+		public void ResetTimer()
+		{
+			popupImage.SetActive(false);
+			timer = 0;
+		}
 
 		void ProduceGoods()
 		{
-			popupImage.SetActive(false);
-
 			switch (goodsType)
 			{
 				case GoodsType.Gold:
@@ -148,27 +146,18 @@ namespace IslandMonkey
 			while (true)
 			{
 				yield return null;
-				if (shouldResetTimer)
+				timer += Time.deltaTime;
+
+				// TODO 선택적 비활성화 방법 리팩토링
+				if (popupInterval > 0 && popupImage && !popupImage.activeSelf && timer > popupInterval)
 				{
-					shouldResetTimer = false;
-					timer = 0;
-					popupImage.SetActive(false);
+					popupImage.SetActive(true);
 				}
-				else
+
+				if (interval > 0 && timer > interval)
 				{
-					timer += Time.deltaTime;
-
-					// TODO 선택적 비활성화 방법 리팩토링
-					if (popupInterval > 0 && popupImage && !popupImage.activeSelf && timer > popupInterval)
-					{
-						popupImage.SetActive(true);
-					}
-
-					if (interval > 0 && timer > interval)
-					{
-						timer = 0;
-						ProduceGoods();
-					}
+					ResetTimer();
+					ProduceGoods();
 				}
 			}
 		}
