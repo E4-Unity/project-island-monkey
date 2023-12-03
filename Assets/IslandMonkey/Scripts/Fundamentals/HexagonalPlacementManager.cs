@@ -90,7 +90,7 @@ namespace IslandMonkey
 
 			// Hex Index에 대응하는 좌표 구하기
 			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
-			Vector3 spawnPosition = new Vector3(pos.x, 0, pos.y);
+			Vector3 spawnPosition = new Vector3(pos.y, 0, pos.x);
 
 			// 이펙트 연출
 			if (!disableBuildEffects)
