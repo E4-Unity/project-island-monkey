@@ -7,54 +7,74 @@ using UnityEngine;
 namespace IslandMonkey
 {
 	[Serializable]
-	public class MonkeyBankSaveData : ISerializationCallbackReceiver
+	public class MonkeyBankSaveData
 	{
-		public BigInteger Gold;
-
-		[SerializeField] string goldString;
-
-		public void OnBeforeSerialize()
-		{
-			goldString = Gold.ToString();
-		}
-
-		public void OnAfterDeserialize()
-		{
-			Gold = BigInteger.Parse(goldString);
-		}
+		public SerializedBigInteger Gold = new SerializedBigInteger();
+		public int Level = 1;
 	}
 
-	public class MonkeyBank : Model, ISerializationCallbackReceiver, DataManager.ISavable<MonkeyBankSaveData>
+	public class MonkeyBank : Model, DataManager.ISavable<MonkeyBankSaveData>
 	{
+		/* Field */
+		[SerializeField] string[] goldLimitList;
+
 		MonkeyBankSaveData saveData = new MonkeyBankSaveData();
 
-		BigInteger goldLimit = 3000;
+		SerializedBigInteger goldLimit = new SerializedBigInteger();
 
-		string goldLimitString;
-
-		/* 프로퍼티 */
+		/* Property */
 		public BigInteger Gold
 		{
-			get => saveData.Gold;
+			get => saveData.Gold.Value;
 			set
 			{
-				var newCurrentGold = value.Clamp(BigInteger.Zero, goldLimit);
-				SetField(ref saveData.Gold, newCurrentGold);
+				var newCurrentGold = value.Clamp(BigInteger.Zero, GoldLimit);
+				SetField(ref saveData.Gold.Value, newCurrentGold);
 				DataManager.SaveData(this);
 			}
 		}
 
-		public bool IsFull => saveData.Gold == goldLimit;
+		public BigInteger GoldLimit
+		{
+			get => goldLimit.Value;
+			set => goldLimit.Value = value;
+		}
+
+		public bool IsFull => saveData.Gold.Value == goldLimit.Value;
+
+		public int Level
+		{
+			get => saveData.Level;
+			set
+			{
+				saveData.Level = value;
+				GoldLimit = goldLimitList[Level - 1].ToBigInteger();
+				DataManager.SaveData(this);
+			}
+		}
 
 		/* MonoBehaviour */
 		void Awake()
 		{
 			var loadData = DataManager.LoadData(this);
 			if (loadData is not null)
+			{
 				saveData = loadData;
+			}
+
+			if (goldLimitList.Length >= Level)
+			{
+				GoldLimit = goldLimitList[Level - 1].ToBigInteger();
+			}
 		}
 
 		/* API */
+		public void LevelUp(int amount = 1)
+		{
+			if (goldLimitList.Length < Level) return;
+			Level += amount;
+		}
+
 		public void AddToBank(int amount)
 		{
 			if (IsFull)
@@ -67,15 +87,6 @@ namespace IslandMonkey
 
 			Gold += amount;
 			// TODO UI 업데이트, 사운드 재생 등
-		}
-
-		public void OnBeforeSerialize()
-		{
-			goldLimitString = goldLimit.ToString();
-		}
-
-		public void OnAfterDeserialize()
-		{
 		}
 
 		/* ISavable 인터페이스 */

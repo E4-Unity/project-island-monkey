@@ -1,34 +1,18 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
+using System.Reflection;
 using IslandMonkey.MVVM;
-using UnityEngine;
+using IslandMonkey.Utils;
 
 namespace IslandMonkey
 {
 	[Serializable]
-	public class GoodsSaveData : ISerializationCallbackReceiver
+	public class GoodsSaveData
 	{
-		public BigInteger Gold;
-		public BigInteger Banana;
-		public BigInteger Clam;
-
-		[SerializeField] string goldString;
-		[SerializeField] string bananaString;
-		[SerializeField] string clamString;
-
-		public void OnBeforeSerialize()
-		{
-			goldString = Gold.ToString();
-			bananaString = Banana.ToString();
-			clamString = Clam.ToString();
-		}
-
-		public void OnAfterDeserialize()
-		{
-			Gold = BigInteger.Parse(goldString);
-			Banana = BigInteger.Parse(bananaString);
-			Clam = BigInteger.Parse(clamString);
-		}
+		public SerializedBigInteger Gold = new SerializedBigInteger();
+		public SerializedBigInteger Banana = new SerializedBigInteger();
+		public SerializedBigInteger Clam = new SerializedBigInteger();
 	}
 	public enum GoodsType
 	{
@@ -44,13 +28,19 @@ namespace IslandMonkey
 	public class GoodsManager : Model, DataManager.ISavable<GoodsSaveData>
 	{
 		GoodsSaveData goodsSaveData = new GoodsSaveData();
+		static readonly Dictionary<GoodsType, PropertyInfo> GoodsPropertyInfos = new Dictionary<GoodsType, PropertyInfo>()
+		{
+			{ GoodsType.Gold, typeof(GoodsManager).GetProperty(nameof(Gold))},
+			{ GoodsType.Banana, typeof(GoodsManager).GetProperty(nameof(Banana)) },
+			{ GoodsType.Clam, typeof(GoodsManager).GetProperty(nameof(Clam)) }
+		};
 
 		public BigInteger Gold
 		{
-			get => goodsSaveData.Gold;
+			get => goodsSaveData.Gold.Value;
 			private set
 			{
-				SetField(ref goodsSaveData.Gold, BigInteger.Max(BigInteger.Zero, value));
+				SetField(ref goodsSaveData.Gold.Value, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Gold);
 				DataManager.SaveData(this);
 			}
@@ -58,10 +48,10 @@ namespace IslandMonkey
 
 		public BigInteger Banana
 		{
-			get => goodsSaveData.Banana;
+			get => goodsSaveData.Banana.Value;
 			private set
 			{
-				SetField(ref goodsSaveData.Banana, BigInteger.Max(BigInteger.Zero, value));
+				SetField(ref goodsSaveData.Banana.Value, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Banana);
 				DataManager.SaveData(this);
 			}
@@ -69,10 +59,10 @@ namespace IslandMonkey
 
 		public BigInteger Clam
 		{
-			get => goodsSaveData.Clam;
+			get => goodsSaveData.Clam.Value;
 			private set
 			{
-				SetField(ref goodsSaveData.Clam, BigInteger.Max(BigInteger.Zero, value));
+				SetField(ref goodsSaveData.Clam.Value, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Clam);
 				DataManager.SaveData(this);
 			}
@@ -83,6 +73,7 @@ namespace IslandMonkey
 
 		void Awake()
 		{
+			// 데이터 로드
 			var saveData = DataManager.LoadData(this);
 			if (saveData is not null)
 				goodsSaveData = saveData;
@@ -91,64 +82,26 @@ namespace IslandMonkey
 		public void EarnGoods(GoodsType goodsType, in BigInteger amount)
 		{
 			// 유효성 검사
-			if (goodsType == GoodsType.None || amount < 0) return;
+			if (amount <= 0 || !GoodsPropertyInfos.ContainsKey(goodsType)) return;
 
-			switch (goodsType)
-			{
-				case GoodsType.Gold:
-					Gold += amount;
-					break;
-				case GoodsType.Banana:
-					Banana += amount;
-					break;
-				case GoodsType.Clam:
-					Clam += amount;
-					break;
-			}
+			var propertyInfo = GoodsPropertyInfos[goodsType];
+			propertyInfo.SetValue(this, (BigInteger)propertyInfo.GetValue(this) + amount);
 		}
 
 		public void SpendGoods(GoodsType goodsType, in BigInteger amount)
 		{
 			if (!CanSpend(goodsType, amount)) return;
 
-			switch (goodsType)
-			{
-				case GoodsType.Gold:
-					Gold -= amount;
-					break;
-				case GoodsType.Banana:
-					Banana -= amount;
-					break;
-				case GoodsType.Clam:
-					Clam -= amount;
-					break;
-			}
+			var propertyInfo = GoodsPropertyInfos[goodsType];
+			propertyInfo.SetValue(this, (BigInteger)propertyInfo.GetValue(this) - amount);
 		}
 
 		public bool CanSpend(GoodsType goodsType, in BigInteger amount)
 		{
 			// 유효성 검사
-			if (goodsType == GoodsType.None || amount < 0) return false;
+			if (amount < 0 || !GoodsPropertyInfos.ContainsKey(goodsType)) return false;
 
-			bool result = false;
-
-			switch (goodsType)
-			{
-				case GoodsType.Gold:
-					if (Gold >= amount) result = true;
-					break;
-				case GoodsType.Banana:
-					if (Banana >= amount) result = true;
-					break;
-				case GoodsType.Clam:
-					if (Clam >= amount) result = true;
-					break;
-				default:
-					result = false;
-					break;
-			}
-
-			return result;
+			return (BigInteger)GoodsPropertyInfos[goodsType].GetValue(this) >= amount;
 		}
 
 		/* ISavable */

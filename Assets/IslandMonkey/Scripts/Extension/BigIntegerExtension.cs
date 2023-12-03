@@ -1,7 +1,25 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
+using UnityEngine;
 
 namespace IslandMonkey.Utils
 {
+	[Serializable]
+	public class SerializedBigInteger : ISerializationCallbackReceiver
+	{
+		public BigInteger Value;
+		[SerializeField] string valueString;
+		public void OnBeforeSerialize()
+		{
+			valueString = Value.ToString();
+		}
+
+		public void OnAfterDeserialize()
+		{
+			Value = valueString.ToBigInteger();
+		}
+	}
+
     public static class BigIntExtension
     {
         const int AsciiAlphabetStart = 'a';

@@ -249,6 +249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b5077afb552e9469732f2abddbe034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldLimitList:
+  - 3000
+  - 8000
+  - 20a
+  - 100a
+  - 500a
 --- !u!114 &7744932082108802832
 MonoBehaviour:
   m_ObjectHideFlags: 0
