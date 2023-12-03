@@ -1,4 +1,5 @@
-using Assets._0_IslandMonkey.Scripts.Extension;
+using System.Numerics;
+using IslandMonkey.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ namespace IslandMonkey.MVVM
 			base.Start();
 			goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		}
-		public int Gold
+		public BigInteger Gold
 		{
 			get
 			{

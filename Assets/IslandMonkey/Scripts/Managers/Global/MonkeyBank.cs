@@ -1,18 +1,20 @@
+using System.Numerics;
 using IslandMonkey.MVVM;
+using IslandMonkey.Utils;
 using UnityEngine;
 
 public class MonkeyBank : Model
 {
-	int gold = 0;
-	int goldLimit = 3000;
+	BigInteger gold = 0;
+	BigInteger goldLimit = 3000;
 
 	/* 프로퍼티 */
-	public int Gold
+	public BigInteger Gold
 	{
 		get => gold;
 		set
 		{
-			var newCurrentGold = Mathf.Clamp(value, 0, goldLimit);
+			var newCurrentGold = value.Clamp(BigInteger.Zero, goldLimit);;
 
 			SetField(ref gold, newCurrentGold);
 		}

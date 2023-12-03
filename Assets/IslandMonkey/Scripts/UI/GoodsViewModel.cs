@@ -1,10 +1,12 @@
+using System.Numerics;
+
 namespace IslandMonkey.MVVM
 {
 	public class GoodsViewModel : ViewModel
 	{
-		public int Gold { get; set; }
-		public int Banana { get; set; }
-		public int Clam { get; set; }
+		public BigInteger Gold { get; set; }
+		public BigInteger Banana { get; set; }
+		public BigInteger Clam { get; set; }
 
 		protected override void Start()
 		{

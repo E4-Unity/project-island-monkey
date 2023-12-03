@@ -1,4 +1,5 @@
-using Assets._0_IslandMonkey.Scripts.Extension;
+using System.Numerics;
+using IslandMonkey.Utils;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace IslandMonkey.MVVM
 		[SerializeField] TextMeshProUGUI[] bananaTextList;
 		[SerializeField] TextMeshProUGUI[] clamTextList;
 
-		public int Gold
+		public BigInteger Gold
 		{
 			set
 			{
@@ -22,7 +23,7 @@ namespace IslandMonkey.MVVM
 			}
 		}
 
-		public int Banana
+		public BigInteger Banana
 		{
 			set
 			{
@@ -34,7 +35,7 @@ namespace IslandMonkey.MVVM
 			}
 		}
 
-		public int Clam
+		public BigInteger Clam
 		{
 			set
 			{

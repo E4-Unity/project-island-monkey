@@ -20,5 +20,5 @@ MonoBehaviour:
   buildingTime: -1
   activeTime: -1
   buildCostGoodsType: 1
-  buildCost: 2000
+  buildCost: 2a
   enableTest: 0

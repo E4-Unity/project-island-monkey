@@ -28,7 +28,7 @@ namespace IslandMonkey
 		// TODO 구조체로 변경
 		[Header("Cost")]
 		[SerializeField] GoodsType buildCostGoodsType;
-		[SerializeField] int buildCost;
+		[SerializeField] string buildCost;
 
 		[Header("Test")]
 		[SerializeField] bool enableTest; // 테스트 버전으로 활성화
@@ -38,7 +38,7 @@ namespace IslandMonkey
 		public GameObject BuildingPrefab => buildingPrefab;
 		public int BuildingTime => buildingTime;
 		public int ActiveTime => activeTime;
-		public int BuildCost => buildCost;
+		public string BuildCost => buildCost;
 		public GoodsType BuildCostGoodsType => buildCostGoodsType;
 	}
 }

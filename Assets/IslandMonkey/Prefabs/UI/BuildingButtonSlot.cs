@@ -1,4 +1,4 @@
-using System;
+using IslandMonkey.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,24 +18,29 @@ namespace IslandMonkey
 		/* Component */
 		// TODO 건설 시간 데이터 반영
 		// 건설 버튼
-		[SerializeField] TextMeshProUGUI costText;
+		[Header("Building Button")]
 		[SerializeField] Button buildButton;
+		[SerializeField] TextMeshProUGUI costText;
 		[SerializeField] Image buildTimeIcon;
 		[SerializeField] TextMeshProUGUI buildTimeText;
+		[SerializeField] GameObject descriptions;
 
 		Color costTextColor;
 
 		// 기타
+		[Header("Finished")]
 		[SerializeField] Image finishedStamp;
+
+		[Header("Locked")]
 		[SerializeField] Image lockedBanner;
-		[SerializeField] GameObject descriptions;
 
 		BuildingManager buildingManager;
 		GoodsManager goodsManager;
 
 		/* Field */
+		[Header("Default Config")]
 		[SerializeField] BuildingDefinition defaultDefinition;
-		[SerializeField] bool useDefaultDefinition;
+		[SerializeField] bool useDefaultConfig;
 
 		BuildingDefinition buildingDefinition;
 		bool isInitialized;
@@ -54,9 +59,9 @@ namespace IslandMonkey
 			costTextColor = costText.color;
 
 			// 자동 초기화
-			if (useDefaultDefinition && defaultDefinition)
+			if (useDefaultConfig && defaultDefinition)
 			{
-				Init(defaultDefinition);
+				InitComponent(defaultDefinition);
 			}
 		}
 
@@ -89,10 +94,10 @@ namespace IslandMonkey
 
 		void OnGoodsUpdated_Event(GoodsType goodsType)
 		{
-			if (goodsType != GoodsType.Gold) return;
+			if (goodsType != buildingDefinition.BuildCostGoodsType) return;
 
 			// 건설을 위한 금액이 부족한 경우
-			if (goodsManager.CanSpend(buildingDefinition.BuildCostGoodsType, buildingDefinition.BuildCost))
+			if (goodsManager.CanSpend(buildingDefinition.BuildCostGoodsType, buildingDefinition.BuildCost.ToBigInteger()))
 			{
 				OnEnoughGoods();
 			}
@@ -143,6 +148,7 @@ namespace IslandMonkey
 					ActivateFinishedStamp();
 					break;
 				case BuildingState.WaitForBuilding:
+					costText.text = buildingDefinition.BuildCost;
 					ActivateBuildButton();
 					break;
 				default:
@@ -210,13 +216,14 @@ namespace IslandMonkey
 		}
 
 		/* API */
-		public void Init(BuildingDefinition definition)
+		public void InitComponent(BuildingDefinition definition)
 		{
+			// 필드 초기화
 			if (isInitialized || definition is null) return;
-
 			isInitialized = true;
 			buildingDefinition = definition;
 
+			// 초기화 시퀀스
 			ChangeState(CheckBuildingState());
 		}
 	}

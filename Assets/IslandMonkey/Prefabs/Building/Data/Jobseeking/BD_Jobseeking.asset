@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BD_Jobseeking
   m_EditorClassIdentifier: 
   goodsFactoryConfig: {fileID: 11400000, guid: 9120a9e21aee466478813404f77a010c, type: 2}
-  enableTest: 0
   buildingID: 6
   buildingType: 1
   buildingPrefab: {fileID: 5105247033075119214, guid: 8baa28e1dddd89146872773b82f79929,
     type: 3}
   buildingTime: 300
   activeTime: -1
-  buildCost: 1000000
   buildCostGoodsType: 1
+  buildCost: 1b
+  enableTest: 0

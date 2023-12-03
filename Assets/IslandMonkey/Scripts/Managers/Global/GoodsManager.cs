@@ -1,16 +1,34 @@
 using System;
+using System.Numerics;
 using IslandMonkey.MVVM;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace IslandMonkey
 {
 	[Serializable]
-	public class GoodsSaveData
+	public class GoodsSaveData : ISerializationCallbackReceiver
 	{
-		public int Gold;
-		public int Banana;
-		public int Clam;
+		public BigInteger Gold;
+		public BigInteger Banana;
+		public BigInteger Clam;
+
+		[SerializeField] string goldString;
+		[SerializeField] string bananaString;
+		[SerializeField] string clamString;
+
+		public void OnBeforeSerialize()
+		{
+			goldString = Gold.ToString();
+			bananaString = Banana.ToString();
+			clamString = Clam.ToString();
+		}
+
+		public void OnAfterDeserialize()
+		{
+			Gold = BigInteger.Parse(goldString);
+			Banana = BigInteger.Parse(bananaString);
+			Clam = BigInteger.Parse(clamString);
+		}
 	}
 	public enum GoodsType
 	{
@@ -27,34 +45,34 @@ namespace IslandMonkey
 	{
 		GoodsSaveData goodsSaveData = new GoodsSaveData();
 
-		public int Gold
+		public BigInteger Gold
 		{
 			get => goodsSaveData.Gold;
 			private set
 			{
-				SetField(ref goodsSaveData.Gold, Mathf.Max(0, value));
+				SetField(ref goodsSaveData.Gold, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Gold);
 				DataManager.SaveData(this);
 			}
 		}
 
-		public int Banana
+		public BigInteger Banana
 		{
 			get => goodsSaveData.Banana;
 			private set
 			{
-				SetField(ref goodsSaveData.Banana, Mathf.Max(0, value));
+				SetField(ref goodsSaveData.Banana, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Banana);
 				DataManager.SaveData(this);
 			}
 		}
 
-		public int Clam
+		public BigInteger Clam
 		{
 			get => goodsSaveData.Clam;
 			private set
 			{
-				SetField(ref goodsSaveData.Clam, Mathf.Max(0, value));
+				SetField(ref goodsSaveData.Clam, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Clam);
 				DataManager.SaveData(this);
 			}
@@ -70,7 +88,7 @@ namespace IslandMonkey
 				goodsSaveData = saveData;
 		}
 
-		public void EarnGoods(GoodsType goodsType, in int amount)
+		public void EarnGoods(GoodsType goodsType, in BigInteger amount)
 		{
 			// 유효성 검사
 			if (goodsType == GoodsType.None || amount < 0) return;
@@ -89,7 +107,7 @@ namespace IslandMonkey
 			}
 		}
 
-		public void SpendGoods(GoodsType goodsType, in int amount)
+		public void SpendGoods(GoodsType goodsType, in BigInteger amount)
 		{
 			if (!CanSpend(goodsType, amount)) return;
 
@@ -107,7 +125,7 @@ namespace IslandMonkey
 			}
 		}
 
-		public bool CanSpend(GoodsType goodsType, in int amount)
+		public bool CanSpend(GoodsType goodsType, in BigInteger amount)
 		{
 			// 유효성 검사
 			if (goodsType == GoodsType.None || amount < 0) return false;

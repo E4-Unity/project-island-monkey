@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BD_RooftopGarden
   m_EditorClassIdentifier: 
   goodsFactoryConfig: {fileID: 11400000, guid: 56cf952dc3c285f4b8f9f7a055bd9c87, type: 2}
-  enableTest: 0
   buildingID: 5
   buildingType: 2
   buildingPrefab: {fileID: 2823044316522827041, guid: 30a30ca300229a249887f02bdbffe0a1,
     type: 3}
   buildingTime: -1
   activeTime: 37
-  buildCost: 100000
   buildCostGoodsType: 1
+  buildCost: 100a
+  enableTest: 0

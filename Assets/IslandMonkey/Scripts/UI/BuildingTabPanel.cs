@@ -9,7 +9,6 @@ public class BuildingTabPanel : TabPanel<BuildingTabPanel>
     public Image tabButton;
     public Sprite activeImage;
     public Sprite inActiveImage;
-    public Slot slotPrefab;
     public BuildingPurchaseDataAsset purchaseData;
     public RectTransform origin;
 
@@ -20,7 +19,7 @@ public class BuildingTabPanel : TabPanel<BuildingTabPanel>
 
     private void BuildItem()
     {
-      
+
         /*foreach (var data in purchaseData.data)
         {
             var instance = Instantiate(slotPrefab);
