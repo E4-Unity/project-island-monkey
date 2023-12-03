@@ -53,9 +53,10 @@ namespace IslandMonkey
 					// 애니메이션 즉시 활성화
 					animator.Activate();
 
-					// GoodsFactory 컴포넌트 제거
+					// TODO 골드 팝업 기능 분리 후 주석 해제
+					/*// GoodsFactory 컴포넌트 제거
 					Destroy(goodsFactory);
-					goodsFactory = null;
+					goodsFactory = null;*/
 
 					break;
 				case BuildingType.Functional:
