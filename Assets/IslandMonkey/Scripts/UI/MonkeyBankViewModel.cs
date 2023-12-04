@@ -2,19 +2,23 @@ namespace IslandMonkey.MVVM
 {
 	public class MonkeyBankViewModel : ViewModel
 	{
-		public int Gold { get; set; }
+		MonkeyBank monkeyBank;
+		GoodsManager goodsManager;
 
-		protected override void Start()
+		void Awake()
 		{
-			base.Start();
+			// 컴포넌트 할당
+			monkeyBank = IslandGameManager.Instance.GetMonkeyBank();
+			goodsManager = IslandGameManager.Instance.GetGoodsManager();
 
 			// Model 등록
-			PropertyNotifier = GlobalGameManager.Instance.GetMonkeyBank();
+			PropertyNotifier = monkeyBank;
 		}
 
-		protected override void RegisterProperties()
+		public void GetRewards()
 		{
-			RegisterProperty(nameof(Gold));
+			goodsManager.EarnGoods(GoodsType.Gold, monkeyBank.Gold);
+			monkeyBank.Clear();
 		}
 	}
 }

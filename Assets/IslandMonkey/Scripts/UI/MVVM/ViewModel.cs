@@ -1,9 +1,10 @@
 using System;
 using System.ComponentModel;
+using UnityEngine;
 
 namespace IslandMonkey.MVVM
 {
-	public abstract class ViewModel : PublicPropertyBinder
+	public abstract class ViewModel : MonoBehaviour
 	{
 		INotifyPropertyChanged propertyNotifier;
 

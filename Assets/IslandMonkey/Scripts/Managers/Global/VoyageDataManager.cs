@@ -114,6 +114,7 @@ namespace IslandMonkey
 			FinishBuilding();
 		}
 
+		// TODO 라이브러리
 		int GetCurrentTime()
 		{
 			var now = DateTime.Now.ToLocalTime();

@@ -111,7 +111,7 @@ namespace IslandMonkey
 			switch (goodsType)
 			{
 				case GoodsType.Gold:
-					monkeyBank.Gold += income;
+					monkeyBank.AddToBank(income);
 					break;
 				default:
 					goodsManager.EarnGoods(goodsType, income);

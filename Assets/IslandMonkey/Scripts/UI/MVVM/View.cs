@@ -6,9 +6,9 @@ namespace IslandMonkey.MVVM
 	{
 		[SerializeField] ViewModel viewModel;
 
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake();
+			base.Start();
 
 			if (!viewModel)
 			{

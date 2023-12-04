@@ -76,7 +76,9 @@ namespace IslandMonkey
 			// 데이터 로드
 			var saveData = DataManager.LoadData(this);
 			if (saveData is not null)
+			{
 				goodsSaveData = saveData;
+			}
 		}
 
 		public void EarnGoods(GoodsType goodsType, in BigInteger amount)
