@@ -1,0 +1,102 @@
+using UnityEngine;
+using GoogleMobileAds.Api;
+
+public class AdvertisementManager : MonoBehaviour
+{
+	private RewardedAd rewardAd; // 보상형 광고
+
+	string rewardAdId;
+
+	private void Start()
+	{
+		MobileAds.Initialize((InitializationStatus initStatus) =>
+		{
+			rewardAdId = "ca-app-pub-3940256099942544/5224354917"; // 테스트용 id
+		});
+
+		
+
+	}
+
+	public void LoadRewardAd()
+	{
+		if(rewardAd != null)
+		{
+			rewardAd.Destroy();
+			rewardAd = null;
+		}
+
+		Debug.Log("Loading reward ad");
+
+		var adRequest = new AdRequest();
+
+		RewardedAd.Load(rewardAdId, adRequest,
+			(RewardedAd ad, LoadAdError error) =>
+			{
+				if(error != null || ad == null)
+				{
+					Debug.LogError("Reward ad failed to load ad with error : " + error);
+					return;
+				}
+
+				Debug.Log("Reward ad loaded with response : " + ad.GetResponseInfo());
+
+				rewardAd = ad;
+
+				RegisterEventHandlers(rewardAd);
+
+				ShowRewardAd();
+			});
+	}
+
+	public void ShowRewardAd()
+	{
+		const string rewardMsg = "Reward Ad rewarded the user. Type : {0}, amount : {1}";
+
+		if(rewardAd != null && rewardAd.CanShowAd())
+		{
+			rewardAd.Show((Reward reward) =>
+			{
+				Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
+			});
+		}
+	}
+
+	private void RegisterEventHandlers(RewardedAd ad)
+	{
+		// Raised when the ad is estimated to have earned money.
+		ad.OnAdPaid += (AdValue adValue) =>
+		{
+			Debug.Log(string.Format("Rewarded ad paid {0} {1}.",
+				adValue.Value,
+				adValue.CurrencyCode));
+		};
+		// Raised when an impression is recorded for an ad.
+		ad.OnAdImpressionRecorded += () =>
+		{
+			Debug.Log("Rewarded ad recorded an impression.");
+		};
+		// Raised when a click is recorded for an ad.
+		ad.OnAdClicked += () =>
+		{
+			Debug.Log("Rewarded ad was clicked.");
+		};
+		// Raised when an ad opened full screen content.
+		ad.OnAdFullScreenContentOpened += () =>
+		{
+			Debug.Log("Rewarded ad full screen content opened.");
+		};
+		// Raised when the ad closed full screen content.
+		ad.OnAdFullScreenContentClosed += () =>
+		{
+			Debug.Log("Rewarded ad full screen content closed.");
+		};
+		// Raised when the ad failed to open full screen content.
+		ad.OnAdFullScreenContentFailed += (AdError error) =>
+		{
+			Debug.LogError("Rewarded ad failed to open full screen content " +
+						   "with error : " + error);
+			LoadRewardAd();
+		};
+	}
+}
