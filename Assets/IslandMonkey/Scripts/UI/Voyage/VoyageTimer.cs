@@ -28,11 +28,11 @@ public class VoyageTimer : MonoBehaviour
 		}
 	}
 
-	private void FixedUpdate()
-	{
-		Debug.Log("Timer : " + voyageDataManager.TimeLeftRatio);
-		Debug.Log("Fillamount : " + timer.fillAmount);
-	}
+	//private void FixedUpdate()
+	//{
+	//	Debug.Log("Timer : " + voyageDataManager.TimeLeftRatio);
+	//	Debug.Log("Fillamount : " + timer.fillAmount);
+	//}
 
 
 	public void VoyageFinished()

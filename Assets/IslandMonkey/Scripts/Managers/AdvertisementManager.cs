@@ -5,20 +5,23 @@ public class AdvertisementManager : MonoBehaviour
 {
 	private RewardedAd rewardAd; // 보상형 광고
 
-	string rewardAdId;
+	private string rewardAdId;
 
+	public enum RewardType {
+		CoinBooster,
+		BoatSpeed,
+		LuckyDraw,
+		MonkeyBank
+	}; 
 	private void Start()
 	{
 		MobileAds.Initialize((InitializationStatus initStatus) =>
 		{
 			rewardAdId = "ca-app-pub-3940256099942544/5224354917"; // 테스트용 id
 		});
-
-		
-
 	}
 
-	public void LoadRewardAd()
+	public void LoadRewardAd(RewardType rewardType)
 	{
 		if(rewardAd != null)
 		{
@@ -45,11 +48,11 @@ public class AdvertisementManager : MonoBehaviour
 
 				RegisterEventHandlers(rewardAd);
 
-				ShowRewardAd();
+				ShowRewardAd(rewardType);
 			});
 	}
 
-	public void ShowRewardAd()
+	public void ShowRewardAd(RewardType rewardType)
 	{
 		const string rewardMsg = "Reward Ad rewarded the user. Type : {0}, amount : {1}";
 
@@ -58,6 +61,7 @@ public class AdvertisementManager : MonoBehaviour
 			rewardAd.Show((Reward reward) =>
 			{
 				Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
+				SendReward(rewardType);
 			});
 		}
 	}
@@ -96,7 +100,24 @@ public class AdvertisementManager : MonoBehaviour
 		{
 			Debug.LogError("Rewarded ad failed to open full screen content " +
 						   "with error : " + error);
-			LoadRewardAd();
+			//LoadRewardAd();
 		};
+	}
+
+	private void SendReward(RewardType rewardType)
+	{
+		switch (rewardType)
+		{
+			case RewardType.BoatSpeed:
+				//데이터 저장
+				break;
+			case RewardType.CoinBooster:
+				//데이터 저장
+				break;
+			case RewardType.LuckyDraw:
+				break;
+			case RewardType.MonkeyBank:
+				break;
+		}
 	}
 }
