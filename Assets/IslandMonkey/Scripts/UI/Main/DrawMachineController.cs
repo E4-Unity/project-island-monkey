@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro; // TextMeshPro를 사용하는 경우
 
-public class DrawMachinePanel : MonoBehaviour
+public class DrawMachineController : MonoBehaviour
 {
 	[SerializeField] private GameObject drawMachinePanel;
 	[SerializeField] private GameObject pickPresentPanel;
