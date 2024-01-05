@@ -219,18 +219,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7149510758041952888}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &964614728 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 498695668559044288, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2776492129749505085}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1144538961
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,12 +369,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaa8b26e9875494fa560afcb08199d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 5
   zoomSpeed: 1
   minZoom: 1
   maxZoom: 2.7
   dragLimitX: {x: -6, y: 6}
   dragLimitY: {x: 1, y: 7}
+  canMoveCamera: 1
 --- !u!1 &1251899072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7184854235407046499, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
@@ -484,6 +472,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb7fba05883264e41874ce04e8d80b96, type: 3}
+--- !u!114 &1897535799 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7189323384415728874, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2776492129749505085}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2776492129749505085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -492,22 +492,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 498695668559044288, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+    - target: {fileID: 63531490168498801, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
-      propertyPath: m_Sprite
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 21300000, guid: 927f7b85047c2e846baddfbfda926166,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1363272787825818325, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
       propertyPath: showcaseMonkey
       value: 
       objectReference: {fileID: 1257826701}
-    - target: {fileID: 3821170359728831127, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-        type: 3}
-      propertyPath: cheatGold
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 3998440265018533906, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -563,21 +557,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen
       objectReference: {fileID: 0}
-    - target: {fileID: 7189323386407296187, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+    - target: {fileID: 6659488363807313436, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-        type: 3}
-      propertyPath: iconDisplay
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 964614728}
+      objectReference: {fileID: 0}
     - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
       propertyPath: upgradePool
       value: 
       objectReference: {fileID: 1251899072}
+    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
+        type: 3}
+      propertyPath: upgradeButton
+      value: 
+      objectReference: {fileID: 1897535799}
     - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
       propertyPath: upgradeMonkey
@@ -588,23 +582,6 @@ PrefabInstance:
       propertyPath: upgradeBuilding
       value: 
       objectReference: {fileID: 457851624}
-    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-        type: 3}
-      propertyPath: buildingIconImages.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-        type: 3}
-      propertyPath: buildingIconImages.Array.data[0]
-      value: 
-      objectReference: {fileID: 356051698028911533, guid: c502867f10baa854d9ec5139d9fb67af,
-        type: 3}
-    - target: {fileID: 7460645347102241677, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-        type: 3}
-      propertyPath: buildingIconImages.Array.data[1]
-      value: 
-      objectReference: {fileID: 5100499423041655900, guid: 4f7ca1be3c9fc14409fdb0e48672c7a6,
-        type: 3}
     - target: {fileID: 7722697770914059927, guid: 78c3ba6220883b34cb20e7412ff1caf2,
         type: 3}
       propertyPath: m_Camera
@@ -615,11 +592,6 @@ PrefabInstance:
       propertyPath: cutsceneCamera
       value: 
       objectReference: {fileID: 1144538962}
-    - target: {fileID: 8586568556576823246, guid: 78c3ba6220883b34cb20e7412ff1caf2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -633,6 +605,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 424676139604744042, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
+        type: 3}
+      propertyPath: m_Name
+      value: Island BananaHouse(Clone)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570328808866542490, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
+        type: 3}
+      propertyPath: m_Name
+      value: BuildingSlot(Clone)
+      objectReference: {fileID: 0}
     - target: {fileID: 1848640299860438688, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
         type: 3}
       propertyPath: m_LocalPosition.x

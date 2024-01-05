@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IslandMonkey
@@ -28,6 +29,9 @@ namespace IslandMonkey
 		[SerializeField] float interval = 6f;
 		[SerializeField] float popupInterval = 2.0f;
 		[SerializeField] GameObject popupImage;
+
+		[SerializeField] private int currentLevel = 1;
+		[SerializeField] private List<int> incomeLevels = new List<int>();
 
 		// 자동 활성화 설정
 		[SerializeField] bool autoConfig;

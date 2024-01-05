@@ -13,6 +13,7 @@ public class CameraMove : MonoBehaviour
 	private Camera cam;
 	private Vector3 dragOrigin;
 
+
 	private void Awake()
 	{
 		cam = Camera.main;
@@ -77,5 +78,6 @@ public class CameraMove : MonoBehaviour
 		float clampedY = Mathf.Clamp(targetPosition.y, dragLimitY.x, dragLimitY.y);
 
 		return new Vector3(clampedX, clampedY, targetPosition.z);
+
 	}
 }

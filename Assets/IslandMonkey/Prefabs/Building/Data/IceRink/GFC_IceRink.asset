@@ -16,3 +16,6 @@ MonoBehaviour:
   income: 441
   producingInterval: 6
   popupInterval: -1
+  popupOffset: {x: 0, y: 0, z: 0}
+  currentLevel: 1
+  incomeLevels: 000000000000000000000000000000000000000000000000
