@@ -180,7 +180,6 @@ MonoBehaviour:
   - 60
   - 30
   - 10
-  goodsManager: {fileID: 0}
 --- !u!1 &232290164511493907
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,8 +211,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2835610884094580389}
   - {fileID: 3304025319657304438}
+  - {fileID: 2835610884094580389}
   - {fileID: 4759835755558420035}
   m_Father: {fileID: 7656078025646068094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

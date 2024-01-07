@@ -21,8 +21,28 @@ public class AdvertisementManager : MonoBehaviour
 		});
 	}
 
-	public void LoadRewardAd(RewardType rewardType)
+	public void LoadRewardAd(int rewardCode)
 	{
+		RewardType rewardType = 0;
+		switch (rewardCode)
+		{
+			case 0:
+				rewardType = RewardType.CoinBooster;
+				break;
+			case 1:
+				rewardType = RewardType.BoatSpeed;
+				break;
+			case 2:
+				rewardType = RewardType.LuckyDraw;
+				break;
+			case 3:
+				rewardType = RewardType.MonkeyBank;
+				break;
+			default :
+				Debug.Log("Cannot load Ads \n Wrong rewardCode : " + rewardCode);
+				return;
+		}
+
 		if(rewardAd != null)
 		{
 			rewardAd.Destroy();
@@ -110,6 +130,7 @@ public class AdvertisementManager : MonoBehaviour
 		{
 			case RewardType.BoatSpeed:
 				//데이터 저장
+				Debug.Log("보트 스피드 2배");
 				break;
 			case RewardType.CoinBooster:
 				//데이터 저장
