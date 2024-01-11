@@ -125,6 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultBuildings:
   - {fileID: 11400000, guid: 511cb8ef499f5514facf4a3843dd40c5, type: 2}
+  m_BuildingDefinitionLabel:
+    m_LabelString: Definition
 --- !u!114 &2558110946673188059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,14 +141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseDistance: 1
   navMeshSurface: {fileID: 2620638593936650693}
-  buildings:
-  - {fileID: 11400000, guid: c0aae107a60888743a43cbb624f11645, type: 2}
-  - {fileID: 11400000, guid: 995614fafaeb70c41a6e8bede323a117, type: 2}
-  - {fileID: 11400000, guid: 9ac7611bfbe5fe247a7c088775e0a8b1, type: 2}
-  - {fileID: 11400000, guid: a469d091ef782d74c8dc7e31b4a3ef66, type: 2}
-  - {fileID: 11400000, guid: bfadd113c0808404cbece9e1fad3f5b6, type: 2}
-  - {fileID: 11400000, guid: 4e7b16e157440cb40a37071ab7444ead, type: 2}
-  - {fileID: 11400000, guid: 2633b3a0bdb4b30458c1463e873391d0, type: 2}
   buildingSlotPrefab: {fileID: 3420824251539141103, guid: d913f290b42f9864ca8fbb1826255bad,
     type: 3}
   groundSlot: {fileID: 917647181948949911}

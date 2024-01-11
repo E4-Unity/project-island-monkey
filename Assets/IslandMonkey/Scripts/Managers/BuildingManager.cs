@@ -2,9 +2,13 @@ using System;
 using System.Collections.Generic;
 using E4.Utilities;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace IslandMonkey
 {
+	/// <summary>
+	/// 건설이 완료되었거나 진행중인 건물 정보 리스트
+	/// </summary>
 	[Serializable]
 	public class BuildingSaveData : ISavable
 	{
@@ -25,21 +29,28 @@ namespace IslandMonkey
 	}
 
 	/// <summary>
-	/// 프로퍼티가 SaveData를 직접 참고하기 때문에 주의해야합니다.
+	/// 생성된 건물 관리
 	/// </summary>
 	public class BuildingManager : DataManagerClient<BuildingSaveData>
 	{
+		/* 필드 */
 		[SerializeField] BuildingDefinition[] defaultBuildings;
 
 		Dictionary<int, BuildingData> cachedData;
 		Dictionary<int, BuildingDefinition> cachedDefinition;
 		Dictionary<BuildingType, int> buildingCountByType = new Dictionary<BuildingType, int>();
 
+		[Header("Addressables")]
+		[SerializeField] AssetLabelReference m_BuildingDefinitionLabel;
+		Dictionary<int, BuildingDefinition> m_BuildingDefinitionDatabase; // Building Definition 데이터베이스
+
+		/* 프로퍼티 */
 		public List<BuildingData> BuildingDataList => Data.BuildingDataList;
 		public Dictionary<BuildingType, int> BuildingCountByType => buildingCountByType;
 
 		public event Action OnBuildingDataRegistered;
 
+		/* MonoBehaviour */
 		protected override void Awake()
 		{
 			base.Awake();
@@ -48,25 +59,7 @@ namespace IslandMonkey
 			Init();
 		}
 
-		public BuildingData GetBuildingData(int index)
-		{
-			if (IsBuildingExist(index))
-			{
-				return cachedData[index];
-			}
-
-			return null;
-		}
-
-		// TODO 임시 사용중
-		public void Save() => SaveData();
-
-		// TODO 인덱스 캐싱
-		public bool IsBuildingExist(int index) => index >= 0 && (cachedData.ContainsKey(index) || cachedDefinition.ContainsKey(index));
-
-		public bool IsBuildingExist(BuildingDefinition definition) =>
-			definition is not null && IsBuildingExist(definition.ID);
-
+		/* API */
 		public void RegisterBuildingData(BuildingData buildingData)
 		{
 			if (buildingData is null) return;
@@ -82,6 +75,37 @@ namespace IslandMonkey
 			OnBuildingDataRegistered?.Invoke();
 		}
 
+		// 쿼리
+		public BuildingDefinition GetBuildingDefinition(int id) => m_BuildingDefinitionDatabase.ContainsKey(id)
+			? m_BuildingDefinitionDatabase[id]
+			: null;
+
+		public int MaxBuildingCounts => m_BuildingDefinitionDatabase.Count;
+
+		public BuildingData GetBuildingData(int index)
+		{
+			if (IsBuildingExist(index))
+			{
+				return cachedData[index];
+			}
+
+			return null;
+		}
+
+		// TODO 인덱스 캐싱
+		public bool IsBuildingExist(int index) => index >= 0 && (cachedData.ContainsKey(index) || cachedDefinition.ContainsKey(index));
+
+		public bool IsBuildingExist(BuildingDefinition definition) =>
+			definition is not null && IsBuildingExist(definition.ID);
+
+		/* 메서드 */
+		// TODO Public 해제
+		// TODO 임시 사용중
+		public void Save() => SaveData();
+
+		/// <summary>
+		/// 데이터 로딩 및 BuildingDefinition 검색
+		/// </summary>
 		void Init()
 		{
 			// 저장된 데이터 처리
@@ -91,6 +115,26 @@ namespace IslandMonkey
 			// 기본 건물 캐싱
 			cachedDefinition = new Dictionary<int, BuildingDefinition>(defaultBuildings.Length);
 			CachingBuildingDefinitionList(defaultBuildings);
+
+			// 모든 Building Definition 색인
+			LoadAllDefinitions();
+		}
+
+		/// <summary>
+		/// 모든 Building Definition 색인
+		/// </summary>
+		void LoadAllDefinitions()
+		{
+			// Building Definition 로드
+			var loadingTasks = Addressables.LoadAssetsAsync<BuildingDefinition>(m_BuildingDefinitionLabel.labelString, null);
+			var buildingDefinitions = loadingTasks.WaitForCompletion();
+
+			// Building Database 초기화 및 색인
+			m_BuildingDefinitionDatabase = new Dictionary<int, BuildingDefinition>(buildingDefinitions.Count);
+			foreach (var definition in buildingDefinitions)
+			{
+				m_BuildingDefinitionDatabase.Add(definition.ID, definition);
+			}
 		}
 
 		void CachingBuildingDataList(IEnumerable<BuildingData> dataList)

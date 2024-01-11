@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 namespace IslandMonkey
 {
+	/// <summary>
+	/// 건물 배치 기능 담당
+	/// </summary>
 	public class HexagonalPlacementManager : MonoBehaviour
 	{
 		/* 컴포넌트 */
@@ -15,11 +18,8 @@ namespace IslandMonkey
 		[Tooltip("칸 간격")] [SerializeField] float baseDistance = 1.75f;
 
 		[SerializeField] NavMeshSurface navMeshSurface;
-		[SerializeField] BuildingDefinition[] buildings;
 		[SerializeField] GameObject buildingSlotPrefab; // TODO Building 으로 변경
 		[SerializeField] Transform groundSlot;
-
-		Dictionary<int, BuildingDefinition> buildingDatabase;
 
 		// TODO 임시, 나중에 BuildingManager 로 이전
 		List<BuildingMonkey.IBuilding> functionalBuildings = new List<BuildingMonkey.IBuilding>();
@@ -37,19 +37,11 @@ namespace IslandMonkey
 
 		/* 프로퍼티 */
 		bool IsFull => row > maxRow;
-		bool CanSpawn => usedHexIndices.Count < buildings.Length;
+		bool CanSpawn => usedHexIndices.Count < buildingManager.MaxBuildingCounts;
 
 		void Awake()
 		{
 			calculator = new HexagonalCalculator(baseDistance);
-
-			// Building Definition 캐싱
-			buildingDatabase = new Dictionary<int, BuildingDefinition>(buildings.Length);
-			foreach (var building in buildings)
-			{
-				if(!building || building.ID < 0) continue; // ID 유효성 검사
-				buildingDatabase.Add(building.ID, building);
-			}
 
 			mainCamera = Camera.main;
 
@@ -140,19 +132,10 @@ namespace IslandMonkey
 			var now = DateTime.Now.ToLocalTime();
 			var span = now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime();
 
-			// Building Definition 로드
-			if (!buildingDatabase.ContainsKey(buildingIndex))
-			{
-#if UNITY_EDITOR
-				Debug.LogError("BuildingData.BuildingIndex (" + buildingIndex +")에 대응하는 BuildingDefinition 을 찾을 수 없습니다.");
-#endif
-				return;
-			}
-
 			// 건물 데이터 저장
 			var newBuildingData = new BuildingData()
 			{
-				Definition = buildingDatabase[buildingIndex],
+				Definition = buildingManager.GetBuildingDefinition(buildingIndex),
 				IsBuildCompleted = spawnImmediately,
 				HexIndex = hexIndex,
 				BuildStartedTime = (int)span.TotalSeconds
