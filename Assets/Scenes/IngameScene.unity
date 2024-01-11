@@ -260,7 +260,7 @@ Camera:
   m_GameObject: {fileID: 1144538961}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -296,7 +296,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 0
+  m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 1
+  m_RenderShadows: 0
+  m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
@@ -325,7 +325,7 @@ MonoBehaviour:
     m_Bits: 9
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -381,12 +381,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aaa8b26e9875494fa560afcb08199d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 5
   zoomSpeed: 1
   minZoom: 1
   maxZoom: 2.7
   dragLimitX: {x: -6, y: 6}
   dragLimitY: {x: 1, y: 7}
+  canMoveCamera: 1
 --- !u!1 &1251899072 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7184854235407046499, guid: 7faaccb9b086dfe49a6e5b2f5878a68f,
