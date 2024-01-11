@@ -4,76 +4,99 @@ using UnityEngine;
 namespace IslandMonkey
 {
 	/// <summary>
-	/// 사령탑 역할
+	/// 건물 클래스
 	/// </summary>
 	public class Building : MonoBehaviour
 	{
-		/* Component */
-		GoodsFactory goodsFactory;
-		BuildingAnimator animator;
-		HexagonalPlacementManager hexagonalPlacementManager; // TODO BuildingManager 로 이전
+		/* 설정 */
+		[Header("기본 설정")]
+		[SerializeField] bool m_UseDefaultConfig;
+		[Space]
+		[SerializeField] BuildingData m_DefaultBuildingData;
+		[SerializeField] BuildingModel m_DefaultBuildingModelPrefab;
 
-		/* Field */
-		[Header("Default Config")]
-		[SerializeField] BuildingData defaultData;
-		[SerializeField] bool useDefaultConfig;
+		/* 컴포넌트 */
+		GoodsFactory m_GoodsFactory;
+		HexagonalPlacementManager m_HexagonalPlacementManager; // TODO BuildingManager 로 이전
 
-		BuildingData data;
-		bool isInitialized;
+		/* 의존성 주입 */
+		BuildingModel m_BuildingModel;
+		BuildingData m_BuildingData;
 
+		/* 필드 */
+		bool m_IsInitialized;
+
+		/* 프로퍼티 */
+		BuildingAnimator GetBuildingAnimator() => m_BuildingModel.GetBuildingAnimator();
+		BuildingMonkey.IBuilding GetBuildingPayload() => m_BuildingModel.GetBuildingPayload();
+
+		/* MonoBehaviour */
 		void Awake()
 		{
-			goodsFactory = GetComponent<GoodsFactory>();
-			hexagonalPlacementManager = IslandGameManager.Instance.GetPlacementManager();
+			// 컴포넌트 할당
+			m_GoodsFactory = GetComponent<GoodsFactory>();
+			m_BuildingModel = GetComponentInChildren<BuildingModel>();
+			m_HexagonalPlacementManager = IslandGameManager.Instance.GetPlacementManager();
 		}
 
-		public void InitComponent(BuildingData newData)
+		void Start()
 		{
-			// 필드 초기화
-			if (isInitialized || newData is null) return;
-			isInitialized = true;
-			data = newData;
+			// 기본 설정 사용
+			if (m_UseDefaultConfig)
+			{
+				InitComponent(m_DefaultBuildingData, m_DefaultBuildingModelPrefab);
+			}
+		}
 
-			/* 초기화 시퀀스 */
-			// Building 스폰
-			GameObject buildingInstance = Instantiate(data.Definition.BuildingPrefab, transform);
-			animator = buildingInstance.GetComponent<BuildingAnimator>();
+		/* API */
+		/// <summary>
+		/// 단 한 번만 호출 가능한 초기화 함수
+		/// </summary>
+		/// <param name="buildingData">건물 설정 데이터</param>
+		/// <param name="buildingModelPrefab">BuildingModel 컴포넌트가 부착된 프리팹</param>
+		public void InitComponent(BuildingData buildingData, BuildingModel buildingModelPrefab)
+		{
+			// 유효성 검사
+			if (buildingData is null) return;
 
-			// TODO BuildingDefinition 이나 별도의 Config 로 이동, 특별 시설에는 필요없음
-			// Building 초기화
-			BuildingMonkey.IBuilding building = buildingInstance.GetComponent<BuildingMonkey.IBuilding>();
-			if(building is not null)
-				building.Init(data);
+			// 중복 호출 방지
+			if (m_IsInitialized) return;
+			m_IsInitialized = true;
+
+			// 의존성 주입
+			m_BuildingData = buildingData;
+			m_BuildingModel = buildingModelPrefab;
 
 			// 건물 종류에 따른 추가 설정
-			switch (data.Definition.BuildingType)
+			switch (m_BuildingData.Definition.BuildingType)
 			{
-				case BuildingType.Special:
+				case BuildingType.Voyage:
 
-					// 애니메이션 즉시 활성화
-					animator.Activate();
+					// Building Payload 초기화
+					GetBuildingPayload().Init(m_BuildingData);
 
-					// TODO 골드 팝업 기능 분리 후 주석 해제
-					/*// GoodsFactory 컴포넌트 제거
-					Destroy(goodsFactory);
-					goodsFactory = null;*/
+					// Goods Factory 초기화
+					m_GoodsFactory.Init(m_BuildingData.Definition.GetGoodsFactoryConfig());
 
 					break;
 				case BuildingType.Functional:
 
+					// Building Payload 초기화
+					GetBuildingPayload().Init(m_BuildingData);
+
+					// Goods Factory 초기화
+					m_GoodsFactory.Init(m_BuildingData.Definition.GetGoodsFactoryConfig());
+
 					// 기능 시설 등록
-					hexagonalPlacementManager.FunctionalBuildings.Add(building);
+					m_HexagonalPlacementManager.FunctionalBuildings.Add(GetBuildingPayload());
 
 					break;
-				default:
+				case BuildingType.Special:
+
+					// 애니메이션 즉시 활성화
+					GetBuildingAnimator().Activate();
 
 					break;
-			}
-
-			// GoodsFactory 초기화
-			if (goodsFactory is not null)
-			{
-				goodsFactory.Init(data.Definition.GetGoodsFactoryConfig());
 			}
 		}
 	}

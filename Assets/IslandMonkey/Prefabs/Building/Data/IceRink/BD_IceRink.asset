@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BD_IceRink
   m_EditorClassIdentifier: 
   goodsFactoryConfig: {fileID: 11400000, guid: 853412dd7970c5c4b8d8a6d51596b2f7, type: 2}
-  enableTest: 0
   buildingID: 1
   buildingType: 2
-  buildingPrefab: {fileID: 2540479403802071824, guid: 63d93aa94686dd44384eba6ae7cfb476,
+  buildingPrefab: {fileID: -4242155572582588678, guid: 63d93aa94686dd44384eba6ae7cfb476,
     type: 3}
   buildingTime: -1
   activeTime: 31
-  buildCost: 800
   buildCostGoodsType: 1
+  buildCost: 800
+  enableTest: 0

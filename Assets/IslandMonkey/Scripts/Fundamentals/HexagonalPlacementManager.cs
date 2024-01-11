@@ -8,11 +8,15 @@ namespace IslandMonkey
 {
 	public class HexagonalPlacementManager : MonoBehaviour
 	{
+		/* 컴포넌트 */
+		BuildingFactory m_BuildingFactory;
+
+		/* 필드 */
 		[Tooltip("칸 간격")] [SerializeField] float baseDistance = 1.75f;
 
 		[SerializeField] NavMeshSurface navMeshSurface;
 		[SerializeField] BuildingDefinition[] buildings;
-		[SerializeField] GameObject buildingSlotPrefab;
+		[SerializeField] GameObject buildingSlotPrefab; // TODO Building 으로 변경
 		[SerializeField] Transform groundSlot;
 
 		Dictionary<int, BuildingDefinition> buildingDatabase;
@@ -31,6 +35,7 @@ namespace IslandMonkey
 		List<int> usedHexIndices = new List<int>();
 		List<int> availableHexIndices = new List<int> { 0, 1, 2, 3, 4, 5 };
 
+		/* 프로퍼티 */
 		bool IsFull => row > maxRow;
 		bool CanSpawn => usedHexIndices.Count < buildings.Length;
 
@@ -47,6 +52,10 @@ namespace IslandMonkey
 			}
 
 			mainCamera = Camera.main;
+
+			// TODO 작업중
+			// Building Factory 생성
+			m_BuildingFactory = new BuildingFactory(groundSlot, buildingSlotPrefab.GetComponent<Building>());
 		}
 
 		void Start()
@@ -109,15 +118,9 @@ namespace IslandMonkey
 				RefreshNavMesh();
 			}
 
-			// Building 스폰
-			if (!buildingSlotPrefab) return;
-			GameObject buildingSlot =
-				Instantiate(buildingSlotPrefab, spawnPosition, Quaternion.identity);
-			buildingSlot.transform.parent = groundSlot;
-
-			// Building 초기화
-			Building building = buildingSlot.GetComponent<Building>();
-			building.InitComponent(buildingData);
+			// 건물 스폰
+			var building = m_BuildingFactory.CreateBuilding(buildingData);
+			building.transform.position = spawnPosition;
 		}
 
 		// TODO 반환이 아니라 즉시 BuildingManager 에 추가?

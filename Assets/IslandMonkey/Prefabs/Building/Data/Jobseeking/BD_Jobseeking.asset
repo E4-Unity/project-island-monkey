@@ -15,7 +15,7 @@ MonoBehaviour:
   goodsFactoryConfig: {fileID: 11400000, guid: 9120a9e21aee466478813404f77a010c, type: 2}
   buildingID: 6
   buildingType: 1
-  buildingPrefab: {fileID: 5105247033075119214, guid: 8baa28e1dddd89146872773b82f79929,
+  buildingPrefab: {fileID: 3733366379366477046, guid: 8baa28e1dddd89146872773b82f79929,
     type: 3}
   buildingTime: 300
   activeTime: -1

@@ -10,6 +10,9 @@ namespace IslandMonkey
 		Special
 	}
 
+	/// <summary>
+	/// 건물 공용 설정 값을 담고 있는 스크립터블 오브젝트
+	/// </summary>
 	[CreateAssetMenu(fileName = "Building Definition", menuName = "Data/Building/Definition")]
 	public class BuildingDefinition : ScriptableObject
 	{
@@ -21,7 +24,7 @@ namespace IslandMonkey
 		[Header("Building")]
 		[SerializeField] int buildingID = -1;
 		[SerializeField] BuildingType buildingType = BuildingType.None; // 건물 종류
-		[SerializeField] GameObject buildingPrefab; // 건물 프리팹
+		[SerializeField] BuildingModel buildingPrefab; // 건물 프리팹
 		[SerializeField] int buildingTime = -1; // 건물 건설 시간 (초)
 		[SerializeField] int activeTime = -1;
 
@@ -35,7 +38,7 @@ namespace IslandMonkey
 
 		public int ID => buildingID;
 		public BuildingType BuildingType => buildingType;
-		public GameObject BuildingPrefab => buildingPrefab;
+		public BuildingModel BuildingPrefab => buildingPrefab;
 		public int BuildingTime => buildingTime;
 		public int ActiveTime => activeTime;
 		public string BuildCost => buildCost;
