@@ -50,7 +50,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			//낚시 중이면 찌 꺼내기
 			if (isFishing)
 			{
-				
+
 				fishingAnimator.PlayNextAnimation();
 				Debug.Log("(찌 들어올림)");
 				isFishing = false;
@@ -59,20 +59,20 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 				{
 					case 0:
 						Debug.Log("아무 일도 없다.");
-						SoundManager.instance.PlaySoundEffect("Fishing_Up");
+						SoundManager.Instance.PlaySoundEffect("Fishing_Up");
 						break;
 					case 1:
 						Debug.Log("너무 빨리 건졌다.");
-						SoundManager.instance.PlaySoundEffect("Fishing_Up");
+						SoundManager.Instance.PlaySoundEffect("Fishing_Up");
 						break;
 					case 2:
 						Debug.Log("너무 느리게 건졌다.");
-						SoundManager.instance.PlaySoundEffect("Fishing_Up");
+						SoundManager.Instance.PlaySoundEffect("Fishing_Up");
 						break;
 					case 3:
 						Debug.Log("잡았다!");
 						fishingAnimator.succeed = true;
-						SoundManager.instance.PlaySoundEffect("Fishing");
+						SoundManager.Instance.PlaySoundEffect("Fishing");
 						fishingAnimator.PlayAndShowPopup();
 						break;
 					case 4:
@@ -84,14 +84,14 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			else //찌 던지기
 			{
 				fishingAnimator.PlayNextAnimation();
-				SoundManager.instance.PlaySoundEffect("Fishing_Wave");
+				SoundManager.Instance.PlaySoundEffect("Fishing_Wave");
 				fishingAnimator.succeed = false;
 				SetFishingPoint();
 				isFishing = true;
 				fishCoroutine = StartCoroutine(Fishing());
 			}
 		}
-		
+
 	}
 
 	void SetFishingPoint()
@@ -120,7 +120,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 
 			//조개가 찌를 뭄
 			yield return new WaitForSeconds(overTime);
-			SoundManager.instance.PlaySoundEffect("Fishing");
+			SoundManager.Instance.PlaySoundEffect("Fishing");
 			Debug.Log("조개가 물었다!");
 			fishStatus = 3;
 			Handheld.Vibrate();
@@ -138,7 +138,7 @@ public class FishingManager : MonoBehaviour, IPointerClickHandler
 			fishingAnimator.PlayNextAnimation();
 			Debug.Log("자동 건지기");
 			isFishing = false;
-			SoundManager.instance.PlaySoundEffect("Fishing_Up");
+			SoundManager.Instance.PlaySoundEffect("Fishing_Up");
 			break;
 
 		}

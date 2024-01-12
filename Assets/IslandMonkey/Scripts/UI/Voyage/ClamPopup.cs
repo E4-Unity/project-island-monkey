@@ -56,7 +56,7 @@ public class ClamPopup : Popup
 		GetButton.onClick.AddListener(() => {
 			VoyageUIManager.Hide();
 			goodsManager.EarnGoods(GoodsType.Clam, clamNum*2 + 1);
-			SoundManager.instance.PlaySoundEffect("Button_Click");
+			SoundManager.Instance.PlaySoundEffect("Button_Click");
 		});
 	}
 
@@ -64,12 +64,12 @@ public class ClamPopup : Popup
 	{
 		base.Show();
 		clamNum = PickClam();
-		
+
 		if (clamNum >= 0)
 		{
 			Debug.Log("난수 : " + randNum);
 			clamText.text = GradeText[clamNum];
-			
+
 			for(int i = 0; i < clams.Count; i++)
 			{
 				clams[i].SetActive(false);
@@ -82,7 +82,7 @@ public class ClamPopup : Popup
 			Debug.Log("Clam number :" + clamNum);
 			Debug.Log("잘못된 난수 :" + randNum);
 		}
-		
+
 	}
 
 	private int PickClam()
@@ -99,5 +99,5 @@ public class ClamPopup : Popup
 			}
 		}
 		return -1;
-	} 
+	}
 }

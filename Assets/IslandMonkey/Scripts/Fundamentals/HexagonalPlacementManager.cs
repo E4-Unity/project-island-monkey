@@ -103,7 +103,7 @@ namespace IslandMonkey
 				mainCamera.transform.position = cameraOffset + spawnPosition;
 
 				// TODO 건설 이펙트 스폰
-				EffectManager.instance.PlayEffect(EffectManager.EffectType.BuildEffect, spawnPosition);
+				EffectManager.Instance.PlayEffect(EffectManager.EffectType.BuildEffect, spawnPosition);
 
 				// 네브 메시 굽기
 				RefreshNavMesh();

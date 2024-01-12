@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using E4.Utilities;
 using UnityEngine;
 
-public class EffectManager : Singleton<EffectManager>
+public class EffectManager : MonoSingleton<EffectManager>
 {
 	// 이펙트 유형을 정의하는 enum
 	public enum EffectType
@@ -32,8 +33,11 @@ public class EffectManager : Singleton<EffectManager>
 
 	private Dictionary<EffectType, GameObject> effects = new Dictionary<EffectType, GameObject>();
 
-	private void Awake()
+	/* MonoSingleton */
+	protected override void InitializeComponent()
 	{
+		base.InitializeComponent();
+
 		InitializeEffects(mainSceneEffects);
 		InitializeEffects(voyageSceneEffects);
 	}

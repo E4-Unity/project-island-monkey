@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using E4.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SoundManager : Singleton<SoundManager>
+public class SoundManager : MonoSingleton<SoundManager>
 {
 	public AudioSource Main_BGM;
 	public AudioSource Additional_BGM;
@@ -32,9 +33,11 @@ public class SoundManager : Singleton<SoundManager>
 
 	private Dictionary<string, AudioClip> soundEffects = new Dictionary<string, AudioClip>();
 
-	private void Awake()
+	/* MonoSingleton */
+	protected override void InitializeComponent()
 	{
-		DontDestroyOnLoad(gameObject);
+		base.InitializeComponent();
+
 		SceneManager.sceneLoaded += OnSceneLoaded;
 
 		Main_BGM = GetComponent<AudioSource>();

@@ -12,7 +12,7 @@ public class VoyageTopbar : MonoBehaviour
 		storageButton.onClick.AddListener(() =>
 		{
 			VoyageUIManager.Show<StoragePopup>(true);
-			SoundManager.instance.PlaySoundEffect("Button_Click");
+			SoundManager.Instance.PlaySoundEffect("Button_Click");
 		});
     }
 }

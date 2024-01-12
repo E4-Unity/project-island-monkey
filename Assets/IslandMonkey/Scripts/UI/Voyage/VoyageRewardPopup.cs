@@ -14,7 +14,7 @@ public class VoyageRewardPopup : Popup
 	{
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
 		getButton.onClick.AddListener(() => {
-			SoundManager.instance.PlaySoundEffect("Button_Click");
+			SoundManager.Instance.PlaySoundEffect("Button_Click");
 			boat.DOMoveZ(30,30);
 			voyageDataManager.ShouldBuild = true;
 			sceneLoadingManagerInterface.GoToMainScene();

@@ -9,7 +9,7 @@ public class SoundUIManager : MonoBehaviour
 
 	void Start()
 	{
-		soundManager = SoundManager.instance; // SoundManager의 인스턴스를 가져옴
+		soundManager = SoundManager.Instance; // SoundManager의 인스턴스를 가져옴
 
 		// 슬라이더 초기화
 		mainBGMSlider.value = PlayerPrefs.GetFloat("MainBGMVolume", 1f);

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using E4.Utilities;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : MonoSingleton<UIManager>
 {
 	[Serializable]
 	public class MPanel
@@ -25,7 +26,17 @@ public class UIManager : Singleton<UIManager>
 	public List<MPanel> panels = new List<MPanel>();
 	public List<MButton> buttons = new List<MButton>();
 
-	public void Awake()
+	/* MonoSingleton */
+	protected override void InitializeComponent()
+	{
+		base.InitializeComponent();
+
+		// 초기화
+		Init();
+	}
+
+	/* 메서드 */
+	void Init()
 	{
 		foreach (var panel in panels)
 		{
@@ -38,7 +49,7 @@ public class UIManager : Singleton<UIManager>
 			btn.button.onClick.AddListener(() =>
 			{
 				btn.onClickEvent.Invoke();
-				SoundManager.instance.PlaySoundEffect("Button_Click");
+				SoundManager.Instance.PlaySoundEffect("Button_Click");
 			});
 		}
 	}

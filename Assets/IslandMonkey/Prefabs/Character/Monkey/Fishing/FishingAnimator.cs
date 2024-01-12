@@ -49,9 +49,9 @@ namespace IslandMonkey
 			{
 				yield return null;
 			}
-			SoundManager.instance.PlaySoundEffect("Fishing_Up");
+			SoundManager.Instance.PlaySoundEffect("Fishing_Up");
 			VoyageUIManager.Show<ClamPopup>(true);
-			
+
 		}
 	}
 }

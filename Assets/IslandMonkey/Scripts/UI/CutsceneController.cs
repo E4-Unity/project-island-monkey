@@ -41,13 +41,13 @@ public class CutsceneController : MonoBehaviour
 			switch (cutsceneIndex)
 			{
 				case 0:
-					SoundManager.instance.PlaySoundEffect("Cutscene_1");
+					SoundManager.Instance.PlaySoundEffect("Cutscene_1");
 					break;
 				case 1:
-					SoundManager.instance.PlaySoundEffect("Cutscene_2");
+					SoundManager.Instance.PlaySoundEffect("Cutscene_2");
 					break;
 				case 2:
-					SoundManager.instance.PlaySoundEffect("Cutscene_3");
+					SoundManager.Instance.PlaySoundEffect("Cutscene_3");
 					Handheld.Vibrate();
 					break;
 			}
@@ -74,7 +74,7 @@ public class CutsceneController : MonoBehaviour
 
 		// 캐릭터 등장 연출
 		OnCutSceneEnd?.Invoke();
-		SoundManager.instance.PlaySoundEffect("Acquisition_Monkey");
+		SoundManager.Instance.PlaySoundEffect("Acquisition_Monkey");
 	}
 
 	IEnumerator FadeToClear(Image target, float fadeTime)
