@@ -53,6 +53,7 @@ namespace IslandMonkey
 		/// </summary>
 		/// <param name="target">배치할 건물 오브젝트</param>
 		/// <param name="hexIndex">배치할 위치 인덱스</param>
+		/// <param name="spawnPosition">배치된 위치 좌표</param>
 		public bool TryPlaceBuilding(Building target, int hexIndex, out Vector3 spawnPosition)
 		{
 			// 초기화

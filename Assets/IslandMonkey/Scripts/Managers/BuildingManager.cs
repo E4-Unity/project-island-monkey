@@ -91,6 +91,7 @@ namespace IslandMonkey
 		Dictionary<int, BuildingData> cachedData;
 		Dictionary<int, BuildingDefinition> cachedDefinition;
 		Dictionary<BuildingType, int> buildingCountByType = new Dictionary<BuildingType, int>();
+		Dictionary<int, Building> m_CachedBuildings = new Dictionary<int, Building>();
 
 		/* 프로퍼티 */
 		public List<BuildingData> BuildingDataList => Data.BuildingDataList;
@@ -178,6 +179,9 @@ namespace IslandMonkey
 			// 건물 생성 및 배치
 			var building = m_BuildingFactory.CreateBuilding(buildingData);
 			m_PlacementManager.TryPlaceBuilding(building, buildingData.HexIndex, out var spawnPosition);
+
+			// 건설된 건물 등록
+			m_CachedBuildings.Add(buildingData.Definition.ID, building);
 
 			// 기능 건물 등록
 			if (buildingData.Definition.BuildingType == BuildingType.Functional)
@@ -267,6 +271,30 @@ namespace IslandMonkey
 		void InitPlacementManager()
 		{
 			m_PlacementManager.BaseDistance = m_BaseDistance;
+		}
+
+		/// <summary>
+		/// 건설이 완료된 건물 재배치
+		/// </summary>
+		[ContextMenu("Rearrange All Buildings")]
+		void RearrangeAllBuildings()
+		{
+
+			// 배치 간격 재설정
+			if (!Mathf.Approximately(m_PlacementManager.BaseDistance, m_BaseDistance))
+			{
+				m_PlacementManager.BaseDistance = m_BaseDistance;
+			}
+
+			// 건물 재배치
+			foreach (var building in m_CachedBuildings.Values)
+			{
+				var buildingData = building.GetBuildingData();
+				m_PlacementManager.TryPlaceBuilding(building, buildingData.HexIndex, out var spawnPosition);
+			}
+
+			// NavMesh 다시 굽기
+			BakeNavMesh();
 		}
 
 		/// <summary>
