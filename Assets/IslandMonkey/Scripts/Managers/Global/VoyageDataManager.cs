@@ -1,20 +1,20 @@
 using System;
 using System.Collections;
+using E4.Utilities;
 using UnityEngine;
 
 namespace IslandMonkey
 {
 	[Serializable]
-	public class VoyageSaveData
+	public class VoyageSaveData : ISavable
 	{
 		public BuildingData CurrentBuildingData = new BuildingData();
 		public MonkeyType MonkeyType = MonkeyType.Basic;
 	}
-	public class VoyageDataManager : MonoBehaviour, DataManager.ISavable<VoyageSaveData>
+	public class VoyageDataManager : DataManagerClient<VoyageSaveData>
 	{
 		/* Field */
 		[SerializeField] bool shouldBuild;
-		VoyageSaveData voyageSaveData;
 		int timer;
 		bool canEnterVoyageScene;
 		Coroutine checkBuildingTimeCoroutine;
@@ -24,22 +24,23 @@ namespace IslandMonkey
 
 		public BuildingData CurrentBuildingData
 		{
-			get => voyageSaveData.CurrentBuildingData;
+			get => Data.CurrentBuildingData;
 			set
 			{
-				voyageSaveData.CurrentBuildingData = value;
+				Data.CurrentBuildingData = value;
 
 				OnCurrentBuildingDataUpdated?.Invoke();
 				CheckBuildingData();
 
-				DataManager.SaveData(this);
+				// 데이터 저장
+				SaveData();
 			}
 		}
 
 		public MonkeyType MonkeyType
 		{
-			get => voyageSaveData.MonkeyType;
-			set => voyageSaveData.MonkeyType = value;
+			get => Data.MonkeyType;
+			set => Data.MonkeyType = value;
 		}
 
 		public int Timer => timer;
@@ -58,10 +59,9 @@ namespace IslandMonkey
 		public event Action OnBuildingFinished;
 
 		/* MonoBehaviour */
-		void Awake()
+		protected override void Awake()
 		{
-			var saveData = DataManager.LoadData(this);
-			voyageSaveData = saveData ?? new VoyageSaveData();
+			base.Awake();
 
 			CheckBuildingData();
 		}
@@ -123,11 +123,5 @@ namespace IslandMonkey
 
 			return currentTime;
 		}
-
-		/* ISavable 인터페이스 구현 */
-		public const string SaveFileName = "VoyageSaveData.json";
-		public string FileName => SaveFileName;
-
-		public VoyageSaveData Data => voyageSaveData;
 	}
 }
