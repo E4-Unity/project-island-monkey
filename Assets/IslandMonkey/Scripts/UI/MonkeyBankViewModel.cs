@@ -8,8 +8,8 @@ namespace IslandMonkey.MVVM
 		void Awake()
 		{
 			// 컴포넌트 할당
-			monkeyBank = IslandGameManager.Instance.GetMonkeyBank();
-			goodsManager = IslandGameManager.Instance.GetGoodsManager();
+			monkeyBank = GlobalGameManager.Instance.GetMonkeyBank();
+			goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 
 			// Model 등록
 			PropertyNotifier = monkeyBank;

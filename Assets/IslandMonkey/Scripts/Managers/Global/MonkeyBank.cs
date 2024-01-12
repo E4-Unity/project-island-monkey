@@ -1,25 +1,23 @@
 using System;
 using System.Numerics;
-using IslandMonkey.MVVM;
+using E4.Utilities;
 using IslandMonkey.Utils;
 using UnityEngine;
 
 namespace IslandMonkey
 {
 	[Serializable]
-	public class MonkeyBankSaveData
+	public class MonkeyBankSaveData : ISavable
 	{
 		public SerializedBigInteger Gold = new SerializedBigInteger();
 		public int Level = 1;
 		public int LastGetRewardsTime;
 	}
 
-	public class MonkeyBank : Model, DataManager.ISavable<MonkeyBankSaveData>
+	public class MonkeyBank : DataManagerClientModel<MonkeyBankSaveData>
 	{
 		/* Field */
 		[SerializeField] string[] goldLimitList;
-
-		MonkeyBankSaveData saveData = new MonkeyBankSaveData();
 
 		SerializedBigInteger goldLimit = new SerializedBigInteger();
 
@@ -28,12 +26,12 @@ namespace IslandMonkey
 		/* Property */
 		public BigInteger Gold
 		{
-			get => saveData.Gold.Value;
+			get => Data.Gold.Value;
 			private set
 			{
 				var newCurrentGold = value.Clamp(BigInteger.Zero, GoldLimit);
-				SetField(ref saveData.Gold.Value, newCurrentGold);
-				DataManager.SaveData(this);
+				SetField(ref Data.Gold.Value, newCurrentGold);
+				SaveData();
 			}
 		}
 
@@ -48,42 +46,33 @@ namespace IslandMonkey
 
 		public int Level
 		{
-			get => saveData.Level;
+			get => Data.Level;
 			private set
 			{
-				SetField(ref saveData.Level, Mathf.Clamp(value, 1, goldLimitList.Length));
+				SetField(ref Data.Level, Mathf.Clamp(value, 1, goldLimitList.Length));
 				GoldLimit = goldLimitList[Level - 1].ToBigInteger();
-				DataManager.SaveData(this);
+				SaveData();
 			}
 		}
 
 		public int LastGetRewardsTime
 		{
-			get => saveData.LastGetRewardsTime;
+			get => Data.LastGetRewardsTime;
 			private set
 			{
-				SetField(ref saveData.LastGetRewardsTime, value);
-				DataManager.SaveData(this);
+				SetField(ref Data.LastGetRewardsTime, value);
+				SaveData();
 			}
 		}
 
 		public int MaxTimeRecord => maxTimeRecord;
 
-		public bool IsFull => saveData.Gold.Value == goldLimit.Value;
+		public bool IsFull => Data.Gold.Value == goldLimit.Value;
 
 		/* MonoBehaviour */
-		void Awake()
+		protected override void Awake()
 		{
-			var loadData = DataManager.LoadData(this);
-			if (loadData is not null)
-			{
-				saveData = loadData;
-			}
-			else
-			{
-				saveData.LastGetRewardsTime = GetCurrentTime();
-				DataManager.SaveData(this);
-			}
+			base.Awake();
 
 			// 레벨 초기화
 			if (goldLimitList.Length >= Level)
@@ -97,7 +86,7 @@ namespace IslandMonkey
 		{
 			Gold = BigInteger.Zero;
 			LastGetRewardsTime = GetCurrentTime();
-			DataManager.SaveData(this);
+			SaveData();
 		}
 
 		public void LevelUp(int amount = 1)
@@ -129,10 +118,5 @@ namespace IslandMonkey
 
 			return currentTime;
 		}
-
-		/* ISavable 인터페이스 */
-		public const string SaveFileName = "MonkeyBankSaveData.json";
-		public string FileName => SaveFileName;
-		public MonkeyBankSaveData Data => saveData;
 	}
 }

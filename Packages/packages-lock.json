@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "com.eu4ng.utility.generic-singleton": {
-      "version": "1.1.1",
+    "com.eu4ng.utilities": {
+      "version": "https://github.com/E4-Unity/com.eu4ng.utilities.git?path=/com.eu4ng.utilities#v0.1.0",
       "depth": 0,
-      "source": "registry",
+      "source": "git",
       "dependencies": {},
-      "url": "https://package.openupm.com"
+      "hash": "3b25ccb7e960dfb0ddaf29ff5fbf7b5c28765754"
     },
     "com.unity.addressables": {
       "version": "1.21.19",

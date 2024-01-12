@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
-using IslandMonkey.MVVM;
+using E4.Utilities;
 using IslandMonkey.Utils;
 
 namespace IslandMonkey
 {
 	[Serializable]
-	public class GoodsSaveData
+	public class GoodsSaveData : ISavable
 	{
 		public SerializedBigInteger Gold = new SerializedBigInteger();
 		public SerializedBigInteger Banana = new SerializedBigInteger();
@@ -23,70 +23,63 @@ namespace IslandMonkey
 	}
 
 	/// <summary>
-	/// 프로퍼티가 SaveData를 직접 참고하기 때문에 주의해야합니다.
+	/// 플레이어의 재화를 관리하는 클래스
 	/// </summary>
-	public class GoodsManager : Model, DataManager.ISavable<GoodsSaveData>
+	public class GoodsManager : DataManagerClientModel<GoodsSaveData>
 	{
-		GoodsSaveData goodsSaveData = new GoodsSaveData();
-		static readonly Dictionary<GoodsType, PropertyInfo> GoodsPropertyInfos = new Dictionary<GoodsType, PropertyInfo>()
+		/* 필드 */
+
+		static readonly Dictionary<GoodsType, PropertyInfo> m_GoodsPropertyInfos = new Dictionary<GoodsType, PropertyInfo>()
 		{
 			{ GoodsType.Gold, typeof(GoodsManager).GetProperty(nameof(Gold))},
 			{ GoodsType.Banana, typeof(GoodsManager).GetProperty(nameof(Banana)) },
 			{ GoodsType.Clam, typeof(GoodsManager).GetProperty(nameof(Clam)) }
 		};
 
+		/* 프로퍼티 */
+
 		public BigInteger Gold
 		{
-			get => goodsSaveData.Gold.Value;
+			get => Data.Gold.Value;
 			private set
 			{
-				SetField(ref goodsSaveData.Gold.Value, BigInteger.Max(BigInteger.Zero, value));
+				SetField(ref Data.Gold.Value, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Gold);
-				DataManager.SaveData(this);
+				SaveData();
 			}
 		}
 
 		public BigInteger Banana
 		{
-			get => goodsSaveData.Banana.Value;
+			get => Data.Banana.Value;
 			private set
 			{
-				SetField(ref goodsSaveData.Banana.Value, BigInteger.Max(BigInteger.Zero, value));
+				SetField(ref Data.Banana.Value, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Banana);
-				DataManager.SaveData(this);
+				SaveData();
 			}
 		}
 
 		public BigInteger Clam
 		{
-			get => goodsSaveData.Clam.Value;
+			get => Data.Clam.Value;
 			private set
 			{
-				SetField(ref goodsSaveData.Clam.Value, BigInteger.Max(BigInteger.Zero, value));
+				SetField(ref Data.Clam.Value, BigInteger.Max(BigInteger.Zero, value));
 				OnGoodsUpdated?.Invoke(GoodsType.Clam);
-				DataManager.SaveData(this);
+				SaveData();
 			}
 		}
 
 		/* Event */
 		public event Action<GoodsType> OnGoodsUpdated;
 
-		void Awake()
-		{
-			// 데이터 로드
-			var saveData = DataManager.LoadData(this);
-			if (saveData is not null)
-			{
-				goodsSaveData = saveData;
-			}
-		}
-
 		public void EarnGoods(GoodsType goodsType, in BigInteger amount)
 		{
 			// 유효성 검사
-			if (amount <= 0 || !GoodsPropertyInfos.ContainsKey(goodsType)) return;
+			if (amount <= 0 || !m_GoodsPropertyInfos.ContainsKey(goodsType)) return;
 
-			var propertyInfo = GoodsPropertyInfos[goodsType];
+			var propertyInfo = m_GoodsPropertyInfos[goodsType];
 			propertyInfo.SetValue(this, (BigInteger)propertyInfo.GetValue(this) + amount);
 		}
 
@@ -94,22 +87,16 @@ namespace IslandMonkey
 		{
 			if (!CanSpend(goodsType, amount)) return;
 
-			var propertyInfo = GoodsPropertyInfos[goodsType];
+			var propertyInfo = m_GoodsPropertyInfos[goodsType];
 			propertyInfo.SetValue(this, (BigInteger)propertyInfo.GetValue(this) - amount);
 		}
 
 		public bool CanSpend(GoodsType goodsType, in BigInteger amount)
 		{
 			// 유효성 검사
-			if (amount < 0 || !GoodsPropertyInfos.ContainsKey(goodsType)) return false;
+			if (amount < 0 || !m_GoodsPropertyInfos.ContainsKey(goodsType)) return false;
 
-			return (BigInteger)GoodsPropertyInfos[goodsType].GetValue(this) >= amount;
+			return (BigInteger)m_GoodsPropertyInfos[goodsType].GetValue(this) >= amount;
 		}
-
-		/* ISavable */
-		public const string SaveFileName = "GoodsSaveData.json";
-		public string FileName => SaveFileName;
-
-		public GoodsSaveData Data => goodsSaveData;
 	}
 }

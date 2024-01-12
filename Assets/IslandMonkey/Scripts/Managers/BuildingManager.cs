@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using IslandMonkey.MVVM;
+using E4.Utilities;
 using UnityEngine;
 
 namespace IslandMonkey
 {
 	[Serializable]
-	public class BuildingSaveData
+	public class BuildingSaveData : ISavable
 	{
 		public List<BuildingData> BuildingDataList = new List<BuildingData>();
 	}
@@ -27,25 +27,22 @@ namespace IslandMonkey
 	/// <summary>
 	/// 프로퍼티가 SaveData를 직접 참고하기 때문에 주의해야합니다.
 	/// </summary>
-	public class BuildingManager : MonoBehaviour, DataManager.ISavable<BuildingSaveData>
+	public class BuildingManager : DataManagerClient<BuildingSaveData>
 	{
 		[SerializeField] BuildingDefinition[] defaultBuildings;
 
-		BuildingSaveData buildingSaveData;
 		Dictionary<int, BuildingData> cachedData;
 		Dictionary<int, BuildingDefinition> cachedDefinition;
 		Dictionary<BuildingType, int> buildingCountByType = new Dictionary<BuildingType, int>();
 
-		public List<BuildingData> BuildingDataList => buildingSaveData.BuildingDataList;
+		public List<BuildingData> BuildingDataList => Data.BuildingDataList;
 		public Dictionary<BuildingType, int> BuildingCountByType => buildingCountByType;
 
 		public event Action OnBuildingDataRegistered;
 
-		void Awake()
+		protected override void Awake()
 		{
-			// 저장된 데이터 로드
-			var saveData = DataManager.LoadData(this);
-			buildingSaveData = saveData ?? new BuildingSaveData();
+			base.Awake();
 
 			// 초기화
 			Init();
@@ -61,10 +58,8 @@ namespace IslandMonkey
 			return null;
 		}
 
-		public void Save() // TODO 임시
-		{
-			DataManager.SaveData(this);
-		}
+		// TODO 임시 사용중
+		public void Save() => SaveData();
 
 		// TODO 인덱스 캐싱
 		public bool IsBuildingExist(int index) => index >= 0 && (cachedData.ContainsKey(index) || cachedDefinition.ContainsKey(index));
@@ -77,11 +72,11 @@ namespace IslandMonkey
 			if (buildingData is null) return;
 
 			// 데이터 추가 및 캐싱
-			buildingSaveData.BuildingDataList.Add(buildingData);
+			Data.BuildingDataList.Add(buildingData);
 			CachingBuildingData(buildingData);
 
 			// 데이터 저장
-			DataManager.SaveData(this);
+			SaveData();
 
 			// 이벤트 호출
 			OnBuildingDataRegistered?.Invoke();
@@ -144,10 +139,5 @@ namespace IslandMonkey
 				buildingCountByType.Add(definition.BuildingType, 1);
 			}
 		}
-
-		/* ISavable 인터페이스 구현 */
-		public const string SaveFileName = "BuildingSaveData.json";
-		public string FileName => SaveFileName;
-		public BuildingSaveData Data => buildingSaveData;
 	}
 }
