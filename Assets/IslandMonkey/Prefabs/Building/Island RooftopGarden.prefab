@@ -107,6 +107,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 19598190240961330}
+    - targetCorrespondingSourceObject: {fileID: 3838336924499406671, guid: 8b0a6ca31caf30e4a8df7b472954a852,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6609908447505007874}
     - targetCorrespondingSourceObject: {fileID: 7739962086136074321, guid: 8b0a6ca31caf30e4a8df7b472954a852,
         type: 3}
       insertIndex: -1
@@ -144,6 +148,18 @@ MonoBehaviour:
     RightFootEquipment: {fileID: 0}
   monkeyDefinition: {fileID: 0}
   monkeyPrefab: {fileID: 0}
+--- !u!114 &-6609908447505007874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2823044316522827041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2a548ee78554c4e81cdd34c9dc18e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6242694871666417331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4957184633476119773, guid: 8b0a6ca31caf30e4a8df7b472954a852,

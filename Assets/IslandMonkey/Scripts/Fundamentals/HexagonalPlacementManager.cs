@@ -1,173 +1,81 @@
 using System;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace IslandMonkey
 {
-	public class HexagonalPlacementManager : MonoBehaviour
+	// TODO MonoBehaviour 제거 후 BuildingManager 에 통합
+	/// <summary>
+	/// 건물 배치 기능 담당
+	/// </summary>
+	[Serializable]
+	public class HexagonalPlacementManager
 	{
-		[Tooltip("칸 간격")] [SerializeField] float baseDistance = 1.75f;
+		/* 컴포넌트 */
+		readonly HexagonalCalculator m_Calculator = new HexagonalCalculator(1);
 
-		[SerializeField] NavMeshSurface navMeshSurface;
-		[SerializeField] BuildingDefinition[] buildings;
-		[SerializeField] GameObject buildingSlotPrefab;
-		[SerializeField] Transform groundSlot;
-
-		Dictionary<int, BuildingDefinition> buildingDatabase;
-
-		// TODO 임시, 나중에 BuildingManager 로 이전
-		List<BuildingMonkey.IBuilding> functionalBuildings = new List<BuildingMonkey.IBuilding>();
-		public List<BuildingMonkey.IBuilding> FunctionalBuildings => functionalBuildings;
-
-		HexagonalCalculator calculator;
-		BuildingManager buildingManager;
-		VoyageDataManager voyageDataManager;
-		Camera mainCamera;
-
+		/* 필드 */
+		// 변수
 		int row = 1;
 		int maxRow = 3;
 		List<int> usedHexIndices = new List<int>();
 		List<int> availableHexIndices = new List<int> { 0, 1, 2, 3, 4, 5 };
 
-		bool IsFull => row > maxRow;
-		bool CanSpawn => usedHexIndices.Count < buildings.Length;
+		/* 프로퍼티 */
+		public bool IsFull => row > maxRow;
 
-		void Awake()
+		public float BaseDistance
 		{
-			calculator = new HexagonalCalculator(baseDistance);
-
-			// Building Definition 캐싱
-			buildingDatabase = new Dictionary<int, BuildingDefinition>(buildings.Length);
-			foreach (var building in buildings)
-			{
-				if(!building || building.ID < 0) continue; // ID 유효성 검사
-				buildingDatabase.Add(building.ID, building);
-			}
-
-			mainCamera = Camera.main;
+			get => m_Calculator.BaseDistance;
+			set => m_Calculator.BaseDistance = value;
 		}
 
-		void Start()
+		/* API */
+		/// <summary>
+		/// 비어있는 곳 중 랜덤 인덱스 반환
+		/// </summary>
+		/// <returns>랜덤 인덱스</returns>
+		public int GetRandomHexIndex()
 		{
-			buildingManager = IslandGameManager.Instance.GetBuildingManager();
-			voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
-
-			foreach (var buildingData in buildingManager.BuildingDataList)
-			{
-				SpawnBuilding(buildingData, true);
-			}
-
-			RefreshNavMesh();
-
-			if (voyageDataManager.ShouldBuild)
-			{
-				var buildingData = buildingManager.GetBuildingData(voyageDataManager.CurrentBuildingData.Definition.ID);
-				if (buildingData is null) return;
-
-				buildingData.IsBuildCompleted = true;
-				SpawnBuilding(buildingData);
-
-				voyageDataManager.Clear();
-
-				buildingManager.Save(); // TODO 리팩토링 필요
-			}
-		}
-
-		public void OnTerritoryExpanded() => maxRow++;
-
-		public void SpawnBuilding(BuildingData buildingData, bool disableBuildEffects = false)
-		{
-			// 유효성 검사
-			if (buildingData is null) return;
-
-			// Hex Index 업데이트
-			DisableHexIndex(buildingData.HexIndex);
-
-			// 건설이 완료되었는지 확인
-			if (!buildingData.IsBuildCompleted) return;
-
-			// Hex Index에 대응하는 좌표 구하기
-			Vector2 pos = calculator.GetPosition(buildingData.HexIndex);
-			Vector3 spawnPosition = new Vector3(pos.y, 0, pos.x);
-
-			// 이펙트 연출
-			if (!disableBuildEffects)
-			{
-				// TODO 리팩토링
-				// 카메라 이동
-				Vector3 cameraOffset = new Vector3(0, 6.14f, -11);
-
-				// Hex Index에 대응하는 좌표 구하기
-				mainCamera.transform.position = cameraOffset + spawnPosition;
-
-				// TODO 건설 이펙트 스폰
-				EffectManager.Instance.PlayEffect(EffectManager.EffectType.BuildEffect, spawnPosition);
-
-				// 네브 메시 굽기
-				RefreshNavMesh();
-			}
-
-			// Building 스폰
-			if (!buildingSlotPrefab) return;
-			GameObject buildingSlot =
-				Instantiate(buildingSlotPrefab, spawnPosition, Quaternion.identity);
-			buildingSlot.transform.parent = groundSlot;
-
-			// Building 초기화
-			Building building = buildingSlot.GetComponent<Building>();
-			building.InitComponent(buildingData);
-		}
-
-		// TODO 반환이 아니라 즉시 BuildingManager 에 추가?
-		public void RequestSpawnBuilding(int buildingIndex, bool spawnImmediately = true)
-		{
-			// 최대 영토 개수 도달
-			if (IsFull) return;
-
-			// 모든 건물들이 다 지어짐
-			if (!CanSpawn) return;
+			// 유효성 검가
+			if (IsFull) return -1;
 
 			// 랜덤 인덱스 뽑기
-			int randomIndex = Random.Range(0, availableHexIndices.Count);
-			int hexIndex = availableHexIndices[randomIndex];
+			var randomIndex = Random.Range(0, availableHexIndices.Count);
+			var randomHexIndex = availableHexIndices[randomIndex];
 
-			// 건설 시작 시간 기록
-			var now = DateTime.Now.ToLocalTime();
-			var span = now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime();
-
-			// Building Definition 로드
-			if (!buildingDatabase.ContainsKey(buildingIndex))
-			{
-#if UNITY_EDITOR
-				Debug.LogError("BuildingData.BuildingIndex (" + buildingIndex +")에 대응하는 BuildingDefinition 을 찾을 수 없습니다.");
-#endif
-				return;
-			}
-
-			// 건물 데이터 저장
-			var newBuildingData = new BuildingData()
-			{
-				Definition = buildingDatabase[buildingIndex],
-				IsBuildCompleted = spawnImmediately,
-				HexIndex = hexIndex,
-				BuildStartedTime = (int)span.TotalSeconds
-			};
-
-			// 건물 데이터 전송
-			buildingManager.RegisterBuildingData(newBuildingData);
-
-			if(!newBuildingData.IsBuildCompleted) // 유학 건물(건설 시간 존재)일 경우에만 전송
-				voyageDataManager.CurrentBuildingData = newBuildingData;
-
-			// 스폰
-			SpawnBuilding(newBuildingData);
+			return randomHexIndex;
 		}
 
-		/* Method */
-		void RefreshNavMesh() => navMeshSurface.BuildNavMesh();
+		/// <summary>
+		/// 건물을 육각 좌표계 기준으로 특정 위치에 배치
+		/// </summary>
+		/// <param name="target">배치할 건물 오브젝트</param>
+		/// <param name="hexIndex">배치할 위치 인덱스</param>
+		/// <param name="spawnPosition">배치된 위치 좌표</param>
+		public bool TryPlaceBuilding(Building target, int hexIndex, out Vector3 spawnPosition)
+		{
+			// 초기화
+			spawnPosition = Vector3.zero;
 
+			// 유효성 검사
+			if (target is null) return false;
+
+			// Hex Index 업데이트
+			DisableHexIndex(hexIndex);
+
+			// Hex Index에 대응하는 좌표 구하기
+			var pos = m_Calculator.GetPosition(hexIndex);
+			spawnPosition = new Vector3(pos.y, 0, pos.x);
+
+			// 건물 배치
+			target.transform.position = spawnPosition;
+
+			return true;
+		}
+
+		/* 메서드 */
 		void DisableHexIndex(int hexIndex)
 		{
 			// 이미 제거된 Hex Index 는 무시
@@ -181,8 +89,8 @@ namespace IslandMonkey
 				row++;
 				if (!IsFull)
 				{
-					int start = calculator.SumHexagonalCentredNumbers(row);
-					int end = calculator.SumHexagonalCentredNumbers(row + 1);
+					int start = m_Calculator.GetMaxHexIndex(row);
+					int end = m_Calculator.GetMaxHexIndex(row + 1);
 					availableHexIndices = new List<int>(end - start);
 					for (int i = start; i < end; i++)
 					{

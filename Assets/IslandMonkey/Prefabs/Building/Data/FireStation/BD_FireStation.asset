@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BD_FireStation
   m_EditorClassIdentifier: 
   goodsFactoryConfig: {fileID: 11400000, guid: d270abab11671bd4691e7b8b9f142a46, type: 2}
-  enableTest: 0
   buildingID: 0
   buildingType: 1
-  buildingPrefab: {fileID: 6995952561956060843, guid: c062a79cde16879478db370f8aaced16,
+  buildingPrefab: {fileID: 2210607984409953148, guid: c062a79cde16879478db370f8aaced16,
     type: 3}
   buildingTime: 60
   activeTime: 46
-  buildCost: 500
   buildCostGoodsType: 1
+  buildCost: 500
+  enableTest: 0

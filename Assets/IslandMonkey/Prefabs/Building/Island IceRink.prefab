@@ -111,6 +111,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1945744282593700109}
+    - targetCorrespondingSourceObject: {fileID: 5526271403094571826, guid: 89c861b060dbd8948b575cfe3cc088ba,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4242155572582588678}
     - targetCorrespondingSourceObject: {fileID: 510876467603636759, guid: 89c861b060dbd8948b575cfe3cc088ba,
         type: 3}
       insertIndex: -1
@@ -303,6 +307,18 @@ MonoBehaviour:
       type: 3}
   monkeyDefinition: {fileID: 0}
   monkeyPrefab: {fileID: 0}
+--- !u!114 &-4242155572582588678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540479403802071824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2a548ee78554c4e81cdd34c9dc18e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5439132005206359431 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2633330059682780581, guid: 89c861b060dbd8948b575cfe3cc088ba,

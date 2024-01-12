@@ -21,7 +21,6 @@ public class BuildingBtn : MonoBehaviour
 	VoyageDataManager voyageDataManager;
 	BuildingManager buildingManager;
 	GoodsManager goodsManager;
-	HexagonalPlacementManager placementManager;
 
 	void Start()
 	{
@@ -29,7 +28,6 @@ public class BuildingBtn : MonoBehaviour
 		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
 		buildingManager = IslandGameManager.Instance.GetBuildingManager();
-		placementManager = IslandGameManager.Instance.GetPlacementManager();
 
 		// 이벤트 바인딩
 		cutsceneController = getAnimalPanel.GetComponent<CutsceneController>();
@@ -140,7 +138,7 @@ public class BuildingBtn : MonoBehaviour
 		voyageDataManager.MonkeyType = selectedType;
 
 		// 건설 없이 건물 데이터만 저장
-		RequestSpawnBuilding(buttonIndex, false);
+		RequestSpawnBuilding(buttonIndex);
 
 		// TODO 리팩토링
 		yield return new WaitForSeconds(11f); // 연출 지연
@@ -152,15 +150,15 @@ public class BuildingBtn : MonoBehaviour
 		SceneLoadingManager.Instance.ChangeScene(BuildScene.Voyage, SceneLoadingManager.ChangeSceneType.Animation); // 항해 씬 넘어가기
 	}
 
-	private void RequestSpawnBuilding(int buttonIndex, bool spawnImmediately = true)
+	private void RequestSpawnBuilding(int buttonIndex)
 	{
 		// 유효성 검사
-		if (placementManager is null) return;
+		if (buildingManager is null) return;
 
 		// 건설되지 않은 경우에만 실행
 		if (buildingManager.IsBuildingExist(buttonIndex)) return;
 
 		// 건설 요청
-		placementManager.RequestSpawnBuilding(buttonIndex, spawnImmediately);
+		buildingManager.RequestSpawnBuilding(buttonIndex);
 	}
 }

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: BD_BananaHouse
   m_EditorClassIdentifier: 
   goodsFactoryConfig: {fileID: 11400000, guid: 61aa7f3b9ae9df54a86d82cbe1f628ea, type: 2}
-  enableTest: 0
   buildingID: 3101
   buildingType: 1
-  buildingPrefab: {fileID: 2614177981476512448, guid: 690bead894ec95e4ea85b804dfec7ea4,
+  buildingPrefab: {fileID: 6758075499227460611, guid: 690bead894ec95e4ea85b804dfec7ea4,
     type: 3}
   buildingTime: -1
   activeTime: -1
-  buildCost: 0
   buildCostGoodsType: 1
+  buildCost: 0
+  enableTest: 0
