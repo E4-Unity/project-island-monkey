@@ -7,13 +7,6 @@
       "dependencies": {},
       "hash": "3b25ccb7e960dfb0ddaf29ff5fbf7b5c28765754"
     },
-    "com.eu4ng.utility.generic-singleton": {
-      "version": "1.1.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
-    },
     "com.unity.addressables": {
       "version": "1.21.19",
       "depth": 0,

@@ -1,5 +1,5 @@
 using System.Collections;
-using E4.Utility;
+using E4.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +13,7 @@ namespace IslandMonkey
 		Main = 1,
 		Voyage = 2
 	}
-	public class SceneLoadingManager : GenericMonoSingleton<SceneLoadingManager>
+	public class SceneLoadingManager : MonoSingleton<SceneLoadingManager>
 	{
 		public enum ChangeSceneType
 		{
@@ -47,11 +47,6 @@ namespace IslandMonkey
 			base.Awake();
 			animator = animationImage.GetComponent<Animator>();
 			SceneManager.sceneLoaded += OnSceneLoaded_Event;
-		}
-
-		void Start()
-		{
-			DontDestroyOnLoad(gameObject);
 		}
 
 		public void ChangeScene(BuildScene buildScene, ChangeSceneType changeSceneType = ChangeSceneType.Fade)
@@ -174,5 +169,8 @@ namespace IslandMonkey
 		{
 			image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
 		}
+
+		/* MonoSingleton */
+		protected override bool UseDontDestroyOnLoad => true;
 	}
 }

@@ -6,7 +6,7 @@ namespace IslandMonkey.MVVM
 	{
 		void Awake()
 		{
-			PropertyNotifier = IslandGameManager.Instance.GetGoodsManager();
+			PropertyNotifier = GlobalGameManager.Instance.GetGoodsManager();
 		}
 	}
 }

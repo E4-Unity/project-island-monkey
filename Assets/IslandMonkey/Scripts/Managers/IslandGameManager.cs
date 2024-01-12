@@ -1,25 +1,29 @@
-using E4.Utility;
+using E4.Utilities;
 using UnityEngine;
 
 namespace IslandMonkey
 {
 	[RequireComponent(typeof(BuildingManager), typeof(HexagonalPlacementManager))]
-	public class IslandGameManager : GenericMonoSingleton<IslandGameManager>
+	public class IslandGameManager : MonoSingleton<IslandGameManager>
 	{
-		BuildingManager buildingManager;
-		HexagonalPlacementManager placementManager;
+		/* 컴포넌트 */
+		BuildingManager m_BuildingManager;
+		HexagonalPlacementManager m_PlacementManager;
 
-		public BuildingManager GetBuildingManager() => buildingManager;
-		public HexagonalPlacementManager GetPlacementManager() => placementManager;
-		public MonkeyBank GetMonkeyBank() => GlobalGameManager.Instance.GetMonkeyBank();
-		public GoodsManager GetGoodsManager() => GlobalGameManager.Instance.GetGoodsManager();
+		/* API */
+		public BuildingManager GetBuildingManager() => m_BuildingManager;
+		public HexagonalPlacementManager GetPlacementManager() => m_PlacementManager;
 
-		protected override void Init()
+		/* MonoSingleton */
+		protected override void InitializeComponent()
 		{
-			base.Init();
+			base.InitializeComponent();
 
-			buildingManager = GetComponent<BuildingManager>();
-			placementManager = GetComponent<HexagonalPlacementManager>();
+			// 컴포넌트 할당
+			m_BuildingManager = GetComponent<BuildingManager>();
+			m_PlacementManager = GetComponent<HexagonalPlacementManager>();
 		}
+
+		protected override bool UseDontDestroyOnLoad => false;
 	}
 }
