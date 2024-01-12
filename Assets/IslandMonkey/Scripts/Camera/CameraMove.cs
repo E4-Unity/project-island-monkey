@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-	[SerializeField] private float zoomSpeed = 0.05f;
+	[SerializeField] private float zoomSpeed = 2f;
 	[SerializeField] private float minZoom = 5f;
 	[SerializeField] private float maxZoom = 15f;
 	[SerializeField] private Vector2 dragLimitX = new Vector2(-6f, 1f);
@@ -12,6 +12,7 @@ public class CameraMove : MonoBehaviour
 
 	private Camera cam;
 	private Vector3 dragOrigin;
+
 
 	private void Awake()
 	{
@@ -77,5 +78,6 @@ public class CameraMove : MonoBehaviour
 		float clampedY = Mathf.Clamp(targetPosition.y, dragLimitY.x, dragLimitY.y);
 
 		return new Vector3(clampedX, clampedY, targetPosition.z);
+
 	}
 }

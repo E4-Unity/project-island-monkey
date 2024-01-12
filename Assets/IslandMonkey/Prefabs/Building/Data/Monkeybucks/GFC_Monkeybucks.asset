@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: GFC_Monkeybucks
   m_EditorClassIdentifier: 
   goodsType: 1
-  income: 601
+  income: 1000
   producingInterval: 45
   popupInterval: 6
   popupOffset: {x: 0.175, y: -0.167, z: 0}
+  currentLevel: 1
+  incomeLevels: 00000000e8030000d0070000b80b0000a00f00008813000070170000581b0000401f00002823000010270000f82a0000e02e0000c8320000b0360000983a0000803e00006842000050460000384a0000204e0000
