@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace IslandMonkey
 {
@@ -28,6 +30,20 @@ namespace IslandMonkey
 		}
 
 		/* API */
+		/// <summary>
+		/// 건물 생성 메서드
+		/// </summary>
+		/// <param name="buildingDefinition">기본 건물 데이터</param>
+		/// <returns>기본 건물</returns>
+		public Building CreateBuilding(BuildingDefinition buildingDefinition)
+		{
+			// 기본 건물 설정 데이터 생성
+			BuildingData buildingData = new BuildingData(buildingDefinition);
+
+			// 건물 생성
+			return CreateBuilding(buildingData);
+		}
+
 		/// <summary>
 		/// 건물 생성 메서드
 		/// </summary>

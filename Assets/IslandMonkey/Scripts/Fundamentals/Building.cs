@@ -15,16 +15,18 @@ namespace IslandMonkey
 		[SerializeField] BuildingData m_DefaultBuildingData;
 		[SerializeField] BuildingModel m_DefaultBuildingModelPrefab;
 
-		/* 컴포넌트 */
-		GoodsFactory m_GoodsFactory;
-		HexagonalPlacementManager m_HexagonalPlacementManager; // TODO BuildingManager 로 이전
-
-		/* 의존성 주입 */
-		BuildingModel m_BuildingModel;
-		BuildingData m_BuildingData;
-
 		/* 필드 */
 		bool m_IsInitialized;
+
+		// 컴포넌트
+		GoodsFactory m_GoodsFactory;
+		BuildingManager m_BuildingManager;
+
+		// 의존성 주입
+		BuildingModel m_BuildingModel;
+		BuildingData m_BuildingData;
+		public BuildingData GetBuildingData() => m_BuildingData;
+		public BuildingModel GetBuildingModel() => m_BuildingModel;
 
 		/* 프로퍼티 */
 		BuildingAnimator GetBuildingAnimator() => m_BuildingModel.GetBuildingAnimator();
@@ -36,7 +38,7 @@ namespace IslandMonkey
 			// 컴포넌트 할당
 			m_GoodsFactory = GetComponent<GoodsFactory>();
 			m_BuildingModel = GetComponentInChildren<BuildingModel>();
-			m_HexagonalPlacementManager = IslandGameManager.Instance.GetPlacementManager();
+			m_BuildingManager = IslandGameManager.Instance.GetBuildingManager();
 		}
 
 		void Start()
@@ -86,9 +88,6 @@ namespace IslandMonkey
 
 					// Goods Factory 초기화
 					m_GoodsFactory.Init(m_BuildingData.Definition.GetGoodsFactoryConfig());
-
-					// 기능 시설 등록
-					m_HexagonalPlacementManager.FunctionalBuildings.Add(GetBuildingPayload());
 
 					break;
 				case BuildingType.Special:

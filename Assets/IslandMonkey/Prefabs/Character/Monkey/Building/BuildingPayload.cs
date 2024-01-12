@@ -7,6 +7,7 @@ namespace IslandMonkey
 	// TODO Building 과 병합?
 	public class BuildingPayload : MonoBehaviour, BuildingMonkey.IBuilding
 	{
+		/* 필드 */
 		[SerializeField] Transform entrance;
 		[SerializeField] AnimatorOverrideController animatorController;
 		[SerializeField] EquipmentComponent.EquipmentSet equipmentSet;
@@ -15,26 +16,28 @@ namespace IslandMonkey
 
 		bool isActivated;
 
+		// 컴포넌트
 		BuildingMonkey monkey;
 		BuildingAnimator buildingAnimator;
 		GoodsFactory goodsFactory;
+		BuildingManager m_BuildingManager;
 
 		// TODO 임시
-		HexagonalPlacementManager placementManager;
 		BuildingData buildingData;
 		float activeTime = 5f;
 		float timer = 0;
 
 		void Awake()
 		{
+			// 컴포넌트 할당
 			buildingAnimator = GetComponent<BuildingAnimator>();
 			goodsFactory = GetComponentInParent<GoodsFactory>();
+			m_BuildingManager = IslandGameManager.Instance.GetBuildingManager();
 		}
 
 		void Start()
 		{
 			SpawnBuildingMonkey();
-			placementManager = IslandGameManager.Instance.GetPlacementManager();
 		}
 
 		public void Init(BuildingData data)
@@ -109,7 +112,7 @@ namespace IslandMonkey
 			{
 				while (monkey.State == BuildingMonkey.BuildingMonkeyState.Working)
 				{
-					foreach (var functionalBuilding in placementManager.FunctionalBuildings)
+					foreach (var functionalBuilding in m_BuildingManager.FunctionalBuildings)
 					{
 						if (!functionalBuilding.IsBusy && !functionalBuilding.IsActivated)
 						{

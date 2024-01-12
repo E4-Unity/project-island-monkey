@@ -8,7 +8,7 @@ namespace IslandMonkey
 	[Serializable]
 	public class VoyageSaveData : ISavable
 	{
-		public BuildingData CurrentBuildingData = new BuildingData();
+		public BuildingData CurrentBuildingData = new BuildingData(null);
 		public MonkeyType MonkeyType = MonkeyType.Basic;
 	}
 	public class VoyageDataManager : DataManagerClient<VoyageSaveData>
@@ -69,7 +69,7 @@ namespace IslandMonkey
 		/* Method */
 		public void Clear()
 		{
-			CurrentBuildingData = new BuildingData();
+			CurrentBuildingData = new BuildingData(null);
 			ShouldBuild = false;
 		}
 		void CheckBuildingData()

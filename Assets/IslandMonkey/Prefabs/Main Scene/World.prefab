@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 4156435146989632919}
   - component: {fileID: 8665980936177993606}
   - component: {fileID: 282676823838588865}
-  - component: {fileID: 2558110946673188059}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -127,23 +126,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 511cb8ef499f5514facf4a3843dd40c5, type: 2}
   m_BuildingDefinitionLabel:
     m_LabelString: Definition
---- !u!114 &2558110946673188059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2588944368973679066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47758d65f158c484aa188fa7eb758682, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseDistance: 1
-  navMeshSurface: {fileID: 2620638593936650693}
-  buildingSlotPrefab: {fileID: 3420824251539141103, guid: d913f290b42f9864ca8fbb1826255bad,
+  m_BuildingPrefab: {fileID: 1531532135024880205, guid: d913f290b42f9864ca8fbb1826255bad,
     type: 3}
-  groundSlot: {fileID: 917647181948949911}
+  m_GroundSlot: {fileID: 0}
+  m_NavMeshSurface: {fileID: 2620638593936650693}
 --- !u!1 &4565924439710840066
 GameObject:
   m_ObjectHideFlags: 0
