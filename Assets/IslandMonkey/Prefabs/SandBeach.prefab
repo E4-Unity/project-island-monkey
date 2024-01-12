@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: dcc7bddb53535344890eb9f55698ac34,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 7
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dcc7bddb53535344890eb9f55698ac34,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 7
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dcc7bddb53535344890eb9f55698ac34,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 7
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dcc7bddb53535344890eb9f55698ac34,
         type: 3}
@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1614bbb6ad53afa4bbc01b73b0945f38, type: 2}
+    - target: {fileID: -5754084199372789682, guid: dcc7bddb53535344890eb9f55698ac34,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: dcc7bddb53535344890eb9f55698ac34,
         type: 3}
       propertyPath: m_Name
