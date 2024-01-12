@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.eu4ng.utilities": "https://github.com/E4-Unity/com.eu4ng.utilities.git?path=/com.eu4ng.utilities#v0.1.0",
     "com.eu4ng.utility.generic-singleton": "1.1.1",
     "com.unity.addressables": "1.21.19",
     "com.unity.ai.navigation": "1.1.5",
