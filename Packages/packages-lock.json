@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3b25ccb7e960dfb0ddaf29ff5fbf7b5c28765754"
+      "hash": "4a9be4267d9abbdd19514b52e65983cb553c5f22"
     },
     "com.unity.addressables": {
       "version": "1.21.19",
@@ -232,7 +232,7 @@
         "com.unity.film-internal-utilities": "0.18.4-preview",
         "com.unity.render-pipelines.core": "10.0.0"
       },
-      "hash": "3d2608e339a710ec9449cd99def5c8b22f06f57d"
+      "hash": "f36dd4ec1865840721ffcbd7365630b8ae66b423"
     },
     "com.unity.ugui": {
       "version": "1.0.0",
