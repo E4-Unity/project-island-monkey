@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bbc19a65ad029f488937d3976b68f40, type: 3}
   m_Name: GFC_BananaHouse
   m_EditorClassIdentifier: 
-  goodsType: 0
-  income: 600
-  producingInterval: -1
-  popupInterval: -1
+  goodsType: 1
+  income: 2000
+  producingInterval: 45
+  popupInterval: 6
   popupOffset: {x: 0, y: 0, z: 0}
-  currentLevel: 4
-  incomeLevels: 1602000058020000580200005802000058020000
+  currentLevel: 2
+  incomeLevels: 00000000e8030000d0070000b80b0000a00f00008813000070170000581b0000401f00002823000010270000f82a0000e02e0000c8320000b0360000983a0000803e00006842000050460000384a0000204e0000

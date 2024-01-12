@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+
+
 
 namespace IslandMonkey
 {
@@ -30,12 +33,14 @@ namespace IslandMonkey
 		[SerializeField] float popupInterval = 2.0f;
 		[SerializeField] GameObject popupImage;
 
-		[SerializeField] private int currentLevel = 1;
-		[SerializeField] private List<int> incomeLevels = new List<int>();
+		//[SerializeField] private int currentLevel = 1;
+		//[SerializeField] private List<int> incomeLevels = new List<int>();
 
 		// 자동 활성화 설정
 		[SerializeField] bool autoConfig;
 		[SerializeField] GoodsFactoryConfig defaultConfig;
+
+
 
 		/* Component */
 		GoodsManager goodsManager;
@@ -66,11 +71,20 @@ namespace IslandMonkey
 			{
 				Init(defaultConfig);
 			}
+
+			// 이벤트 구독
+			if (defaultConfig != null)
+			{
+				defaultConfig.OnLevelUp += UpdateIncomeFromConfig;
+			}
 		}
 
 		public void Init(IGoodsFactoryConfig config)
 		{
 			if (config is null || config.GoodsType == GoodsType.None) return;
+
+			// GoodsFactoryConfig의 참조를 저장합니다.
+			defaultConfig = config as GoodsFactoryConfig;
 
 			goodsType = config.GoodsType;
 			income = config.Income;
@@ -81,7 +95,19 @@ namespace IslandMonkey
 
 			// TODO 임시
 			popupImage.transform.localPosition = config.PopupOffset;
+
+			// income 값을 config에서 가져옵니다.
+			UpdateIncomeFromConfig();
 		}
+		private void UpdateIncomeFromConfig()
+		{
+			// config가 null이 아닌지 확인하고 income 값을 업데이트합니다.
+			if (defaultConfig != null)
+			{
+				income = defaultConfig.Income;
+			}
+		}
+
 
 		public void Activate()
 		{
@@ -130,6 +156,7 @@ namespace IslandMonkey
 			goodsManager.EarnGoods(goodsType, income);
 		}
 
+
 		public void OnClicked()
 		{
 			if (!popupImage.activeSelf) return;
@@ -163,6 +190,14 @@ namespace IslandMonkey
 					ResetTimer();
 					ProduceGoods();
 				}
+			}
+		}
+		void OnDestroy()
+		{
+			// 이벤트 구독 해제
+			if (defaultConfig != null)
+			{
+				defaultConfig.OnLevelUp -= UpdateIncomeFromConfig;
 			}
 		}
 	}

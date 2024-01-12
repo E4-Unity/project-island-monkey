@@ -378,7 +378,7 @@ PrefabInstance:
     - target: {fileID: 2614177981476512448, guid: 690bead894ec95e4ea85b804dfec7ea4,
         type: 3}
       propertyPath: m_Name
-      value: Island BananaHouse
+      value: Island BananaHouse(Clone)
       objectReference: {fileID: 0}
     - target: {fileID: 8361645977940545583, guid: 690bead894ec95e4ea85b804dfec7ea4,
         type: 3}
@@ -577,7 +577,7 @@ PrefabInstance:
     - target: {fileID: 3420824251539141103, guid: d913f290b42f9864ca8fbb1826255bad,
         type: 3}
       propertyPath: m_Name
-      value: BuildingSlot
+      value: BuildingSlot(Clone)
       objectReference: {fileID: 0}
     - target: {fileID: 5646787815300271247, guid: d913f290b42f9864ca8fbb1826255bad,
         type: 3}
@@ -628,6 +628,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124383015184290599, guid: d913f290b42f9864ca8fbb1826255bad,
+        type: 3}
+      propertyPath: goodsType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6124383015184290599, guid: d913f290b42f9864ca8fbb1826255bad,
         type: 3}

@@ -34,6 +34,8 @@ public class WorldSpaceUI : MonoBehaviour
 	[SerializeField] private GoodsFactoryConfig rooftopGardenConfig;
 	[SerializeField] private GoodsFactoryConfig jobSeekingConfig;
 
+	private GoodsManager goodsManager;
+
 	// 각 건물 이름과 연결된 GoodsFactoryConfig의 딕셔너리
 	private Dictionary<string, GoodsFactoryConfig> goodsFactoryConfig;
 	// 현재 선택된 건물의 이름
@@ -42,6 +44,7 @@ public class WorldSpaceUI : MonoBehaviour
 	// 딕셔너리를 초기화하고 각 GoodsFactoryConfig 인스턴스를 추가
 	void Awake()
 	{
+
 		goodsFactoryConfig = new Dictionary<string, GoodsFactoryConfig>
 		{
 			{ "Island BananaHouse", bananaHouseConfig },
@@ -51,6 +54,8 @@ public class WorldSpaceUI : MonoBehaviour
 			{ "Island RooftopGarden", rooftopGardenConfig },
 			{ "Island JopSeeking", jobSeekingConfig }
 		};
+
+		goodsManager = GlobalGameManager.Instance.GetGoodsManager(); // GoodsManager의 인스턴스를 가져옵니다.
 
 		upgradeButton.onClick.AddListener(UpgradeBuildingSelected); // Upgrade 버튼에 이벤트 리스너 추가
 	}
@@ -263,11 +268,12 @@ public class WorldSpaceUI : MonoBehaviour
 					if (config != null)
 					{
 						config.LevelUp();
-						Debug.Log(" levelup is nukll");
+						goodsManager.SpendGoods(GoodsType.Gold,1000);
+						Debug.Log(" 레벨업 성공");
 					}
 					else
 					{
-						Debug.LogError("config is null");
+						Debug.LogError("자료형이 없음");
 					}
 				});
 				upgradeButton.interactable = true; // 버튼 활성화
@@ -275,7 +281,7 @@ public class WorldSpaceUI : MonoBehaviour
 			else
 			{
 				// 오류 메시지 출력 및 버튼 비활성화
-				Debug.LogError($"GoodsFactoryConfig for {currentSelectedBuildingName} not found.");
+				Debug.LogError($"GoodsFactoryConfig {currentSelectedBuildingName} 찾을 수 없음 ");
 				upgradeButton.interactable = false;
 			}
 		}

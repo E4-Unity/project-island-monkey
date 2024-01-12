@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,10 @@ namespace IslandMonkey
 		[SerializeField] Vector3 popupOffset;
 
 		[SerializeField] private int currentLevel = 1;  // 현재 레벨
-		[SerializeField] private List<int> incomeLevels = new List<int>();  // 레벨별 수익
+		[SerializeField] private List<int> incomeLevels; // 레벨별 수익
+
+		// LevelUp 이벤트 정의
+		public event Action OnLevelUp;
 
 		public GoodsType GoodsType => goodsType;
 		public int Income => income;
@@ -31,7 +35,7 @@ namespace IslandMonkey
 			}
 			else
 			{
-				Debug.LogError("Invalid level for income update.");
+				Debug.LogError("income에 맞는 골드를 획득하지 못했습니다.");
 			}
 		}
 
@@ -40,6 +44,7 @@ namespace IslandMonkey
 		{
 			currentLevel++;
 			UpdateIncome();
+			OnLevelUp?.Invoke(); // 이벤트 발행
 		}
 
 		// 현재 레벨을 설정하고, 해당 레벨에 맞는 수입 값을 업데이트
@@ -47,6 +52,13 @@ namespace IslandMonkey
 		{
 			currentLevel = level;
 			UpdateIncome();
+		}
+
+		public void RestoreDefaultsLevel()
+		{
+			income = 1000;
+			currentLevel = 1;
+			// incomeLevels는 복원하지 않음
 		}
 	}
 }

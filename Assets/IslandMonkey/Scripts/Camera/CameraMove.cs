@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-	[SerializeField] private float zoomSpeed = 0.05f;
+	[SerializeField] private float zoomSpeed = 2f;
 	[SerializeField] private float minZoom = 5f;
 	[SerializeField] private float maxZoom = 15f;
 	[SerializeField] private Vector2 dragLimitX = new Vector2(-6f, 1f);
