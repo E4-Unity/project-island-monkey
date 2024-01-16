@@ -1,11 +1,21 @@
 {
   "dependencies": {
+    "com.eu4ng.toonshader.srp": {
+      "version": "https://github.com/E4-Unity/com.eu4ng.toonshader.srp.git?path=/package#v0.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.film-internal-utilities": "0.18.4-preview",
+        "com.unity.render-pipelines.core": "10.0.0"
+      },
+      "hash": "29cee2b3dcc83ea3c672a6ba412483ef1102089f"
+    },
     "com.eu4ng.utilities": {
-      "version": "https://github.com/E4-Unity/com.eu4ng.utilities.git?path=/com.eu4ng.utilities#v0.1.0",
+      "version": "https://github.com/E4-Unity/com.eu4ng.utilities.git?path=/package#v0.1.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4a9be4267d9abbdd19514b52e65983cb553c5f22"
+      "hash": "1ddaa41ec1e4c8c4132c6d24242886a496fa7776"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -229,16 +239,6 @@
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "com.unity.toonshader": {
-      "version": "https://github.com/E4-Unity/unity-toonshader-srp.git#v0.1.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.film-internal-utilities": "0.18.4-preview",
-        "com.unity.render-pipelines.core": "10.0.0"
-      },
-      "hash": "f36dd4ec1865840721ffcbd7365630b8ae66b423"
     },
     "com.unity.ugui": {
       "version": "1.0.0",
