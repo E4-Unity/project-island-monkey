@@ -106,6 +106,9 @@ namespace IslandMonkey
 			while (timer > 0)
 			{
 				var deltaTime = GetCurrentTime() - BuildStartedTime;
+				//Debug.Log("GetCurrentTime : " + GetCurrentTime());
+				//Debug.Log("BuildStartedTime : " + BuildStartedTime);
+				//Debug.Log("deltaTime : " + deltaTime);
 				timer = BuildingTime - deltaTime;
 
 				yield return null;
