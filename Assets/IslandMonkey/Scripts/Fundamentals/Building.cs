@@ -1,4 +1,4 @@
-using IslandMonkey.AssetCollections;
+using IslandMonkeyPack;
 using UnityEngine;
 
 namespace IslandMonkey

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7947870554553985705}
   m_Layer: 0
-  m_Name: Island Skate_R
+  m_Name: Island Paper_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,10 +29,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6757266892140375589}
+  - {fileID: 5436266570644274652}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1382720765727663615
+--- !u!1001 &5421843777804031492
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -40,89 +40,89 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7947870554553985705}
     m_Modifications:
-    - target: {fileID: 5025203505493201248, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
-        type: 3}
-      propertyPath: m_Name
-      value: IceRink_Skate_R
-      objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.15
+      value: 0.12
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.15
+      value: 0.12
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.15
+      value: 0.12
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.0356642
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.018600738
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0017820625
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.67342985
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.7108151
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.121764794
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.16250402
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -66.606
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -95.806
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 99.178
       objectReference: {fileID: 0}
-    - target: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+    - target: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 794020262295023970, guid: 2fddfdd29dd1fd3418826bcfdad74497,
+        type: 3}
+      propertyPath: m_Name
+      value: Jobseeking_Paper_L
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 17f7c6121b8d95a43adc6e66fae0ddb7, type: 3}
---- !u!4 &6757266892140375589 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 2fddfdd29dd1fd3418826bcfdad74497, type: 3}
+--- !u!4 &5436266570644274652 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5689958767547386842, guid: 17f7c6121b8d95a43adc6e66fae0ddb7,
+  m_CorrespondingSourceObject: {fileID: 22304229632699352, guid: 2fddfdd29dd1fd3418826bcfdad74497,
     type: 3}
-  m_PrefabInstance: {fileID: 1382720765727663615}
+  m_PrefabInstance: {fileID: 5421843777804031492}
   m_PrefabAsset: {fileID: 0}

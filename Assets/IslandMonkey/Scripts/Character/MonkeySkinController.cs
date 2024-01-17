@@ -4,7 +4,7 @@ namespace IslandMonkey
 {
 	public class MonkeySkinController : MonoBehaviour
 	{
-		static readonly int TextureID = Shader.PropertyToID("_Texture");
+		static readonly int TextureID = Shader.PropertyToID("_MainTex");
 
 		[Header("Renderer")]
 		[SerializeField] SkinnedMeshRenderer[] bodies;

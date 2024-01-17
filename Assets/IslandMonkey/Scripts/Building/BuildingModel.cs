@@ -1,4 +1,4 @@
-using IslandMonkey.AssetCollections;
+using IslandMonkeyPack;
 using UnityEngine;
 
 namespace IslandMonkey
@@ -20,7 +20,7 @@ namespace IslandMonkey
 		void Awake()
 		{
 			// 컴포넌트 할당
-			m_BuildingAnimator = GetComponent<BuildingAnimator>();
+			m_BuildingAnimator = GetComponentInChildren<BuildingAnimator>();
 			m_BuildingPayload = GetComponent<BuildingPayload>();
 		}
 	}

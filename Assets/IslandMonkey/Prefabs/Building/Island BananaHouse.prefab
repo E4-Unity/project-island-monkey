@@ -31,13 +31,84 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8361645977940545583}
   m_LocalEulerAnglesHint: {x: 0, y: -200, z: 0}
---- !u!1001 &7167477489696015915
+--- !u!1 &2614177981476512448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8361645977940545583}
+  - component: {fileID: -7885727619823774114}
+  - component: {fileID: 6758075499227460611}
+  m_Layer: 0
+  m_Name: Island BananaHouse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8361645977940545583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614177981476512448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 396583269491712324}
+  - {fileID: 5527063405274042543}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7885727619823774114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614177981476512448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1b05fc26b261d4f8d9f573ec942af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entrance: {fileID: 396583269491712324}
+  animatorController: {fileID: 22100000, guid: 9d1383542aa22524eb1ba8008842888b, type: 2}
+  equipmentSet:
+    RightHandEquipment: {fileID: 0}
+    LeftHandEquipment: {fileID: 6258280395062794376, guid: 163420ba74d90ef4eb7cbb0248132d17,
+      type: 3}
+    NeckEquipment: {fileID: 0}
+    LeftFootEquipment: {fileID: 0}
+    RightFootEquipment: {fileID: 0}
+  monkeyDefinition: {fileID: 11400000, guid: 28de7aad0f869f64fa2eaee31f5a791c, type: 2}
+  monkeyPrefab: {fileID: -8352743930469246174, guid: e3be94dc69834294583c4a7b3f94bb9b,
+    type: 3}
+--- !u!114 &6758075499227460611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614177981476512448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2a548ee78554c4e81cdd34c9dc18e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &2340779001537201455
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 8361645977940545583}
     m_Modifications:
     - target: {fileID: 1692639302397777412, guid: e04b236f31822504a958f207fef82de5,
         type: 3}
@@ -92,70 +163,51 @@ PrefabInstance:
     - target: {fileID: 5129762476761457899, guid: e04b236f31822504a958f207fef82de5,
         type: 3}
       propertyPath: m_Name
-      value: Island BananaHouse
+      value: BananaHouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1692639302397777412, guid: e04b236f31822504a958f207fef82de5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 396583269491712324}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5129762476761457899, guid: e04b236f31822504a958f207fef82de5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -7885727619823774114}
-    - targetCorrespondingSourceObject: {fileID: 5129762476761457899, guid: e04b236f31822504a958f207fef82de5,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6758075499227460611}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e04b236f31822504a958f207fef82de5, type: 3}
---- !u!1 &2614177981476512448 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5129762476761457899, guid: e04b236f31822504a958f207fef82de5,
-    type: 3}
-  m_PrefabInstance: {fileID: 7167477489696015915}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-7885727619823774114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2614177981476512448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1b05fc26b261d4f8d9f573ec942af9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entrance: {fileID: 396583269491712324}
-  animatorController: {fileID: 22100000, guid: 9d1383542aa22524eb1ba8008842888b, type: 2}
-  equipmentSet:
-    RightHandEquipment: {fileID: 0}
-    LeftHandEquipment: {fileID: 4674937124063724094, guid: 163420ba74d90ef4eb7cbb0248132d17,
-      type: 3}
-    NeckEquipment: {fileID: 0}
-    LeftFootEquipment: {fileID: 0}
-    RightFootEquipment: {fileID: 0}
-  monkeyDefinition: {fileID: 11400000, guid: 28de7aad0f869f64fa2eaee31f5a791c, type: 2}
-  monkeyPrefab: {fileID: -8352743930469246174, guid: e3be94dc69834294583c4a7b3f94bb9b,
-    type: 3}
---- !u!114 &6758075499227460611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2614177981476512448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f2a548ee78554c4e81cdd34c9dc18e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &8361645977940545583 stripped
+--- !u!4 &5527063405274042543 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1692639302397777412, guid: e04b236f31822504a958f207fef82de5,
+  m_CorrespondingSourceObject: {fileID: 7838529426806150528, guid: e04b236f31822504a958f207fef82de5,
     type: 3}
-  m_PrefabInstance: {fileID: 7167477489696015915}
+  m_PrefabInstance: {fileID: 2340779001537201455}
   m_PrefabAsset: {fileID: 0}

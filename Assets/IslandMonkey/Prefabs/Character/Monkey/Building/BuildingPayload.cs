@@ -1,5 +1,5 @@
 using System.Collections;
-using IslandMonkey.AssetCollections;
+using IslandMonkeyPack;
 using UnityEngine;
 
 namespace IslandMonkey
@@ -30,7 +30,7 @@ namespace IslandMonkey
 		void Awake()
 		{
 			// 컴포넌트 할당
-			buildingAnimator = GetComponent<BuildingAnimator>();
+			buildingAnimator = GetComponentInChildren<BuildingAnimator>();
 			goodsFactory = GetComponentInParent<GoodsFactory>();
 			m_BuildingManager = IslandGameManager.Instance.GetBuildingManager();
 		}

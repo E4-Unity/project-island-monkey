@@ -2,6 +2,7 @@
   "dependencies": {
     "com.eu4ng.toonshader.srp": "https://github.com/E4-Unity/com.eu4ng.toonshader.srp.git?path=/package#v0.1.0",
     "com.eu4ng.utilities": "https://github.com/E4-Unity/com.eu4ng.utilities.git?path=/package#v0.1.0",
+    "com.islandmonkey.pack": "https://github.com/UnityBASAKK/com.islandmonkey.pack.git?path=/package#v0.1.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "1.21.19",
     "com.unity.ai.navigation": "1.1.5",

@@ -17,6 +17,15 @@
       "dependencies": {},
       "hash": "1ddaa41ec1e4c8c4132c6d24242886a496fa7776"
     },
+    "com.islandmonkey.pack": {
+      "version": "https://github.com/UnityBASAKK/com.islandmonkey.pack.git?path=/package#v0.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.eu4ng.toonshader.srp": "0.1.0"
+      },
+      "hash": "ea2ccc9427e73ec954feb82c474125b20e98a3dc"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
