@@ -129,7 +129,7 @@ MonoBehaviour:
     m_LabelString: Definition
   m_BuildingPrefab: {fileID: 1531532135024880205, guid: d913f290b42f9864ca8fbb1826255bad,
     type: 3}
-  m_GroundSlot: {fileID: 0}
+  m_GroundSlot: {fileID: 917647181948949911}
   m_NavMeshSurface: {fileID: 2620638593936650693}
 --- !u!1 &4565924439710840066
 GameObject:

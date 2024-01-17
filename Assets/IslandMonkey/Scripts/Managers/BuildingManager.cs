@@ -117,6 +117,8 @@ namespace IslandMonkey
 			// 이미 건설이 완료된 건물 건설
 			foreach (var buildingData in BuildingDataList)
 			{
+				// TODO 리팩토리
+				if(m_VoyageDataManager.CurrentBuildingData == buildingData) continue; // 중복 건설 방지
 				SpawnBuilding(buildingData);
 			}
 
