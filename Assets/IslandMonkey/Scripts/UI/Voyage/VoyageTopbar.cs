@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class VoyageTopbar : MonoBehaviour
 {
 	[SerializeField] Button storageButton;
+	[SerializeField] Button adsButton;
     // Start is called before the first frame update
     void Awake()
     {
@@ -14,5 +15,11 @@ public class VoyageTopbar : MonoBehaviour
 			VoyageUIManager.Show<StoragePopup>(true);
 			SoundManager.Instance.PlaySoundEffect("Button_Click");
 		});
-    }
+
+		adsButton.onClick.AddListener(() =>
+		{
+			VoyageUIManager.Show<AdsPopup>(true);
+			SoundManager.Instance.PlaySoundEffect("Button_Click");
+		});
+	}
 }

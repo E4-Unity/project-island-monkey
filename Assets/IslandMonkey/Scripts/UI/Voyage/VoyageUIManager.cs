@@ -60,8 +60,6 @@ public class VoyageUIManager : MonoBehaviour
 		}
 	}
 
-
-
 	private void Awake()
 	{
 		s_instance = this;
