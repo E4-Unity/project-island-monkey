@@ -9,6 +9,16 @@ namespace IslandMonkey
 	[RequireComponent(typeof(GoodsManager), typeof(MonkeyBank), typeof(VoyageDataManager))]
 	public class GlobalGameManager : MonoSingleton<GlobalGameManager>
 	{
+		[RuntimeInitializeOnLoadMethod]
+		static void RuntimeInitialize()
+		{
+#if UNITY_EDITOR
+			Application.targetFrameRate = -1;
+#elif UNITY_ANDROID
+			Application.targetFrameRate = 60;
+#endif
+		}
+
 		/* 컴포넌트 */
 		GoodsManager m_GoodsManager;
 		MonkeyBank m_MonkeyBank;
