@@ -26,8 +26,9 @@ public class CutsceneController : MonoBehaviour
 
 	IEnumerator PlayCutscenesSequence()
 	{
+		// TODO 시네머신, 카메라 컨트롤러에 위임
 		// 카메라 위치 변경
-		cutsceneCamera.transform.position = new Vector3(0, 6, -11);
+		cutsceneCamera.transform.position = new Vector3(40, 6, -11);
 		cutsceneCamera.orthographicSize = 1; // Orthographic Size를 1로 설정
 
 		// 컷신 재생
