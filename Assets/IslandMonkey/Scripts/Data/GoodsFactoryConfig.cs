@@ -26,6 +26,11 @@ namespace IslandMonkey
 		public float PopupInterval => popupInterval;
 		public Vector3 PopupOffset => popupOffset;
 
+		public int CurrentLevel
+		{
+			get { return currentLevel; }
+		}
+
 		// 현재 레벨에 맞는 수입 값을 가져오는 메서드
 		private void UpdateIncome()
 		{

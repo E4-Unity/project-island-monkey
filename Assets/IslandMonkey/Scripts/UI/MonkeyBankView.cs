@@ -88,8 +88,11 @@ namespace IslandMonkey.MVVM
 			int timeRecordMin = timeRecord / 60;
 			int maxTimeRecordMin = maxTimeRecord / 60;
 
+			// timeRecordMin이 maxTimeRecordMin을 넘지 않도록 함
+			timeRecordMin = Mathf.Min(timeRecordMin, maxTimeRecordMin);
+
 			timeText.text = string.Format("{0} / {1} 분", timeRecordMin, maxTimeRecordMin);
-			timeSlider.value = timeRecordMin / (float)maxTimeRecordMin;
+			timeSlider.value = (float)timeRecordMin / maxTimeRecordMin;
 		}
 
 		// TODO 라이브러리
