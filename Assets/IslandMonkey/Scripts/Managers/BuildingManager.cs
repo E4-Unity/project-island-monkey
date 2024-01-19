@@ -21,21 +21,23 @@ namespace IslandMonkey
 	[Serializable]
 	public class BuildingData
 	{
-		public BuildingDefinition Definition;
+		public int ID = -1;
 		public bool IsBuildCompleted; // 건물이 완성되었는지 여부
 		public int HexIndex; // 건물 위치 인덱스 (육각 좌표계)
 		public int BuildStartedTime;
 		public bool ShouldBuild; // 건설 연출 필요
 
+		/* 프로퍼티 */
+		public BuildingDefinition Definition => BuildingDefinition.GetDefinition(ID);
 		public bool IsValid => Definition is not null && Definition.ID >= 0;
 
 		/* 생성자 */
-		public BuildingData(BuildingDefinition definition)
+		public BuildingData(int id)
 		{
-			if (definition is null) return;
+			if (id < 0) return;
 
-			Definition = definition;
-			IsBuildCompleted = definition.BuildingType != BuildingType.Voyage;
+			ID = id;
+			IsBuildCompleted = Definition.BuildingType != BuildingType.Voyage;
 			BuildStartedTime = GetCurrentTime();
 		}
 
@@ -74,7 +76,6 @@ namespace IslandMonkey
 
 		[Header("Addressables")]
 		[SerializeField] AssetLabelReference m_BuildingDefinitionLabel;
-		Dictionary<int, BuildingDefinition> m_BuildingDefinitionDatabase; // Building Definition 데이터베이스
 
 		[Header("Building Factory")]
 		[SerializeField] Building m_BuildingPrefab;
@@ -148,7 +149,7 @@ namespace IslandMonkey
 			if (m_PlacementManager.IsFull) return;
 
 			// 건물 데이터 생성
-			var newBuildingData = new BuildingData(GetBuildingDefinition(buildingID))
+			var newBuildingData = new BuildingData(buildingID)
 			{
 				HexIndex = m_PlacementManager.GetRandomHexIndex()
 			};
@@ -226,10 +227,6 @@ namespace IslandMonkey
 		}
 
 		// 쿼리
-		public BuildingDefinition GetBuildingDefinition(int id) => m_BuildingDefinitionDatabase.ContainsKey(id)
-			? m_BuildingDefinitionDatabase[id]
-			: null;
-
 		public BuildingData GetBuildingData(int index)
 		{
 			if (IsBuildingExist(index))
@@ -262,9 +259,6 @@ namespace IslandMonkey
 			// 기본 건물 캐싱
 			cachedDefinition = new Dictionary<int, BuildingDefinition>(defaultBuildings.Length);
 			CachingBuildingDefinitionList(defaultBuildings);
-
-			// 모든 Building Definition 색인
-			LoadAllDefinitions();
 		}
 
 		/// <summary>
@@ -297,23 +291,6 @@ namespace IslandMonkey
 
 			// NavMesh 다시 굽기
 			BakeNavMesh();
-		}
-
-		/// <summary>
-		/// 모든 Building Definition 색인
-		/// </summary>
-		void LoadAllDefinitions()
-		{
-			// Building Definition 로드
-			var loadingTasks = Addressables.LoadAssetsAsync<BuildingDefinition>(m_BuildingDefinitionLabel.labelString, null);
-			var buildingDefinitions = loadingTasks.WaitForCompletion();
-
-			// Building Database 초기화 및 색인
-			m_BuildingDefinitionDatabase = new Dictionary<int, BuildingDefinition>(buildingDefinitions.Count);
-			foreach (var definition in buildingDefinitions)
-			{
-				m_BuildingDefinitionDatabase.Add(definition.ID, definition);
-			}
 		}
 
 		/// <summary>

@@ -38,7 +38,7 @@ namespace IslandMonkey
 		public Building CreateBuilding(BuildingDefinition buildingDefinition)
 		{
 			// 기본 건물 설정 데이터 생성
-			BuildingData buildingData = new BuildingData(buildingDefinition);
+			BuildingData buildingData = new BuildingData(buildingDefinition.ID);
 
 			// 건물 생성
 			return CreateBuilding(buildingData);

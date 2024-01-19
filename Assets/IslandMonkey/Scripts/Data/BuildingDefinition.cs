@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace IslandMonkey
 {
@@ -16,6 +18,32 @@ namespace IslandMonkey
 	[CreateAssetMenu(fileName = "Building Definition", menuName = "Data/Building/Definition")]
 	public class BuildingDefinition : ScriptableObject
 	{
+		/* Static 필드 */
+		static Dictionary<int, BuildingDefinition> m_Database;
+
+		/* Static API */
+		public static BuildingDefinition GetDefinition(int id) => m_Database.ContainsKey(id) ? m_Database[id] : null;
+
+		/// <summary>
+		/// 모든 Building Definition 색인
+		/// </summary>
+		[RuntimeInitializeOnLoadMethod]
+		static void RuntimeInitialize()
+		{
+			/* 모든 Building Definition 색인 */
+			// TODO 제네릭 클래스
+			// Building Definition 로드
+			var loadingTasks = Addressables.LoadAssetsAsync<BuildingDefinition>("Definition", null);
+			var definitions = loadingTasks.WaitForCompletion(); // TODO 비동기
+
+			m_Database = new Dictionary<int, BuildingDefinition>(definitions.Count);
+			foreach (var definition in definitions)
+			{
+				m_Database.Add(definition.ID, definition);
+			}
+		}
+
+		/* 필드 */
 		[Header("Config")]
 		[SerializeField] GoodsFactoryConfig goodsFactoryConfig;
 
@@ -33,9 +61,7 @@ namespace IslandMonkey
 		[SerializeField] GoodsType buildCostGoodsType;
 		[SerializeField] string buildCost;
 
-		[Header("Test")]
-		[SerializeField] bool enableTest; // 테스트 버전으로 활성화
-
+		/* 프로퍼티 */
 		public int ID => buildingID;
 		public BuildingType BuildingType => buildingType;
 		public BuildingModel BuildingPrefab => buildingPrefab;
