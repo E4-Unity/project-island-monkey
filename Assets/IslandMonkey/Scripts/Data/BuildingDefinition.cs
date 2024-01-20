@@ -22,12 +22,12 @@ namespace IslandMonkey
 		static Dictionary<int, BuildingDefinition> m_Database;
 
 		/* Static API */
-		public static BuildingDefinition GetDefinition(int id) => m_Database.ContainsKey(id) ? m_Database[id] : null;
+		public static BuildingDefinition GetDefinition(int id) => m_Database is not null && m_Database.ContainsKey(id) ? m_Database[id] : null;
 
 		/// <summary>
 		/// 모든 Building Definition 색인
 		/// </summary>
-		[RuntimeInitializeOnLoadMethod]
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		static void RuntimeInitialize()
 		{
 			/* 모든 Building Definition 색인 */

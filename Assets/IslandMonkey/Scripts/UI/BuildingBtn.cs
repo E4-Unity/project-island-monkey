@@ -6,13 +6,16 @@ using IslandMonkey;
 
 public class BuildingBtn : MonoBehaviour
 {
+	/* 필드 */
 	[SerializeField] private List<Button> buildingButtons; // 건물 버튼 리스트
 	[SerializeField] private List<GameObject> finList; // 완료된 건물 UI 이미지 리스트
 	[SerializeField] private List<int> payGoldList; // 건물 건설에 필요한 골드 리스트
-	[SerializeField] private ShowcaseMonkey showcaseMonkey; // 연출용 원숭이 프리팹
 
 	[SerializeField] private GameObject getAnimalPanel; // 동물 획득 UI 패널
 	[SerializeField] private GameObject buildingPanel; // 건물 UI 패널
+
+	// TODO 숭숭이 등장 연출 전용 매니저 제작 시 이동
+	ShowcaseMonkey showcaseMonkey;
 
 	// 캐릭터 등장 연출
 	CutsceneController cutsceneController;
@@ -28,6 +31,8 @@ public class BuildingBtn : MonoBehaviour
 		goodsManager = GlobalGameManager.Instance.GetGoodsManager();
 		voyageDataManager = GlobalGameManager.Instance.GetVoyageDataManager();
 		buildingManager = IslandGameManager.Instance.GetBuildingManager();
+		showcaseMonkey = IslandGameManager.Instance.GetShowcaseMonkey();
+
 
 		// 이벤트 바인딩
 		cutsceneController = getAnimalPanel.GetComponent<CutsceneController>();

@@ -4,12 +4,12 @@ using UnityEngine;
 namespace IslandMonkey
 {
 	/// <summary>
-	/// 모든 씬에서 사용하는 컴포넌트들을 모아둔 컨테이너 클래스
+	/// 모든 씬에서 사용하는 레퍼런스들을 모아둔 컨테이너 클래스
 	/// </summary>
 	[RequireComponent(typeof(GoodsManager), typeof(MonkeyBank), typeof(VoyageDataManager))]
 	public class GlobalGameManager : MonoSingleton<GlobalGameManager>
 	{
-		[RuntimeInitializeOnLoadMethod]
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		static void RuntimeInitialize()
 		{
 #if UNITY_EDITOR
@@ -25,8 +25,6 @@ namespace IslandMonkey
 		VoyageDataManager m_VoyageDataManager;
 
 		/* API */
-		// TODO 개선
-		// 레퍼런스가 필요한 클래스의 Start 이벤트 때 할당 가능합니다. Awake 때 접근하면 null입니다.
 		public GoodsManager GetGoodsManager() => m_GoodsManager;
 		public MonkeyBank GetMonkeyBank() => m_MonkeyBank;
 		public VoyageDataManager GetVoyageDataManager() => m_VoyageDataManager;
